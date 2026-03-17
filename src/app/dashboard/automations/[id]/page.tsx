@@ -260,7 +260,7 @@ export default function AutomationDetailPage() {
                 }
                 className="mt-1"
               >
-                {automation.status}
+                {automation.status === "active" ? "Активна" : "На паузе"}
               </Badge>
             </div>
             <div>

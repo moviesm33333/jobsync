@@ -151,7 +151,7 @@ export function AutomationList({
                   <Badge
                     variant={automation.status === "active" ? "default" : "secondary"}
                   >
-                    {automation.status}
+                    {automation.status === "active" ? "Активна" : "На паузе"}
                   </Badge>
                 </div>
 
@@ -192,12 +192,12 @@ export function AutomationList({
                   </div>
                   {automation.nextRunAt && automation.status === "active" && (
                     <span className="text-xs">
-                      Next: {format(new Date(automation.nextRunAt), "MMM d, h:mm a")}
+                      Следующий: {format(new Date(automation.nextRunAt), "MMM d, h:mm a")}
                     </span>
                   )}
                   {automation.lastRunAt && (
                     <span className="text-xs">
-                      Last: {format(new Date(automation.lastRunAt), "MMM d, h:mm a")}
+                      Последний: {format(new Date(automation.lastRunAt), "MMM d, h:mm a")}
                     </span>
                   )}
                 </div>
