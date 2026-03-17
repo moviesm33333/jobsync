@@ -79,8 +79,8 @@ export default function AutomationDetailPage() {
         setRuns(automationResult.data.runs || []);
       } else {
         toast({
-          title: "Error",
-          description: automationResult.message || "Automation not found",
+          title: "Ошибка!",
+          description: automationResult.message || "Автоматизация не найдена",
           variant: "destructive",
         });
         router.push("/dashboard/automations");
@@ -96,8 +96,8 @@ export default function AutomationDetailPage() {
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to load automation details",
+        title: "Ошибка!",
+        description: "Не удалось загрузить детали автоматизации",
         variant: "destructive",
       });
     }
@@ -122,13 +122,13 @@ export default function AutomationDetailPage() {
       toast({
         title:
           automation.status === "active"
-            ? "Automation paused"
-            : "Automation resumed",
+            ? "Автоматизация приостановлена"
+            : "Автоматизация возобновлена",
       });
       loadData();
     } else {
       toast({
-        title: "Error",
+        title: "Ошибка!",
         description: result.message,
         variant: "destructive",
       });
@@ -149,21 +149,21 @@ export default function AutomationDetailPage() {
 
       if (response.ok && data.success) {
         toast({
-          title: "Automation run started",
-          description: `Saved ${data.run.jobsSaved} new jobs`,
+          title: "Автоматизация запущена",
+          description: `Сохранено ${data.run.jobsSaved} новых вакансий`,
         });
         loadData();
       } else {
         toast({
-          title: "Error",
-          description: data.message || "Failed to run automation",
+          title: "Ошибка!",
+          description: data.message || "Не удалось запустить",
           variant: "destructive",
         });
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to run automation",
+        title: "Ошибка!",
+        description: "Не удалось запустить",
         variant: "destructive",
       });
     }
@@ -230,7 +230,7 @@ export default function AutomationDetailPage() {
             ) : (
               <Play className="h-4 w-4 mr-2" />
             )}
-            {automation.status === "active" ? "Pause" : "Resume"}
+            {automation.status === "active" ? "Приостановить" : "Возобновить"}
           </Button>
           <Button
             variant="outline"
@@ -244,7 +244,7 @@ export default function AutomationDetailPage() {
             ) : (
               <PlayCircle className="h-4 w-4 mr-2" />
             )}
-            Run Now
+            Запустить
           </Button>
         </div>
       </div>
@@ -253,7 +253,7 @@ export default function AutomationDetailPage() {
         <CardContent className="pt-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
-              <p className="text-sm text-muted-foreground">Status</p>
+              <p className="text-sm text-muted-foreground">Статус</p>
               <Badge
                 variant={
                   automation.status === "active" ? "default" : "secondary"
@@ -264,26 +264,26 @@ export default function AutomationDetailPage() {
               </Badge>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Job Board</p>
+              <p className="text-sm text-muted-foreground">Площадка</p>
               <p className="font-medium capitalize">{automation.jobBoard}</p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Match Threshold</p>
+              <p className="text-sm text-muted-foreground">Порог совпадения</p>
               <p className="font-medium">{automation.matchThreshold}%</p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Schedule</p>
+              <p className="text-sm text-muted-foreground">Расписание</p>
               <p className="font-medium flex items-center gap-1">
                 <Clock className="h-4 w-4" />
-                {automation.scheduleHour.toString().padStart(2, "0")}:00 daily
+                {automation.scheduleHour.toString().padStart(2, "0")}:00 ежедневно
               </p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Resume</p>
+              <p className="text-sm text-muted-foreground">Резюме</p>
               {resumeMissing ? (
                 <p className="text-amber-600 flex items-center gap-1 text-sm">
                   <AlertTriangle className="h-4 w-4" />
-                  Missing
+                  Отсутствует
                 </p>
               ) : (
                 <p className="font-medium flex items-center gap-1">
@@ -293,7 +293,7 @@ export default function AutomationDetailPage() {
               )}
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Next Run</p>
+              <p className="text-sm text-muted-foreground">Следующий запуск</p>
               <p className="font-medium">
                 {automation.nextRunAt && automation.status === "active"
                   ? format(new Date(automation.nextRunAt), "MMM d, h:mm a")
@@ -301,20 +301,20 @@ export default function AutomationDetailPage() {
               </p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Last Run</p>
+              <p className="text-sm text-muted-foreground">Последний запуск</p>
               <p className="font-medium">
                 {automation.lastRunAt
                   ? format(new Date(automation.lastRunAt), "MMM d, h:mm a")
-                  : "Never"}
+                  : "Никогда"}
               </p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Discovered Jobs</p>
+              <p className="text-sm text-muted-foreground">Найденные вакансии</p>
               <p className="font-medium">
-                {jobs.length} total
+                {jobs.length} всего
                 {newJobsCount > 0 && (
                   <Badge variant="secondary" className="ml-2">
-                    {newJobsCount} new
+                    {newJobsCount} новых
                   </Badge>
                 )}
               </p>
@@ -325,16 +325,16 @@ export default function AutomationDetailPage() {
 
       <Tabs defaultValue="logs">
         <TabsList>
-          <TabsTrigger value="logs">Logs</TabsTrigger>
+          <TabsTrigger value="logs">Журнал</TabsTrigger>
           <TabsTrigger value="jobs">
-            Discovered Jobs
+            Найденные вакансии
             {newJobsCount > 0 && (
               <Badge variant="secondary" className="ml-2">
                 {newJobsCount}
               </Badge>
             )}
           </TabsTrigger>
-          <TabsTrigger value="history">Run History</TabsTrigger>
+          <TabsTrigger value="history">История запусков</TabsTrigger>
         </TabsList>
         <TabsContent value="logs" className="mt-4">
           <LogsTab automationId={automationId} runKey={runKey} />

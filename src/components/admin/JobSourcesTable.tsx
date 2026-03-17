@@ -42,9 +42,9 @@ function JobSourcesTable({
     if (source._count?.jobsApplied! > 0) {
       setAlert({
         openState: true,
-        title: "Applied jobs exist!",
+        title: "Есть связанные отклики!",
         description:
-          "Associated jobs applied must be 0 to be able to delete this job source",
+          "Количество связанных откликов должно быть 0, чтобы удалить этот источник",
         deleteAction: false,
       });
     } else {
@@ -62,13 +62,13 @@ function JobSourcesTable({
       if (success) {
         toast({
           variant: "success",
-          description: `Job source has been deleted successfully`,
+          description: `Источник успешно удалён`,
         });
         reloadJobSources();
       } else {
         toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: message,
         });
       }
@@ -80,10 +80,10 @@ function JobSourcesTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Source</TableHead>
-            <TableHead className="hidden sm:table-cell">Value</TableHead>
-            <TableHead>Jobs Applied</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead>Источник</TableHead>
+            <TableHead className="hidden sm:table-cell">Значение</TableHead>
+            <TableHead>Откликов</TableHead>
+            <TableHead>Действия</TableHead>
             <TableHead>
               <span className="sr-only">Actions</span>
             </TableHead>
@@ -109,13 +109,13 @@ function JobSourcesTable({
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuLabel>Действия</DropdownMenuLabel>
                       <DropdownMenuItem
                         className="text-red-600 cursor-pointer"
                         onClick={() => onDeleteJobSource(source)}
                       >
                         <Trash className="mr-2 h-4 w-4" />
-                        Delete
+                        Удалить
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>

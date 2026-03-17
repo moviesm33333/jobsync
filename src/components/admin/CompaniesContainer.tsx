@@ -89,7 +89,7 @@ function CompaniesContainer() {
                   <RecordsCount
                     count={companies.length}
                     total={totalCompanies}
-                    label="companies"
+                    label="компаний"
                   />
                   {totalCompanies > APP_CONSTANTS.RECORDS_PER_PAGE && (
                     <RecordsPerPageSelector

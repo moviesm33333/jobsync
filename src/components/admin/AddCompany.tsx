@@ -44,7 +44,7 @@ function AddCompany({
 }: AddCompanyProps) {
   const [isPending, startTransition] = useTransition();
 
-  const pageTitle = editCompany ? "Edit Company" : "Add Company";
+  const pageTitle = editCompany ? "Редактировать компанию" : "Добавить компанию";
 
   const form = useForm<z.infer<typeof AddCompanyFormSchema>>({
     resolver: zodResolver(AddCompanyFormSchema),
@@ -90,7 +90,7 @@ function AddCompany({
       if (!res?.success) {
         toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: res?.message,
         });
       } else {
@@ -99,9 +99,9 @@ function AddCompany({
         reloadCompanies();
         toast({
           variant: "success",
-          description: `Company has been ${
-            editCompany ? "updated" : "created"
-          } successfully`,
+          description: `Компания успешно ${
+            editCompany ? "обновлена" : "создана"
+          }`,
         });
       }
     });
@@ -118,7 +118,7 @@ function AddCompany({
       >
         <PlusCircle className="h-3.5 w-3.5" />
         <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-          New Company
+          Новая компания
         </span>
       </Button>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -126,8 +126,8 @@ function AddCompany({
           <DialogHeader>
             <DialogTitle>{pageTitle}</DialogTitle>
             <DialogDescription className="text-primary">
-              Caution: Editing name of the company will affect all the related
-              job records.
+              Внимание: изменение названия компании затронет все связанные
+              записи о вакансиях.
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
@@ -142,7 +142,7 @@ function AddCompany({
                   name="company"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Company Name</FormLabel>
+                      <FormLabel>Название компании</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -159,7 +159,7 @@ function AddCompany({
                   name="logoUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Company Logo URL</FormLabel>
+                      <FormLabel>URL логотипа компании</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -179,11 +179,11 @@ function AddCompany({
                       className="mt-2 md:mt-0 w-full"
                       onClick={closeDialog}
                     >
-                      Cancel
+                      Отмена
                     </Button>
                   </div>
                   <Button type="submit" disabled={!formState.isDirty}>
-                    Save
+                    Сохранить
                     {isPending && (
                       <Loader className="h-4 w-4 shrink-0 spinner" />
                     )}

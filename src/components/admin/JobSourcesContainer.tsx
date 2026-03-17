@@ -50,7 +50,7 @@ function JobSourcesContainer() {
       <div className="col-span-3">
         <Card x-chunk="dashboard-06-chunk-0">
           <CardHeader className="flex-row justify-between items-center">
-            <CardTitle>Job Sources</CardTitle>
+            <CardTitle>Источники</CardTitle>
             <div className="flex items-center">
               <div className="ml-auto flex items-center gap-2">
               </div>
@@ -68,7 +68,7 @@ function JobSourcesContainer() {
                   <RecordsCount
                     count={sources.length}
                     total={totalJobSources}
-                    label="job sources"
+                    label="источников"
                   />
                   {totalJobSources > APP_CONSTANTS.RECORDS_PER_PAGE && (
                     <RecordsPerPageSelector
@@ -88,7 +88,7 @@ function JobSourcesContainer() {
                   disabled={loading}
                   className="btn btn-primary"
                 >
-                  {loading ? "Loading..." : "Load More"}
+                  {loading ? "Загрузка..." : "Загрузить ещё"}
                 </Button>
               </div>
             )}

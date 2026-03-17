@@ -58,7 +58,7 @@ function AddTag({ reloadTags }: AddTagProps) {
       if (result?.success) {
         toast({
           variant: "success",
-          description: "Skill tag has been added successfully.",
+          description: "Навык успешно добавлен.",
         });
         setDialogOpen(false);
         reset();
@@ -66,8 +66,8 @@ function AddTag({ reloadTags }: AddTagProps) {
       } else {
         toast({
           variant: "destructive",
-          title: "Error!",
-          description: result?.message ?? "Failed to create skill tag.",
+          title: "Ошибка!",
+          description: result?.message ?? "Не удалось создать навык.",
         });
       }
     });
@@ -83,15 +83,15 @@ function AddTag({ reloadTags }: AddTagProps) {
       >
         <PlusCircle className="h-3.5 w-3.5" />
         <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-          Add Skill
+          Добавить навык
         </span>
       </Button>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add Skill</DialogTitle>
+            <DialogTitle>Добавить навык</DialogTitle>
             <DialogDescription>
-              Add a new skill tag to use across your job applications.
+              Добавьте новый навык для использования в ваших откликах.
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
@@ -101,7 +101,7 @@ function AddTag({ reloadTags }: AddTagProps) {
                 name="label"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Skill Name</FormLabel>
+                    <FormLabel>Название навыка</FormLabel>
                     <FormControl>
                       <Input placeholder="e.g. React, AWS, Python" {...field} />
                     </FormControl>
@@ -115,10 +115,10 @@ function AddTag({ reloadTags }: AddTagProps) {
                   variant="outline"
                   onClick={() => setDialogOpen(false)}
                 >
-                  Cancel
+                  Отмена
                 </Button>
                 <Button type="submit" disabled={isPending}>
-                  Save
+                  Сохранить
                   {isPending && (
                     <Loader className="ml-2 h-4 w-4 shrink-0 spinner" />
                   )}

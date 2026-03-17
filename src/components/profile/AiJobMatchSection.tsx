@@ -79,8 +79,8 @@ export const AiJobMatchSection = ({
     onError: (err) => {
       toast({
         variant: "destructive",
-        title: "Error!",
-        description: err.message || "Failed to get job match analysis",
+        title: "Ошибка!",
+        description: err.message || "Не удалось получить анализ совпадения",
       });
     },
   });
@@ -96,11 +96,11 @@ export const AiJobMatchSection = ({
         throw new Error(message);
       }
     } catch (error) {
-      const message = "Error fetching resume list";
+      const message = "Ошибка загрузки списка резюме";
       const description = error instanceof Error ? error.message : message;
       toast({
         variant: "destructive",
-        title: "Error!",
+        title: "Ошибка!",
         description,
       });
     }
@@ -163,7 +163,7 @@ export const AiJobMatchSection = ({
         <SheetContent className="overflow-y-scroll">
           <SheetHeader>
             <SheetTitle className="flex flex-row items-center">
-              AI Job Match ({selectedModel.provider})
+              ИИ-подбор вакансий ({selectedModel.provider})
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -207,7 +207,7 @@ export const AiJobMatchSection = ({
                 }
               >
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select a resume" />
+                  <SelectValue placeholder="Выберите резюме" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -230,7 +230,7 @@ export const AiJobMatchSection = ({
             {isLoading && !hasContent ? (
               <div className="flex items-center flex-col mt-4">
                 <Loading />
-                <div className="mt-2">Analyzing job match...</div>
+                <div className="mt-2">Анализ совпадения...</div>
               </div>
             ) : (
               <AiJobMatchResponseContent

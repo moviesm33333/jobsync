@@ -55,7 +55,7 @@ const SummarySection = ({ summary }: { summary?: string }) => {
   if (!summary) return null;
   return (
     <div className="pt-4">
-      <h2 className="font-semibold text-sm">Summary</h2>
+      <h2 className="font-semibold text-sm">О себе</h2>
       <SheetDescription className="mt-1">{summary}</SheetDescription>
     </div>
   );
@@ -79,14 +79,14 @@ const AchievementsSection = ({
   return (
     <AccordionItem value="achievements">
       <AccordionTrigger className="text-sm font-semibold">
-        Achievements
+        Достижения
       </AccordionTrigger>
       <AccordionContent>
         {strong && strong.length > 0 && (
           <div className="mb-3">
             <div className="flex items-center gap-1 text-green-600 text-xs font-medium mb-1">
               <CheckCircle className="h-3 w-3" />
-              Strong Achievements
+              Сильные достижения
             </div>
             <ul className="text-sm text-muted-foreground space-y-1">
               {strong.map((item, i) => item && <li key={i}>- {item}</li>)}
@@ -97,7 +97,7 @@ const AchievementsSection = ({
           <div className="mb-3">
             <div className="flex items-center gap-1 text-amber-600 text-xs font-medium mb-1">
               <AlertTriangle className="h-3 w-3" />
-              Needs Quantification
+              Требуют количественной оценки
             </div>
             <ul className="text-sm text-muted-foreground space-y-1">
               {weak.map((item, i) => item && <li key={i}>- {item}</li>)}
@@ -107,7 +107,7 @@ const AchievementsSection = ({
         {missingMetrics && missingMetrics.length > 0 && (
           <div>
             <div className="text-xs font-medium text-muted-foreground mb-1">
-              Suggested Metrics to Add
+              Рекомендуемые метрики
             </div>
             <ul className="text-sm text-muted-foreground space-y-1">
               {missingMetrics.map(
@@ -139,12 +139,12 @@ const KeywordsSection = ({
   return (
     <AccordionItem value="keywords">
       <AccordionTrigger className="text-sm font-semibold">
-        Keywords
+        Ключевые слова
       </AccordionTrigger>
       <AccordionContent>
         {found && found.length > 0 && (
           <div className="mb-3">
-            <div className="text-xs font-medium text-green-600 mb-1">Found</div>
+            <div className="text-xs font-medium text-green-600 mb-1">Найдены</div>
             <div className="flex flex-wrap gap-1">
               {found.map(
                 (kw, i) =>
@@ -160,7 +160,7 @@ const KeywordsSection = ({
         {missing && missing.length > 0 && (
           <div className="mb-3">
             <div className="text-xs font-medium text-amber-600 mb-1">
-              Consider Adding
+              Рекомендуется добавить
             </div>
             <div className="flex flex-wrap gap-1">
               {missing.map(
@@ -177,7 +177,7 @@ const KeywordsSection = ({
         {overused && overused.length > 0 && (
           <div>
             <div className="text-xs font-medium text-red-600 mb-1">
-              Overused
+              Слишком часто используются
             </div>
             <div className="flex flex-wrap gap-1">
               {overused.map(
@@ -214,13 +214,13 @@ const ActionVerbsSection = ({
   return (
     <AccordionItem value="verbs">
       <AccordionTrigger className="text-sm font-semibold">
-        Action Verbs
+        Глаголы действия
       </AccordionTrigger>
       <AccordionContent>
         {strong && strong.length > 0 && (
           <div className="mb-3">
             <div className="text-xs font-medium text-green-600 mb-1">
-              Strong Verbs
+              Сильные глаголы
             </div>
             <div className="flex flex-wrap gap-1">
               {strong.map(
@@ -237,7 +237,7 @@ const ActionVerbsSection = ({
         {weak && weak.length > 0 && (
           <div className="mb-3">
             <div className="text-xs font-medium text-amber-600 mb-1">
-              Weak Verbs
+              Слабые глаголы
             </div>
             <div className="flex flex-wrap gap-1">
               {weak.map(
@@ -254,7 +254,7 @@ const ActionVerbsSection = ({
         {suggestions && suggestions.length > 0 && (
           <div>
             <div className="text-xs font-medium text-muted-foreground mb-1">
-              Suggestions
+              Предложения
             </div>
             <ul className="text-sm text-muted-foreground space-y-1">
               {suggestions.map(
@@ -302,7 +302,7 @@ const SectionFeedbackSection = ({
   return (
     <AccordionItem value="sections">
       <AccordionTrigger className="text-sm font-semibold">
-        Section Feedback
+        Обратная связь по разделам
       </AccordionTrigger>
       <AccordionContent>
         <div className="space-y-2">
@@ -338,7 +338,7 @@ const ATSIssuesSection = ({
   return (
     <AccordionItem value="ats">
       <AccordionTrigger className="text-sm font-semibold">
-        ATS Issues
+        Проблемы ATS
       </AccordionTrigger>
       <AccordionContent>
         <ul className="text-sm text-muted-foreground space-y-1">
@@ -367,7 +367,7 @@ const TopImprovementsSection = ({
   return (
     <AccordionItem value="improvements">
       <AccordionTrigger className="text-sm font-semibold">
-        Top Improvements
+        Главные улучшения
       </AccordionTrigger>
       <AccordionContent>
         <div className="space-y-3">
@@ -413,12 +413,12 @@ const GrammarSection = ({
   return (
     <AccordionItem value="grammar">
       <AccordionTrigger className="text-sm font-semibold">
-        Grammar & Spelling
+        Грамматика и орфография
       </AccordionTrigger>
       <AccordionContent>
         {errors && errors.length > 0 && (
           <div className="mb-3">
-            <div className="text-xs font-medium text-red-600 mb-1">Errors</div>
+            <div className="text-xs font-medium text-red-600 mb-1">Ошибки</div>
             <div className="space-y-2">
               {errors.map(
                 (err, i) =>
@@ -449,7 +449,7 @@ const GrammarSection = ({
         {punctuationIssues && punctuationIssues.length > 0 && (
           <div className="mb-3">
             <div className="text-xs font-medium text-amber-600 mb-1">
-              Punctuation
+              Пунктуация
             </div>
             <ul className="text-sm text-muted-foreground space-y-1">
               {punctuationIssues.map((p, i) => p && <li key={i}>- {p}</li>)}
@@ -459,7 +459,7 @@ const GrammarSection = ({
         {consistencyIssues && consistencyIssues.length > 0 && (
           <div>
             <div className="text-xs font-medium text-amber-600 mb-1">
-              Consistency
+              Единообразие
             </div>
             <ul className="text-sm text-muted-foreground space-y-1">
               {consistencyIssues.map((c, i) => c && <li key={i}>- {c}</li>)}
@@ -524,7 +524,7 @@ export const AiResumeReviewResponseContent = ({
       {isStreaming && (
         <div className="flex items-center gap-2 text-muted-foreground text-sm mt-4 animate-pulse">
           <div className="h-2 w-2 bg-primary rounded-full"></div>
-          <span>Analyzing resume...</span>
+          <span>Анализ резюме...</span>
         </div>
       )}
     </div>

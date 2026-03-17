@@ -43,9 +43,9 @@ function CompaniesTable({
     if (company._count?.jobsApplied! > 0) {
       setAlert({
         openState: true,
-        title: "Applied jobs exist!",
+        title: "Есть связанные отклики!",
         description:
-          "Associated jobs applied must be 0 to be able to delete this company",
+          "Количество связанных откликов должно быть 0, чтобы удалить эту компанию",
         deleteAction: false,
       });
     } else {
@@ -63,13 +63,13 @@ function CompaniesTable({
       if (success) {
         toast({
           variant: "success",
-          description: `Company has been deleted successfully`,
+          description: `Компания успешно удалена`,
         });
         reloadCompanies();
       } else {
         toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: message,
         });
       }
@@ -121,20 +121,20 @@ function CompaniesTable({
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuLabel>Действия</DropdownMenuLabel>
                       <DropdownMenuItem
                         className="cursor-pointer"
                         onClick={() => editCompany(company.id)}
                       >
                         <Pencil className="mr-2 h-4 w-4" />
-                        Edit Company
+                        Редактировать
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         className="text-red-600 cursor-pointer"
                         onClick={() => onDeleteCompany(company)}
                       >
                         <Trash className="mr-2 h-4 w-4" />
-                        Delete
+                        Удалить
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>

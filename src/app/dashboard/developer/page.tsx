@@ -5,17 +5,17 @@ import {
 } from "@/components/developer/DeveloperContainer";
 
 export const metadata: Metadata = {
-  title: "Developer Options | JobSync",
-  description: "Developer tools and utilities for development mode",
+  title: "Для разработчика | JobSync",
+  description: "Инструменты для разработки и тестирования",
 };
 
 export default function DeveloperPage() {
   return (
     <>
       <div className="col-span-3">
-        <h1 className="text-3xl font-bold tracking-tight">Developer Options</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Для разработчика</h1>
         <p className="text-muted-foreground mt-2">
-          Tools for development and testing. Only available in development mode.
+          Инструменты для разработки и тестирования. Доступно только в режиме разработки.
         </p>
       </div>
       <div className="col-start-1 self-start">

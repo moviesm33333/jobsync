@@ -51,12 +51,12 @@ interface AutomationWizardProps {
 }
 
 const STEPS = [
-  { id: "basics", title: "Basics", description: "Name your automation" },
-  { id: "search", title: "Search", description: "Configure search criteria" },
-  { id: "resume", title: "Resume", description: "Select resume for matching" },
-  { id: "matching", title: "Matching", description: "Set match threshold" },
-  { id: "schedule", title: "Schedule", description: "When to run" },
-  { id: "review", title: "Review", description: "Confirm settings" },
+  { id: "basics", title: "Основное", description: "Назовите автоматизацию" },
+  { id: "search", title: "Поиск", description: "Настройте критерии поиска" },
+  { id: "resume", title: "Резюме", description: "Выберите резюме для сопоставления" },
+  { id: "matching", title: "Совпадение", description: "Установите порог совпадения" },
+  { id: "schedule", title: "Расписание", description: "Когда запускать" },
+  { id: "review", title: "Обзор", description: "Подтвердите настройки" },
 ];
 
 const HOURS = Array.from({ length: 24 }, (_, i) => ({
@@ -114,10 +114,10 @@ export function AutomationWizard({
 
       if (result.success) {
         toast({
-          title: editAutomation ? "Automation updated" : "Automation created",
+          title: editAutomation ? "Автоматизация обновлена" : "Автоматизация создана",
           description: editAutomation
-            ? "Your automation has been updated successfully."
-            : "Your automation has been created and will run at the scheduled time.",
+            ? "Ваша автоматизация успешно обновлена."
+            : "Ваша автоматизация создана и будет запущена в запланированное время.",
         });
         form.reset();
         setStep(0);
@@ -125,15 +125,15 @@ export function AutomationWizard({
         onSuccess();
       } else {
         toast({
-          title: "Error",
-          description: result.message || "Something went wrong",
+          title: "Ошибка!",
+          description: result.message || "Что-то пошло не так",
           variant: "destructive",
         });
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to save automation",
+        title: "Ошибка!",
+        description: "Не удалось сохранить автоматизацию",
         variant: "destructive",
       });
     } finally {
@@ -190,12 +190,12 @@ export function AutomationWizard({
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Automation Name</FormLabel>
+                <FormLabel>Название автоматизации</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g., Full Stack Jobs Calgary" {...field} />
+                  <Input placeholder="напр., Вакансии Full Stack в Москве" {...field} />
                 </FormControl>
                 <FormDescription>
-                  A descriptive name to identify this automation
+                  Описательное название для идентификации этой автоматизации
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -206,11 +206,11 @@ export function AutomationWizard({
             name="jobBoard"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Job Board</FormLabel>
+                <FormLabel>Площадка</FormLabel>
                 <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a job board" />
+                      <SelectValue placeholder="Выберите площадку" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -219,7 +219,7 @@ export function AutomationWizard({
                   </SelectContent>
                 </Select>
                 <FormDescription>
-                  The job board to search (more coming soon)
+                  Площадка для поиска (скоро будет больше)
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -234,12 +234,12 @@ export function AutomationWizard({
             name="keywords"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Search Keywords</FormLabel>
+                <FormLabel>Ключевые слова для поиска</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g., Full Stack Developer" {...field} />
+                  <Input placeholder="напр., Full Stack Developer" {...field} />
                 </FormControl>
                 <FormDescription>
-                  Job titles, skills, or keywords to search for
+                  Названия должностей, навыки или ключевые слова для поиска
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -250,12 +250,12 @@ export function AutomationWizard({
             name="location"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Location</FormLabel>
+                <FormLabel>Местоположение</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g., Calgary, AB" {...field} />
+                  <Input placeholder="напр., Москва" {...field} />
                 </FormControl>
                 <FormDescription>
-                  City, state/province, or region to search in
+                  Город, область или регион для поиска
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -270,11 +270,11 @@ export function AutomationWizard({
             name="resumeId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Resume for Matching</FormLabel>
+                <FormLabel>Резюме для сопоставления</FormLabel>
                 <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a resume" />
+                      <SelectValue placeholder="Выберите резюме" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -286,7 +286,7 @@ export function AutomationWizard({
                   </SelectContent>
                 </Select>
                 <FormDescription>
-                  Jobs will be matched against this resume
+                  Вакансии будут сопоставляться с этим резюме
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -294,7 +294,7 @@ export function AutomationWizard({
           />
           {resumes.length === 0 && (
             <p className="text-sm text-muted-foreground">
-              No resumes found. Please create a resume in your profile first.
+              Резюме не найдены. Сначала создайте резюме в профиле.
             </p>
           )}
         </div>
@@ -307,7 +307,7 @@ export function AutomationWizard({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  Match Threshold: {field.value}%
+                  Порог совпадения: {field.value}%
                 </FormLabel>
                 <FormControl>
                   <Slider
@@ -319,8 +319,8 @@ export function AutomationWizard({
                   />
                 </FormControl>
                 <FormDescription>
-                  Only save jobs that match your resume above this percentage.
-                  Higher = fewer but better matches.
+                  Сохранять только вакансии с совпадением выше этого процента.
+                  Выше = меньше, но лучше совпадения.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -335,14 +335,14 @@ export function AutomationWizard({
             name="scheduleHour"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Daily Run Time</FormLabel>
+                <FormLabel>Время ежедневного запуска</FormLabel>
                 <Select
                   onValueChange={(val) => field.onChange(parseInt(val))}
                   value={field.value.toString()}
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select time" />
+                      <SelectValue placeholder="Выберите время" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -354,7 +354,7 @@ export function AutomationWizard({
                   </SelectContent>
                 </Select>
                 <FormDescription>
-                  The automation will run daily at this time (server timezone)
+                  Автоматизация будет запускаться ежедневно в это время (часовой пояс сервера)
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -366,33 +366,33 @@ export function AutomationWizard({
         <div className={step === 5 ? "space-y-4" : "hidden"}>
           <div className="rounded-lg border p-4 space-y-3">
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Name</span>
+              <span className="text-muted-foreground">Название</span>
               <span className="font-medium">{formValues.name || "-"}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Job Board</span>
+              <span className="text-muted-foreground">Площадка</span>
               <span className="font-medium capitalize">{formValues.jobBoard || "-"}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Keywords</span>
+              <span className="text-muted-foreground">Ключевые слова</span>
               <span className="font-medium">{formValues.keywords || "-"}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Location</span>
+              <span className="text-muted-foreground">Местоположение</span>
               <span className="font-medium">{formValues.location || "-"}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Resume</span>
-              <span className="font-medium">{selectedResume?.title || "Not selected"}</span>
+              <span className="text-muted-foreground">Резюме</span>
+              <span className="font-medium">{selectedResume?.title || "Не выбрано"}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Match Threshold</span>
+              <span className="text-muted-foreground">Порог совпадения</span>
               <span className="font-medium">{formValues.matchThreshold ?? 80}%</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Schedule</span>
+              <span className="text-muted-foreground">Расписание</span>
               <span className="font-medium">
-                Daily at {(formValues.scheduleHour ?? 8).toString().padStart(2, "0")}:00
+                Ежедневно в {(formValues.scheduleHour ?? 8).toString().padStart(2, "0")}:00
               </span>
             </div>
           </div>
@@ -406,10 +406,10 @@ export function AutomationWizard({
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>
-            {editAutomation ? "Edit Automation" : "Create Automation"}
+            {editAutomation ? "Редактировать автоматизацию" : "Создать автоматизацию"}
           </DialogTitle>
           <DialogDescription>
-            Step {step + 1} of {STEPS.length}: {STEPS[step].description}
+            Шаг {step + 1} из {STEPS.length}: {STEPS[step].description}
           </DialogDescription>
         </DialogHeader>
 
@@ -429,7 +429,7 @@ export function AutomationWizard({
             const firstError = Object.values(errors)[0];
             if (firstError?.message) {
               toast({
-                title: "Validation Error",
+                title: "Ошибка валидации",
                 description: firstError.message as string,
                 variant: "destructive",
               });
@@ -441,18 +441,18 @@ export function AutomationWizard({
               {step > 0 && (
                 <Button type="button" variant="outline" onClick={prevStep}>
                   <ChevronLeft className="h-4 w-4 mr-1" />
-                  Back
+                  Назад
                 </Button>
               )}
               {step < STEPS.length - 1 ? (
                 <Button type="button" onClick={nextStep} disabled={!canGoNext()}>
-                  Next
+                  Далее
                   <ChevronRight className="h-4 w-4 ml-1" />
                 </Button>
               ) : (
                 <Button type="submit" disabled={isSubmitting}>
                   {isSubmitting && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                  {editAutomation ? "Update" : "Create"} Automation
+                  {editAutomation ? "Обновить" : "Создать"} автоматизацию
                 </Button>
               )}
             </DialogFooter>

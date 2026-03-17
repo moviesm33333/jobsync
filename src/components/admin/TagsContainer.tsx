@@ -50,7 +50,7 @@ function TagsContainer() {
       <div className="col-span-3">
         <Card>
           <CardHeader className="flex-row justify-between items-center">
-            <CardTitle>Skills/Tags</CardTitle>
+            <CardTitle>Навыки/Теги</CardTitle>
             <div className="flex items-center">
               <div className="ml-auto flex items-center gap-2">
                 <AddTag reloadTags={reloadTags} />
@@ -66,7 +66,7 @@ function TagsContainer() {
                   <RecordsCount
                     count={tags.length}
                     total={totalTags}
-                    label="skills"
+                    label="навыков"
                   />
                   {totalTags > APP_CONSTANTS.RECORDS_PER_PAGE && (
                     <RecordsPerPageSelector
@@ -86,7 +86,7 @@ function TagsContainer() {
                   disabled={loading}
                   className="btn btn-primary"
                 >
-                  {loading ? "Loading..." : "Load More"}
+                  {loading ? "Загрузка..." : "Загрузить ещё"}
                 </Button>
               </div>
             )}

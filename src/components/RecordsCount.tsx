@@ -9,15 +9,15 @@ type RecordsCountProps = {
 export function RecordsCount({
   count,
   total,
-  label = "records",
+  label = "записей",
 }: RecordsCountProps) {
   return (
     <div className="text-xs text-muted-foreground">
-      Showing{" "}
+      Показано{" "}
       <strong>
-        1 to {count}
+        1 — {count}
       </strong>{" "}
-      of
+      из
       <strong> {total}</strong> {label}
     </div>
   );

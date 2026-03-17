@@ -65,8 +65,8 @@ const AiResumeReviewSection = ({ resume }: AiSectionProps) => {
     onError: (err) => {
       toast({
         variant: "destructive",
-        title: "Error!",
-        description: err.message || "Failed to get AI review",
+        title: "Ошибка!",
+        description: err.message || "Не удалось получить ИИ-анализ",
       });
     },
   });
@@ -75,8 +75,8 @@ const AiResumeReviewSection = ({ resume }: AiSectionProps) => {
     if (!resume || resume.ResumeSections?.length === 0) {
       toast({
         variant: "destructive",
-        title: "Error!",
-        description: "Resume content is required",
+        title: "Ошибка!",
+        description: "Необходимо заполнить содержание резюме",
       });
       return;
     }
@@ -123,7 +123,7 @@ const AiResumeReviewSection = ({ resume }: AiSectionProps) => {
           >
             <Sparkles className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Review
+              ИИ-анализ резюме
             </span>
           </Button>
         </SheetTrigger>
@@ -132,7 +132,7 @@ const AiResumeReviewSection = ({ resume }: AiSectionProps) => {
         <SheetContent className="overflow-y-scroll">
           <SheetHeader>
             <SheetTitle className="flex flex-row items-center">
-              AI Review ({selectedModel.provider})
+              ИИ-анализ ({selectedModel.provider})
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -177,7 +177,7 @@ const AiResumeReviewSection = ({ resume }: AiSectionProps) => {
             >
               <Sparkles className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Generate AI Review
+                Запустить ИИ-анализ
               </span>
             </Button>
           </div>
@@ -185,7 +185,7 @@ const AiResumeReviewSection = ({ resume }: AiSectionProps) => {
           {isLoading && !hasContent ? (
             <div className="flex items-center flex-col mt-4">
               <Loading />
-              <div className="mt-2">Analyzing resume...</div>
+              <div className="mt-2">Анализ резюме...</div>
             </div>
           ) : (
             <AiResumeReviewResponseContent

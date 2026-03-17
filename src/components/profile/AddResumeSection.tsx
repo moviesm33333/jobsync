@@ -104,7 +104,7 @@ const AddResumeSection = forwardRef<AddResumeSectionRef, AddResumeSectionProps>(
             >
               <PlusCircle className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Add Section
+                Добавить раздел
               </span>
             </Button>
           </DropdownMenuTrigger>
@@ -115,26 +115,26 @@ const AddResumeSection = forwardRef<AddResumeSectionRef, AddResumeSectionProps>(
                 onClick={openContactInfoDialog}
                 disabled={!!resume?.ContactInfo}
               >
-                Add Contact Info
+                Добавить контактные данные
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer"
                 onClick={openSummaryDialog}
                 disabled={!!summarySection}
               >
-                Add Summary
+                Добавить «О себе»
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer"
                 onClick={openExperienceDialog}
               >
-                Add Experience
+                Добавить опыт работы
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer"
                 onClick={openEducationDialog}
               >
-                Add Education
+                Добавить образование
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>

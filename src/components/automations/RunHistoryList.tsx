@@ -53,9 +53,9 @@ export function RunHistoryList({ runs }: RunHistoryListProps) {
       <Card>
         <CardContent className="flex flex-col items-center justify-center py-12">
           <History className="h-12 w-12 text-muted-foreground mb-4" />
-          <h3 className="text-lg font-medium">No runs yet</h3>
+          <h3 className="text-lg font-medium">Запусков пока нет</h3>
           <p className="text-muted-foreground text-center mt-2">
-            Run history will appear here once the automation runs.
+            История запусков появится здесь после запуска автоматизации.
           </p>
         </CardContent>
       </Card>
@@ -65,24 +65,24 @@ export function RunHistoryList({ runs }: RunHistoryListProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Run History</CardTitle>
+        <CardTitle>История запусков</CardTitle>
         <CardDescription>
-          Recent automation runs and their results
+          Последние запуски автоматизации и их результаты
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Status</TableHead>
-              <TableHead>Started</TableHead>
-              <TableHead>Duration</TableHead>
-              <TableHead className="text-center">Searched</TableHead>
-              <TableHead className="text-center">New</TableHead>
-              <TableHead className="text-center">Processed</TableHead>
-              <TableHead className="text-center">Matched</TableHead>
-              <TableHead className="text-center">Saved</TableHead>
-              <TableHead>Error</TableHead>
+              <TableHead>Статус</TableHead>
+              <TableHead>Начало</TableHead>
+              <TableHead>Длительность</TableHead>
+              <TableHead className="text-center">Найдено</TableHead>
+              <TableHead className="text-center">Новых</TableHead>
+              <TableHead className="text-center">Обработано</TableHead>
+              <TableHead className="text-center">Совпало</TableHead>
+              <TableHead className="text-center">Сохранено</TableHead>
+              <TableHead>Ошибка</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

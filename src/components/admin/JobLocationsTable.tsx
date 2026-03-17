@@ -41,9 +41,9 @@ function JobLocationsTable({
     if (location._count?.jobsApplied! > 0) {
       setAlert({
         openState: true,
-        title: "Applied jobs exist!",
+        title: "Есть связанные отклики!",
         description:
-          "Associated jobs applied must be 0 to be able to delete this job location",
+          "Количество связанных откликов должно быть 0, чтобы удалить этот город",
         deleteAction: false,
       });
     } else {
@@ -60,13 +60,13 @@ function JobLocationsTable({
       if (success) {
         toast({
           variant: "success",
-          description: `Job location has been deleted successfully`,
+          description: `Город успешно удалён`,
         });
         reloadJobLocations();
       } else {
         toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: message,
         });
       }
@@ -77,10 +77,10 @@ function JobLocationsTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Location</TableHead>
-            <TableHead className="hidden sm:table-cell">Value</TableHead>
-            <TableHead>Jobs Applied</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead>Город</TableHead>
+            <TableHead className="hidden sm:table-cell">Значение</TableHead>
+            <TableHead>Откликов</TableHead>
+            <TableHead>Действия</TableHead>
             <TableHead>
               <span className="sr-only">Actions</span>
             </TableHead>
@@ -106,13 +106,13 @@ function JobLocationsTable({
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuLabel>Действия</DropdownMenuLabel>
                       <DropdownMenuItem
                         className="text-red-600 cursor-pointer"
                         onClick={() => onDeleteJobLocation(location)}
                       >
                         <Trash className="mr-2 h-4 w-4" />
-                        Delete
+                        Удалить
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>

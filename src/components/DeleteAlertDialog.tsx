@@ -26,7 +26,7 @@ export function DeleteAlertDialog({
   onOpenChange,
   onDelete,
   alertTitle,
-  alertDescription = "This action cannot be undone. This will permanently delete and remove data from server.",
+  alertDescription = "Это действие нельзя отменить. Данные будут безвозвратно удалены.",
   deleteAction = true,
 }: DeleteAlertDialogProps) {
   return (
@@ -34,18 +34,18 @@ export function DeleteAlertDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {alertTitle ?? `Are you sure you want to delete this ${pageTitle}?`}
+            {alertTitle ?? `Вы уверены, что хотите удалить?`}
           </AlertDialogTitle>
           <AlertDialogDescription>{alertDescription}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>Отмена</AlertDialogCancel>
           {deleteAction && (
             <AlertDialogAction
               className={buttonVariants({ variant: "destructive" })}
               onClick={onDelete}
             >
-              Delete
+              Удалить
             </AlertDialogAction>
           )}
         </AlertDialogFooter>

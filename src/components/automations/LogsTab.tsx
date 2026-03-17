@@ -124,11 +124,11 @@ export function LogsTab({ automationId, runKey }: LogsTabProps) {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <CardTitle>Automation Logs</CardTitle>
+            <CardTitle>Журнал автоматизации</CardTitle>
             {logData.isRunning && (
               <Badge variant="default" className="gap-1">
                 <Loader2 className="h-3 w-3 animate-spin" />
-                Running
+                Выполняется
               </Badge>
             )}
           </div>
@@ -139,7 +139,7 @@ export function LogsTab({ automationId, runKey }: LogsTabProps) {
                 variant={filter === "all" ? "default" : "outline"}
                 onClick={() => setFilter("all")}
               >
-                All
+                Все
               </Button>
               <Button
                 size="sm"
@@ -182,11 +182,11 @@ export function LogsTab({ automationId, runKey }: LogsTabProps) {
         </div>
         {logData.startedAt && (
           <p className="text-sm text-muted-foreground">
-            Started: {format(new Date(logData.startedAt), "MMM d, h:mm:ss a")}
+            Начало: {format(new Date(logData.startedAt), "MMM d, h:mm:ss a")}
             {logData.completedAt && (
               <>
                 {" "}
-                • Completed:{" "}
+                • Завершено:{" "}
                 {format(new Date(logData.completedAt), "MMM d, h:mm:ss a")}
               </>
             )}
@@ -199,8 +199,8 @@ export function LogsTab({ automationId, runKey }: LogsTabProps) {
             <div className="flex items-center justify-center h-full text-muted-foreground">
               <p>
                 {logData.logs.length === 0
-                  ? "No logs yet. Run the automation to see logs."
-                  : "No logs match the selected filter."}
+                  ? "Журнал пуст. Запустите автоматизацию, чтобы увидеть записи."
+                  : "Нет записей, соответствующих выбранному фильтру."}
               </p>
             </div>
           ) : (

@@ -51,12 +51,12 @@ export function DiscoveredJobDetail({
     setLoadingAction(null);
 
     if (result.success) {
-      toast({ title: "Job accepted", description: "The job has been added to your tracked jobs." });
+      toast({ title: "Вакансия принята", description: "Вакансия добавлена в отслеживаемые." });
       onOpenChange(false);
       onRefresh();
     } else {
       toast({
-        title: "Error",
+        title: "Ошибка!",
         description: result.message,
         variant: "destructive",
       });
@@ -69,12 +69,12 @@ export function DiscoveredJobDetail({
     setLoadingAction(null);
 
     if (result.success) {
-      toast({ title: "Job dismissed" });
+      toast({ title: "Вакансия отклонена" });
       onOpenChange(false);
       onRefresh();
     } else {
       toast({
-        title: "Error",
+        title: "Ошибка!",
         description: result.message,
         variant: "destructive",
       });
@@ -114,7 +114,7 @@ export function DiscoveredJobDetail({
           <div className="space-y-4 pr-4">
             <div className="flex items-center gap-4">
               <Badge variant="default" className="text-lg px-3 py-1">
-                {job.matchScore}% Match
+                {job.matchScore}% совпадение
               </Badge>
               <Badge variant="outline">{job.discoveryStatus}</Badge>
               {job.automation && (
@@ -125,7 +125,7 @@ export function DiscoveredJobDetail({
             </div>
 
             <div>
-              <h4 className="font-medium mb-2">Description</h4>
+              <h4 className="font-medium mb-2">Описание</h4>
               <p className="text-sm text-muted-foreground whitespace-pre-wrap">
                 {job.description}
               </p>
@@ -147,7 +147,7 @@ export function DiscoveredJobDetail({
               ) : (
                 <X className="h-4 w-4 mr-2" />
               )}
-              Dismiss
+              Отклонить
             </Button>
             <Button onClick={handleAccept} disabled={loadingAction !== null}>
               {loadingAction === "accept" ? (
@@ -155,7 +155,7 @@ export function DiscoveredJobDetail({
               ) : (
                 <Check className="h-4 w-4 mr-2" />
               )}
-              Accept
+              Принять
             </Button>
           </DialogFooter>
         )}

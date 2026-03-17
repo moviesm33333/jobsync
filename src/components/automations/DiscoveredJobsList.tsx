@@ -51,11 +51,11 @@ export function DiscoveredJobsList({
     setLoadingAction(null);
 
     if (result.success) {
-      toast({ title: "Job accepted", description: "The job has been added to your tracked jobs." });
+      toast({ title: "Вакансия принята", description: "Вакансия добавлена в отслеживаемые." });
       onRefresh();
     } else {
       toast({
-        title: "Error",
+        title: "Ошибка!",
         description: result.message,
         variant: "destructive",
       });
@@ -68,11 +68,11 @@ export function DiscoveredJobsList({
     setLoadingAction(null);
 
     if (result.success) {
-      toast({ title: "Job dismissed" });
+      toast({ title: "Вакансия отклонена" });
       onRefresh();
     } else {
       toast({
-        title: "Error",
+        title: "Ошибка!",
         description: result.message,
         variant: "destructive",
       });
@@ -90,9 +90,9 @@ export function DiscoveredJobsList({
       <Card>
         <CardContent className="flex flex-col items-center justify-center py-12">
           <Briefcase className="h-12 w-12 text-muted-foreground mb-4" />
-          <h3 className="text-lg font-medium">No discovered jobs</h3>
+          <h3 className="text-lg font-medium">Найденных вакансий нет</h3>
           <p className="text-muted-foreground text-center mt-2">
-            Jobs discovered by automations will appear here.
+            Вакансии, найденные автоматизациями, появятся здесь.
           </p>
         </CardContent>
       </Card>
@@ -102,22 +102,22 @@ export function DiscoveredJobsList({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Discovered Jobs</CardTitle>
+        <CardTitle>Найденные вакансии</CardTitle>
         <CardDescription>
-          Jobs found by your automations that match your criteria
+          Вакансии, найденные автоматизациями и соответствующие вашим критериям
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Job</TableHead>
-              <TableHead>Company</TableHead>
-              <TableHead>Location</TableHead>
-              <TableHead className="text-center">Match</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Discovered</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              <TableHead>Вакансия</TableHead>
+              <TableHead>Компания</TableHead>
+              <TableHead>Местоположение</TableHead>
+              <TableHead className="text-center">Совпадение</TableHead>
+              <TableHead>Статус</TableHead>
+              <TableHead>Найдена</TableHead>
+              <TableHead className="text-right">Действия</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

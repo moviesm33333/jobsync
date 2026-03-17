@@ -59,7 +59,7 @@ export const AiJobMatchResponseContent = ({
 
       {summary && (
         <div>
-          <SectionHeader title="Summary" />
+          <SectionHeader title="О себе" />
           <SheetDescription>{summary}</SheetDescription>
         </div>
       )}
@@ -68,7 +68,7 @@ export const AiJobMatchResponseContent = ({
         <>
           {requirements.met && requirements.met.length > 0 && (
             <>
-              <SectionHeader title="Requirements Met" />
+              <SectionHeader title="Выполненные требования" />
               <ul className="text-sm text-muted-foreground">
                 {requirements.met.map(
                   (req, i) =>
@@ -83,14 +83,14 @@ export const AiJobMatchResponseContent = ({
           )}
           {requirements.partial && requirements.partial.length > 0 && (
             <>
-              <SectionHeader title="Partial Matches" />
+              <SectionHeader title="Частичные совпадения" />
               <ul className="text-sm text-muted-foreground">
                 {requirements.partial.map(
                   (req, i) =>
                     req && (
                       <ListItem key={i}>
                         <strong>{req.requirement}</strong>: {req.evidence}{" "}
-                        <span className="text-amber-600">(Gap: {req.gap})</span>
+                        <span className="text-amber-600">(Пробел: {req.gap})</span>
                       </ListItem>
                     ),
                 )}
@@ -99,7 +99,7 @@ export const AiJobMatchResponseContent = ({
           )}
           {requirements.missing && requirements.missing.length > 0 && (
             <>
-              <SectionHeader title="Missing Requirements" />
+              <SectionHeader title="Отсутствующие требования" />
               <ul className="text-sm text-muted-foreground">
                 {requirements.missing.map(
                   (req, i) =>
@@ -118,7 +118,7 @@ export const AiJobMatchResponseContent = ({
                         </Badge>
                         <br />
                         <span className="text-muted-foreground text-sm">
-                          Suggestion: {req.suggestion}
+                          Рекомендация: {req.suggestion}
                         </span>
                       </ListItem>
                     ),
@@ -131,29 +131,29 @@ export const AiJobMatchResponseContent = ({
 
       {skills && (
         <>
-          <SectionHeader title="Skills Analysis" />
+          <SectionHeader title="Анализ навыков" />
           <div className="text-sm text-muted-foreground">
             {skills.matched && skills.matched.length > 0 && (
               <div className="mb-2">
-                <span className="font-medium">Matched: </span>
+                <span className="font-medium">Совпадают: </span>
                 {skills.matched.filter(Boolean).join(", ")}
               </div>
             )}
             {skills.transferable && skills.transferable.length > 0 && (
               <div className="mb-2">
-                <span className="font-medium">Transferable: </span>
+                <span className="font-medium">Применимые: </span>
                 {skills.transferable.filter(Boolean).join(", ")}
               </div>
             )}
             {skills.missing && skills.missing.length > 0 && (
               <div className="mb-2 text-amber-600">
-                <span className="font-medium">Missing: </span>
+                <span className="font-medium">Отсутствуют: </span>
                 {skills.missing.filter(Boolean).join(", ")}
               </div>
             )}
             {skills.bonus && skills.bonus.length > 0 && (
               <div className="mb-2 text-green-600">
-                <span className="font-medium">Bonus Skills: </span>
+                <span className="font-medium">Бонусные навыки: </span>
                 {skills.bonus.filter(Boolean).join(", ")}
               </div>
             )}
@@ -163,29 +163,29 @@ export const AiJobMatchResponseContent = ({
 
       {experience && (
         <>
-          <SectionHeader title="Experience" />
+          <SectionHeader title="Опыт работы" />
           <div className="text-sm text-muted-foreground space-y-1">
             {experience.levelMatch && (
               <div>
-                <span className="font-medium">Level: </span>
+                <span className="font-medium">Уровень: </span>
                 <span className="capitalize">{experience.levelMatch}</span>
               </div>
             )}
             {experience.yearsRequired !== undefined && (
               <div>
-                <span className="font-medium">Years Required: </span>
-                {experience.yearsRequired ?? "Not specified"}
+                <span className="font-medium">Требуемый стаж: </span>
+                {experience.yearsRequired ?? "Не указано"}
               </div>
             )}
             {experience.yearsApparent !== undefined && (
               <div>
-                <span className="font-medium">Your Experience: </span>
-                {experience.yearsApparent} years
+                <span className="font-medium">Ваш опыт: </span>
+                {experience.yearsApparent} лет
               </div>
             )}
             {experience.relevance && (
               <div>
-                <span className="font-medium">Relevance: </span>
+                <span className="font-medium">Релевантность: </span>
                 <span className="capitalize">{experience.relevance}</span>
               </div>
             )}
@@ -195,23 +195,23 @@ export const AiJobMatchResponseContent = ({
 
       {keywords && (
         <>
-          <SectionHeader title="Keywords" />
+          <SectionHeader title="Ключевые слова" />
           <div className="text-sm text-muted-foreground">
             {keywords.matched && keywords.matched.length > 0 && (
               <div className="mb-2">
-                <span className="font-medium">Found: </span>
+                <span className="font-medium">Найдены: </span>
                 {keywords.matched.filter(Boolean).join(", ")}
               </div>
             )}
             {keywords.missing && keywords.missing.length > 0 && (
               <div className="mb-2 text-amber-600">
-                <span className="font-medium">Missing: </span>
+                <span className="font-medium">Отсутствуют: </span>
                 {keywords.missing.filter(Boolean).join(", ")}
               </div>
             )}
             {keywords.addToResume && keywords.addToResume.length > 0 && (
               <div className="mb-2">
-                <span className="font-medium">Add to Resume: </span>
+                <span className="font-medium">Добавить в резюме: </span>
                 {keywords.addToResume.filter(Boolean).join(", ")}
               </div>
             )}
@@ -221,7 +221,7 @@ export const AiJobMatchResponseContent = ({
 
       {dealBreakers && dealBreakers.length > 0 && (
         <>
-          <SectionHeader title="Deal Breakers" />
+          <SectionHeader title="Критические несоответствия" />
           <ul className="text-sm text-red-600">
             {dealBreakers.map(
               (item, i) => item && <ListItem key={i}>{item}</ListItem>,
@@ -232,7 +232,7 @@ export const AiJobMatchResponseContent = ({
 
       {tailoringTips && tailoringTips.length > 0 && (
         <>
-          <SectionHeader title="Tailoring Tips" />
+          <SectionHeader title="Советы по адаптации" />
           <ul className="text-sm text-muted-foreground">
             {tailoringTips.map(
               (tip, i) =>
@@ -249,7 +249,7 @@ export const AiJobMatchResponseContent = ({
       {isStreaming && (
         <div className="flex items-center gap-2 text-muted-foreground text-sm mt-4 animate-pulse">
           <div className="h-2 w-2 bg-primary rounded-full"></div>
-          <span>Streaming response...</span>
+          <span>Получение ответа...</span>
         </div>
       )}
     </>

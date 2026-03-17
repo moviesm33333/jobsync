@@ -19,7 +19,7 @@ export function RecordsPerPageSelector({
 }: RecordsPerPageSelectorProps) {
   return (
     <div className="flex items-center gap-2">
-      <span className="text-xs text-muted-foreground">Records per page</span>
+      <span className="text-xs text-muted-foreground">Записей на странице</span>
       <Select
         value={String(value)}
         onValueChange={(val) => onChange(Number(val))}

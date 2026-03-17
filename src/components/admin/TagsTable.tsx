@@ -48,8 +48,8 @@ function TagsTable({ tags, reloadTags }: TagsTableProps) {
 
       setAlert({
         openState: true,
-        title: "Skill is in use!",
-        description: `This skill is linked to ${links} and cannot be deleted.`,
+        title: "Навык используется!",
+        description: `Этот навык связан с ${links} и не может быть удалён.`,
         deleteAction: false,
       });
     } else {
@@ -67,13 +67,13 @@ function TagsTable({ tags, reloadTags }: TagsTableProps) {
     if (success) {
       toast({
         variant: "success",
-        description: "Skill tag has been deleted successfully",
+        description: "Навык успешно удалён",
       });
       reloadTags();
     } else {
       toast({
         variant: "destructive",
-        title: "Error!",
+        title: "Ошибка!",
         description: message,
       });
     }
@@ -84,11 +84,11 @@ function TagsTable({ tags, reloadTags }: TagsTableProps) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Skill Label</TableHead>
-            <TableHead className="hidden sm:table-cell">Value</TableHead>
-            <TableHead># Jobs</TableHead>
-            <TableHead># Questions</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead>Навык</TableHead>
+            <TableHead className="hidden sm:table-cell">Значение</TableHead>
+            <TableHead># Вакансий</TableHead>
+            <TableHead># Вопросов</TableHead>
+            <TableHead>Действия</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -113,13 +113,13 @@ function TagsTable({ tags, reloadTags }: TagsTableProps) {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                    <DropdownMenuLabel>Действия</DropdownMenuLabel>
                     <DropdownMenuItem
                       className="text-red-600 cursor-pointer"
                       onClick={() => onDeleteTag(tag)}
                     >
                       <Trash className="mr-2 h-4 w-4" />
-                      Delete
+                      Удалить
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

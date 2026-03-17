@@ -63,11 +63,11 @@ export function AutomationList({
     setLoadingAction(null);
 
     if (result.success) {
-      toast({ title: "Automation paused" });
+      toast({ title: "Автоматизация приостановлена" });
       onRefresh();
     } else {
       toast({
-        title: "Error",
+        title: "Ошибка!",
         description: result.message,
         variant: "destructive",
       });
@@ -80,11 +80,11 @@ export function AutomationList({
     setLoadingAction(null);
 
     if (result.success) {
-      toast({ title: "Automation resumed" });
+      toast({ title: "Автоматизация возобновлена" });
       onRefresh();
     } else {
       toast({
-        title: "Error",
+        title: "Ошибка!",
         description: result.message,
         variant: "destructive",
       });
@@ -100,11 +100,11 @@ export function AutomationList({
     setDeleteId(null);
 
     if (result.success) {
-      toast({ title: "Automation deleted" });
+      toast({ title: "Автоматизация удалена" });
       onRefresh();
     } else {
       toast({
-        title: "Error",
+        title: "Ошибка!",
         description: result.message,
         variant: "destructive",
       });
@@ -116,9 +116,9 @@ export function AutomationList({
       <Card>
         <CardContent className="flex flex-col items-center justify-center py-12">
           <Zap className="h-12 w-12 text-muted-foreground mb-4" />
-          <h3 className="text-lg font-medium">No automations yet</h3>
+          <h3 className="text-lg font-medium">Автоматизаций пока нет</h3>
           <p className="text-muted-foreground text-center mt-2">
-            Create your first automation to start discovering jobs automatically.
+            Создайте первую автоматизацию для автоматического поиска вакансий.
           </p>
         </CardContent>
       </Card>
@@ -158,22 +158,22 @@ export function AutomationList({
                 {resumeMissing && (
                   <div className="flex items-center gap-2 text-amber-600 text-sm">
                     <AlertTriangle className="h-4 w-4" />
-                    <span>Resume missing - select a new one</span>
+                    <span>Резюме отсутствует — выберите новое</span>
                   </div>
                 )}
 
                 <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
                   <span>
-                    <span className="font-medium text-foreground">Keywords:</span>{" "}
+                    <span className="font-medium text-foreground">Ключевые слова:</span>{" "}
                     {automation.keywords}
                   </span>
                   <span>
-                    <span className="font-medium text-foreground">Location:</span>{" "}
+                    <span className="font-medium text-foreground">Местоположение:</span>{" "}
                     {automation.location}
                   </span>
                   {automation.resume && (
                     <span>
-                      <span className="font-medium text-foreground">Resume:</span>{" "}
+                      <span className="font-medium text-foreground">Резюме:</span>{" "}
                       {automation.resume.title}
                     </span>
                   )}
@@ -183,12 +183,12 @@ export function AutomationList({
                   <div className="flex items-center gap-1">
                     <Clock className="h-4 w-4" />
                     <span>
-                      {automation.scheduleHour.toString().padStart(2, "0")}:00 daily
+                      {automation.scheduleHour.toString().padStart(2, "0")}:00 ежедневно
                     </span>
                   </div>
                   <div className="flex items-center gap-1">
                     <FileText className="h-4 w-4" />
-                    <span>{automation.matchThreshold}% threshold</span>
+                    <span>{automation.matchThreshold}% порог</span>
                   </div>
                   {automation.nextRunAt && automation.status === "active" && (
                     <span className="text-xs">
@@ -213,7 +213,7 @@ export function AutomationList({
                   {automation.status === "active" ? (
                     <DropdownMenuItem onClick={() => handlePause(automation.id)}>
                       <Pause className="h-4 w-4 mr-2" />
-                      Pause
+                      Приостановить
                     </DropdownMenuItem>
                   ) : (
                     <DropdownMenuItem
@@ -221,12 +221,12 @@ export function AutomationList({
                       disabled={resumeMissing}
                     >
                       <Play className="h-4 w-4 mr-2" />
-                      Resume
+                      Возобновить
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuItem onClick={() => onEdit(automation)}>
                     <Pencil className="h-4 w-4 mr-2" />
-                    Edit
+                    Редактировать
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
@@ -234,7 +234,7 @@ export function AutomationList({
                     onClick={() => setDeleteId(automation.id)}
                   >
                     <Trash2 className="h-4 w-4 mr-2" />
-                    Delete
+                    Удалить
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -246,20 +246,20 @@ export function AutomationList({
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Automation</AlertDialogTitle>
+            <AlertDialogTitle>Удалить автоматизацию</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this automation? This action cannot be
-              undone. Discovered jobs will remain but lose their automation reference.
+              Вы уверены, что хотите удалить эту автоматизацию? Это действие нельзя
+              отменить. Найденные вакансии сохранятся, но потеряют привязку к автоматизации.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isDeleting}>Отмена</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeleting ? "Deleting..." : "Delete"}
+              {isDeleting ? "Удаление..." : "Удалить"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

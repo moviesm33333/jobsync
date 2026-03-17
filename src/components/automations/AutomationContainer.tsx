@@ -35,8 +35,8 @@ export function AutomationContainer({ resumes }: AutomationContainerProps) {
       setAutomations(result.data);
     } else {
       toast({
-        title: "Error",
-        description: result.message || "Failed to load automations",
+        title: "Ошибка!",
+        description: result.message || "Не удалось загрузить автоматизации",
         variant: "destructive",
       });
     }
@@ -67,7 +67,7 @@ export function AutomationContainer({ resumes }: AutomationContainerProps) {
     <>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>Job Discovery Automations</CardTitle>
+          <CardTitle>Автоматический поиск вакансий</CardTitle>
           <div className="flex gap-2">
             <Button variant="outline" size="icon" onClick={loadAutomations}>
               <RefreshCw className="h-4 w-4" />
@@ -78,16 +78,16 @@ export function AutomationContainer({ resumes }: AutomationContainerProps) {
               disabled={resumes.length === 0}
             >
               <Plus className="h-4 w-4 mr-2" />
-              Create Automation
+              Создать автоматизацию
             </Button>
           </div>
         </CardHeader>
         <CardContent>
           {resumes.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
-              <p>You need to create a resume before setting up automations.</p>
+              <p>Сначала создайте резюме, чтобы настроить автоматизацию.</p>
               <p className="text-sm mt-2">
-                Go to your Profile to create a resume first.
+                Перейдите в Профиль и создайте резюме.
               </p>
             </div>
           ) : loading ? (
