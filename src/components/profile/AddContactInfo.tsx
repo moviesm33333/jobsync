@@ -90,9 +90,9 @@ function AddContactInfo({
         setDialogOpen(false);
         toast({
           variant: "success",
-          description: `Contact Info has been ${
-            contactInfoToEdit ? "updated" : "created"
-          } successfully`,
+          description: `Контактные данные успешно ${
+            contactInfoToEdit ? "обновлены" : "добавлены"
+          }`,
         });
       }
     });
@@ -118,7 +118,7 @@ function AddContactInfo({
                 name="firstName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>First Name</FormLabel>
+                    <FormLabel>Имя</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -135,7 +135,7 @@ function AddContactInfo({
                 name="lastName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Last Name</FormLabel>
+                    <FormLabel>Фамилия</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -152,7 +152,7 @@ function AddContactInfo({
                 name="headline"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Headline</FormLabel>
+                    <FormLabel>Заголовок</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -169,7 +169,7 @@ function AddContactInfo({
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Эл. почта</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -186,7 +186,7 @@ function AddContactInfo({
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone</FormLabel>
+                    <FormLabel>Телефон</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -203,7 +203,7 @@ function AddContactInfo({
                 name="address"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Address</FormLabel>
+                    <FormLabel>Адрес</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -223,11 +223,11 @@ function AddContactInfo({
                     className="mt-2 md:mt-0 w-full"
                     onClick={closeDialog}
                   >
-                    Cancel
+                    Отмена
                   </Button>
                 </div>
                 <Button type="submit" disabled={!formState.isDirty}>
-                  Save
+                  Сохранить
                   {isPending && <Loader className="h-4 w-4 shrink-0 spinner" />}
                 </Button>
               </DialogFooter>

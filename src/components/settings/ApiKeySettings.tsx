@@ -53,7 +53,7 @@ const PROVIDERS: ProviderConfig[] = [
     name: "OpenAI",
     placeholder: "sk-...",
     inputType: "password",
-    description: "Used for GPT models in resume review and job matching",
+    description: "Для моделей GPT при анализе резюме и подборе вакансий",
     sensitive: true,
   },
   {
@@ -61,7 +61,7 @@ const PROVIDERS: ProviderConfig[] = [
     name: "DeepSeek",
     placeholder: "sk-...",
     inputType: "password",
-    description: "Used for DeepSeek models in resume review and job matching",
+    description: "Для моделей DeepSeek при анализе резюме и подборе вакансий",
     sensitive: true,
   },
   {
@@ -69,7 +69,7 @@ const PROVIDERS: ProviderConfig[] = [
     name: "RapidAPI",
     placeholder: "Your RapidAPI key",
     inputType: "password",
-    description: "Used for JSearch job discovery automations",
+    description: "Для автоматического поиска вакансий через JSearch",
     sensitive: true,
   },
   {
@@ -77,7 +77,7 @@ const PROVIDERS: ProviderConfig[] = [
     name: "Ollama",
     placeholder: DEFAULT_OLLAMA_PLACEHOLDER,
     inputType: "text",
-    description: "Base URL for your Ollama instance",
+    description: "Адрес вашего сервера Ollama",
     sensitive: false,
   },
 ];
@@ -132,8 +132,8 @@ function ApiKeySettings() {
       if (!verifyData.success) {
         toast({
           variant: "destructive",
-          title: "Verification failed",
-          description: verifyData.error || "Could not verify the key",
+          title: "Ошибка проверки",
+          description: verifyData.error || "Не удалось проверить ключ",
         });
         return;
       }
@@ -147,8 +147,8 @@ function ApiKeySettings() {
       if (saveResult.success) {
         toast({
           variant: "success",
-          title: "API key saved",
-          description: `${PROVIDERS.find((p) => p.id === provider)?.name} key verified and saved.`,
+          title: "API-ключ сохранён",
+          description: `${PROVIDERS.find((p) => p.id === provider)?.name} проверен и сохранён.`,
         });
         setEditingProvider(null);
         setInputValue("");
@@ -156,16 +156,16 @@ function ApiKeySettings() {
       } else {
         toast({
           variant: "destructive",
-          title: "Save failed",
-          description: saveResult.message || "Failed to save API key",
+          title: "Не удалось сохранить",
+          description: saveResult.message || "Не удалось сохранить API-ключ",
         });
       }
     } catch (error) {
       console.error("Error saving API key:", error);
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "An unexpected error occurred",
+        title: "Ошибка",
+        description: "Произошла непредвиденная ошибка",
       });
     } finally {
       setVerifying(false);
@@ -179,15 +179,15 @@ function ApiKeySettings() {
       if (result.success) {
         toast({
           variant: "success",
-          title: "API key deleted",
-          description: `${PROVIDERS.find((p) => p.id === provider)?.name} key removed.`,
+          title: "API-ключ удалён",
+          description: `${PROVIDERS.find((p) => p.id === provider)?.name} ключ удалён.`,
         });
         await fetchKeys();
       } else {
         toast({
           variant: "destructive",
-          title: "Error",
-          description: result.message || "Failed to delete API key",
+          title: "Ошибка",
+          description: result.message || "Не удалось удалить API-ключ",
         });
       }
     } catch (error) {
@@ -206,14 +206,14 @@ function ApiKeySettings() {
     return (
       <div className="space-y-4">
         <div>
-          <h3 className="text-lg font-medium">API Keys</h3>
+          <h3 className="text-lg font-medium">API-ключи</h3>
           <p className="text-sm text-muted-foreground">
-            Manage your API keys for AI providers and external services.
+            Управление API-ключами для провайдеров ИИ и внешних сервисов.
           </p>
         </div>
         <div className="flex items-center gap-2">
           <Loader2 className="h-4 w-4 animate-spin" />
-          <span>Loading keys...</span>
+          <span>Загрузка ключей...</span>
         </div>
       </div>
     );
@@ -222,10 +222,10 @@ function ApiKeySettings() {
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="text-lg font-medium">API Keys</h3>
+        <h3 className="text-lg font-medium">API-ключи</h3>
         <p className="text-sm text-muted-foreground">
-          Manage your API keys for AI providers and external services. Keys are
-          encrypted and stored securely.
+          Управление API-ключами для провайдеров ИИ и внешних сервисов. Ключи
+          шифруются и хранятся безопасно.
         </p>
       </div>
 
@@ -257,7 +257,7 @@ function ApiKeySettings() {
                         : existingKey.displayValue || existingKey.last4}
                     </Badge>
                   ) : (
-                    <Badge variant="secondary">Not configured</Badge>
+                    <Badge variant="secondary">Не настроен</Badge>
                   )}
                 </div>
               </CardHeader>
@@ -290,14 +290,14 @@ function ApiKeySettings() {
                         {verifying && (
                           <Loader2 className="mr-2 h-3 w-3 animate-spin" />
                         )}
-                        Verify & Save
+                        Проверить и сохранить
                       </Button>
                       <Button
                         size="sm"
                         variant="outline"
                         onClick={handleCancel}
                       >
-                        Cancel
+                        Отмена
                       </Button>
                     </div>
                   </div>
@@ -312,7 +312,7 @@ function ApiKeySettings() {
                       }}
                     >
                       <Plus className="h-3 w-3 mr-1" />
-                      {existingKey ? "Update Key" : "Add Key"}
+                      {existingKey ? "Обновить ключ" : "Добавить ключ"}
                     </Button>
                     {existingKey && (
                       <AlertDialog>
@@ -332,19 +332,19 @@ function ApiKeySettings() {
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>Delete API Key</AlertDialogTitle>
+                            <AlertDialogTitle>Удалить API-ключ</AlertDialogTitle>
                             <AlertDialogDescription>
-                              Are you sure you want to delete your{" "}
-                              {provider.name} key? The system will fall back to
-                              the server environment variable if available.
+                              Вы уверены, что хотите удалить ключ{" "}
+                              {provider.name}? Система будет использовать
+                              переменную окружения сервера, если она доступна.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogCancel>Отмена</AlertDialogCancel>
                             <AlertDialogAction
                               onClick={() => handleDelete(provider.id)}
                             >
-                              Delete
+                              Удалить
                             </AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>

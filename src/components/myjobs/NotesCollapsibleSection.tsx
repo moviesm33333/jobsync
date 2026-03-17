@@ -86,7 +86,7 @@ export function NotesCollapsibleSection({
       } else {
         toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: result.message,
         });
       }
@@ -105,14 +105,14 @@ export function NotesCollapsibleSection({
       if (result.success) {
         toast({
           variant: "success",
-          description: "Note deleted successfully",
+          description: "Заметка удалена",
         });
         setDeleteConfirmId(null);
         loadNotes();
       } else {
         toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: result.message,
         });
       }
@@ -122,7 +122,7 @@ export function NotesCollapsibleSection({
   const inlineEditor = (
     <div className="border rounded-lg p-4 space-y-3">
       <p className="text-sm font-medium">
-        {editingNote ? "Edit Note" : "Add Note"}
+        {editingNote ? "Редактировать заметку" : "Добавить заметку"}
       </p>
       <TiptapEditor
         field={
@@ -142,7 +142,7 @@ export function NotesCollapsibleSection({
           size="sm"
           onClick={handleCancel}
         >
-          Cancel
+          Отмена
         </Button>
         <Button
           type="button"
@@ -150,7 +150,7 @@ export function NotesCollapsibleSection({
           onClick={handleSave}
           disabled={isPending || !editorContent.trim()}
         >
-          Save
+          Сохранить
           {isPending && <Loader className="ml-2 h-4 w-4 shrink-0 spinner" />}
         </Button>
       </div>
@@ -166,7 +166,7 @@ export function NotesCollapsibleSection({
       <div className="flex items-center gap-2">
         <CollapsibleTrigger className="flex items-center gap-2 hover:opacity-80">
           <StickyNote className="h-4 w-4" />
-          <span className="text-sm font-medium">Notes</span>
+          <span className="text-sm font-medium">Заметки</span>
           {notes.length > 0 && (
             <Badge variant="secondary" className="text-xs">
               {notes.length}
@@ -184,13 +184,13 @@ export function NotesCollapsibleSection({
           onClick={handleAddNote}
         >
           <PlusCircle className="h-3.5 w-3.5" />
-          New Note
+          Новая заметка
         </Button>
       </div>
       <CollapsibleContent className="mt-3 space-y-3">
         {isAdding && inlineEditor}
         {notes.length === 0 && !isAdding ? (
-          <p className="text-sm text-muted-foreground">No notes yet.</p>
+          <p className="text-sm text-muted-foreground">Заметок пока нет.</p>
         ) : (
           notes.map((note) =>
             editingNote?.id === note.id ? (
@@ -201,10 +201,10 @@ export function NotesCollapsibleSection({
                 className="border border-destructive rounded-lg p-4 space-y-3"
               >
                 <p className="text-sm font-medium">
-                  Are you sure you want to delete this note?
+                  Вы уверены, что хотите удалить эту заметку?
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  This action cannot be undone.
+                  Это действие нельзя отменить.
                 </p>
                 <div className="flex justify-end gap-2">
                   <Button
@@ -213,7 +213,7 @@ export function NotesCollapsibleSection({
                     size="sm"
                     onClick={() => setDeleteConfirmId(null)}
                   >
-                    Cancel
+                    Отмена
                   </Button>
                   <Button
                     type="button"
@@ -222,7 +222,7 @@ export function NotesCollapsibleSection({
                     onClick={handleDeleteConfirm}
                     disabled={isPending}
                   >
-                    Delete
+                    Удалить
                     {isPending && (
                       <Loader className="ml-2 h-4 w-4 shrink-0 spinner" />
                     )}

@@ -18,7 +18,7 @@ export function NoteCard({ note, onEdit, onDelete }: NoteCardProps) {
         <div className="text-sm text-muted-foreground">
           {format(new Date(note.createdAt), "PPp")}
           {note.isEdited && (
-            <span className="ml-2 text-xs text-muted-foreground">(edited)</span>
+            <span className="ml-2 text-xs text-muted-foreground">(изменено)</span>
           )}
         </div>
         <div className="flex gap-1">

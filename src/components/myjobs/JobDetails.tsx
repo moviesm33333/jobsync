@@ -90,7 +90,7 @@ function JobDetails({ job }: { job: JobResponse }) {
           </CardHeader>
           <h3 className="ml-4">
             {new Date() > job.dueDate && job.Status?.value === "draft" ? (
-              <Badge className="bg-red-500">Expired</Badge>
+              <Badge className="bg-red-500">Истёк</Badge>
             ) : (
               <Badge
                 className={cn(

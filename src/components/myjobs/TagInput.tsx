@@ -72,8 +72,8 @@ export function TagInput({
       if (!result?.success) {
         toast({
           variant: "destructive",
-          title: "Error!",
-          description: result?.message ?? "Failed to create skill tag.",
+          title: "Ошибка!",
+          description: result?.message ?? "Не удалось создать навык.",
         });
         return;
       }
@@ -110,21 +110,21 @@ export function TagInput({
             type="button"
           >
             {isMaxReached
-              ? `Max ${MAX_TAGS} skills reached`
-              : "Search or add a skill..."}
+              ? `Максимум ${MAX_TAGS} навыков`
+              : "Найти или добавить навык..."}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-full p-0" align="start">
           <Command shouldFilter={false}>
             <CommandInput
-              placeholder="Type a skill..."
+              placeholder="Введите навык..."
               value={inputValue}
               onValueChange={setInputValue}
             />
             <CommandList>
               {filteredOptions.length === 0 && !inputValue && (
-                <CommandEmpty>No skills found.</CommandEmpty>
+                <CommandEmpty>Навыки не найдены.</CommandEmpty>
               )}
               {filteredOptions.length > 0 && (
                 <CommandGroup>
@@ -150,7 +150,7 @@ export function TagInput({
                     ) : (
                       <CirclePlus className="mr-2 h-4 w-4" />
                     )}
-                    Create &quot;{inputValue.trim()}&quot;
+                    Создать &quot;{inputValue.trim()}&quot;
                   </CommandItem>
                 </CommandGroup>
               )}
@@ -168,7 +168,7 @@ export function TagInput({
                 type="button"
                 onClick={() => removeTagById(tag.id)}
                 className="ml-1 rounded-full hover:bg-muted-foreground/20 p-0.5"
-                aria-label={`Remove ${tag.label}`}
+                aria-label={`Удалить ${tag.label}`}
               >
                 <X className="h-3 w-3" />
               </button>
