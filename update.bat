@@ -21,6 +21,13 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
+:: Проверяем что в .env есть DATABASE_URL
+findstr /C:"DATABASE_URL" .env >nul 2>nul
+if %errorlevel% neq 0 (
+    echo DATABASE_URL="file:./dev.db">> .env
+    echo     Добавлена недостающая переменная DATABASE_URL в .env
+)
+
 echo [3/3] Обновляю базу данных...
 call npx prisma generate
 call npx prisma db push

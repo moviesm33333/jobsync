@@ -31,7 +31,7 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-:: Создаём .env если его нет
+:: Создаём .env если его нет, или дописываем недостающие переменные
 if not exist .env (
     echo [3/5] Создаю файл .env...
     (
@@ -44,9 +44,30 @@ if not exist .env (
         echo OLLAMA_BASE_URL=http://host.docker.internal:11434
         echo RAPIDAPI_KEY=your-rapidapi-key-here
     ) > .env
-    echo     Файл .env создан. При необходимости отредактируйте его.
+    echo     Файл .env создан.
 ) else (
-    echo [3/5] Файл .env уже существует, пропускаю.
+    echo [3/5] Файл .env найден, проверяю переменные...
+    findstr /C:"DATABASE_URL" .env >nul 2>nul
+    if %errorlevel% neq 0 (
+        echo DATABASE_URL="file:./dev.db">> .env
+        echo     Добавлена переменная DATABASE_URL
+    )
+    findstr /C:"AUTH_SECRET" .env >nul 2>nul
+    if %errorlevel% neq 0 (
+        echo AUTH_SECRET=jobsync-secret-key-change-me-1234567890>> .env
+        echo     Добавлена переменная AUTH_SECRET
+    )
+    findstr /C:"NEXTAUTH_URL" .env >nul 2>nul
+    if %errorlevel% neq 0 (
+        echo NEXTAUTH_URL=http://localhost:3737>> .env
+        echo     Добавлена переменная NEXTAUTH_URL
+    )
+    findstr /C:"TZ=" .env >nul 2>nul
+    if %errorlevel% neq 0 (
+        echo TZ=America/Edmonton>> .env
+        echo     Добавлена переменная TZ
+    )
+    echo     Проверка завершена.
 )
 
 echo [4/5] Создаю базу данных...
