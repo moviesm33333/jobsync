@@ -84,10 +84,10 @@ function CompaniesTable({
             <TableHead className="hidden w-[100px] sm:table-cell">
               <span className="sr-only">Company Logo</span>
             </TableHead>
-            <TableHead>Company Name</TableHead>
-            <TableHead className="hidden sm:table-cell">Value</TableHead>
-            <TableHead>Jobs Applied</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead>Название компании</TableHead>
+            <TableHead className="hidden sm:table-cell">Значение</TableHead>
+            <TableHead>Откликов</TableHead>
+            <TableHead>Действия</TableHead>
             <TableHead>
               <span className="sr-only">Actions</span>
             </TableHead>

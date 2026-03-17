@@ -109,7 +109,7 @@ function CompaniesContainer() {
                   disabled={loading}
                   className="btn btn-primary"
                 >
-                  {loading ? "Loading..." : "Load More"}
+                  {loading ? "Загрузка..." : "Загрузить ещё"}
                 </Button>
               </div>
             )}
