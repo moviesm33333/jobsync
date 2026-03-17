@@ -26,15 +26,16 @@ if %errorlevel% neq 0 (
 :: Создаём .env если его нет
 if not exist .env (
     echo [2/4] Создаю файл .env...
-    if exist .env.example (
-        copy .env.example .env >nul
-    ) else (
-        (
-            echo DATABASE_URL="file:./dev.db"
-            echo AUTH_SECRET="jobsync-secret-key-change-me-1234567890"
-            echo NEXTAUTH_URL="http://localhost:3000"
-        ) > .env
-    )
+    (
+        echo DATABASE_URL="file:./dev.db"
+        echo TZ=America/Edmonton
+        echo NEXTAUTH_URL=http://localhost:3737
+        echo AUTH_SECRET=jobsync-secret-key-change-me-1234567890
+        echo OPENAI_API_KEY=your-openai-api-key-here
+        echo DEEPSEEK_API_KEY=your-deepseek-api-key-here
+        echo OLLAMA_BASE_URL=http://host.docker.internal:11434
+        echo RAPIDAPI_KEY=your-rapidapi-key-here
+    ) > .env
     echo     Файл .env создан. При необходимости отредактируйте его.
 ) else (
     echo [2/4] Файл .env уже существует, пропускаю.
