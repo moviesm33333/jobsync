@@ -65,9 +65,17 @@ const PROVIDERS: ProviderConfig[] = [
     sensitive: true,
   },
   {
+    id: "neuroapi",
+    name: "NeuroAPI",
+    placeholder: "sk-...",
+    inputType: "password",
+    description: "Доступ к GPT, Claude, Gemini, DeepSeek и другим моделям через единый API",
+    sensitive: true,
+  },
+  {
     id: "rapidapi",
     name: "RapidAPI",
-    placeholder: "Your RapidAPI key",
+    placeholder: "Ваш ключ RapidAPI",
     inputType: "password",
     description: "Для автоматического поиска вакансий через JSearch",
     sensitive: true,
@@ -244,7 +252,7 @@ function ApiKeySettings() {
                       {provider.description}
                       {provider.id === "ollama" && (
                         <span className="block text-xs text-muted-foreground/70 mt-0.5">
-                          Default: {defaultOllamaUrl}
+                          По умолчанию: {defaultOllamaUrl}
                         </span>
                       )}
                     </CardDescription>
@@ -266,7 +274,7 @@ function ApiKeySettings() {
                   <div className="space-y-3">
                     <div>
                       <Label htmlFor={`key-${provider.id}`}>
-                        {provider.id === "ollama" ? "Base URL" : "API Key"}
+                        {provider.id === "ollama" ? "Base URL" : "API-ключ"}
                       </Label>
                       <Input
                         id={`key-${provider.id}`}

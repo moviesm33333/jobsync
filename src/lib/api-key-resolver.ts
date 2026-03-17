@@ -6,6 +6,7 @@ import { decrypt } from "@/lib/encryption";
 const ENV_VAR_MAP: Record<string, string> = {
   openai: "OPENAI_API_KEY",
   deepseek: "DEEPSEEK_API_KEY",
+  neuroapi: "NEUROAPI_KEY",
   rapidapi: "RAPIDAPI_KEY",
   ollama: "OLLAMA_BASE_URL",
 };

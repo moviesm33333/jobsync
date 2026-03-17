@@ -238,7 +238,7 @@ function JobsContainer({
         variant: "destructive",
         title: "Ошибка!",
         description:
-          error instanceof Error ? error.message : "Unknown error occurred.",
+          error instanceof Error ? error.message : "Произошла неизвестная ошибка.",
       });
     }
   };

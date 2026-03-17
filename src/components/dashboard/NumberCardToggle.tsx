@@ -65,7 +65,7 @@ export default function NumberCardToggle({ data }: NumberCardToggleProps) {
       <CardFooter>
         <Progress
           value={current.trend}
-          aria-label={`${current.trend}% increase`}
+          aria-label={`${current.trend}% рост`}
         />
       </CardFooter>
     </Card>

@@ -74,14 +74,14 @@ function ActivitiesTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="hidden md:table-cell">Date</TableHead>
-            <TableHead>Activity</TableHead>
-            <TableHead>Project(Activity Type)</TableHead>
+            <TableHead className="hidden md:table-cell">Дата</TableHead>
+            <TableHead>Активность</TableHead>
+            <TableHead>Проект (Тип активности)</TableHead>
             <TableHead className="hidden md:table-cell">Начало</TableHead>
             <TableHead className="hidden md:table-cell">Конец</TableHead>
             <TableHead>Длительность</TableHead>
             <TableHead>
-              <span>Actions</span>
+              <span>Действия</span>
             </TableHead>
           </TableRow>
         </TableHeader>

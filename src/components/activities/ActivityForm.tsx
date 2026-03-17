@@ -156,7 +156,7 @@ const ActivityFormComponent = ({
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="Ex: Job Search, Learning skill, etc"
+                    placeholder="Напр.: Поиск работы, Изучение навыка и т.д."
                   />
                 </FormControl>
                 <FormMessage>
@@ -195,7 +195,7 @@ const ActivityFormComponent = ({
             name="startDate"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Start Date</FormLabel>
+                <FormLabel>Дата начала</FormLabel>
                 <DatePicker field={field} presets={false} isEnabled={true} />
                 <FormMessage />
               </FormItem>
@@ -212,7 +212,7 @@ const ActivityFormComponent = ({
               <FormItem>
                 <FormLabel>Начало</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="hh:mm AM/PM" />
+                  <Input {...field} placeholder="чч:мм AM/PM" />
                 </FormControl>
                 <FormMessage>
                   {errors.startTime && (
@@ -233,7 +233,7 @@ const ActivityFormComponent = ({
             name="endDate"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>End Date</FormLabel>
+                <FormLabel>Дата окончания</FormLabel>
                 <DatePicker field={field} presets={false} isEnabled={true} />
                 <FormMessage />
               </FormItem>
@@ -254,19 +254,19 @@ const ActivityFormComponent = ({
                     {duration && (
                       <span>
                         {" "}
-                        ({duration.hours > 0 ? `${duration.hours} h` : ""}
+                        ({duration.hours > 0 ? `${duration.hours} ч` : ""}
                         {duration.minutes > 0
                           ? `${duration.hours > 0 ? " " : ""}${
                               duration.minutes
-                            } min`
+                            } мин`
                           : ""}
-                        {!duration.hours && !duration.minutes ? "0 mins" : ""})
+                        {!duration.hours && !duration.minutes ? "0 мин" : ""})
                       </span>
                     )}
                   </span>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="hh:mm AM/PM" />
+                  <Input {...field} placeholder="чч:мм AM/PM" />
                 </FormControl>
                 <FormMessage>
                   {errors.endTime && (

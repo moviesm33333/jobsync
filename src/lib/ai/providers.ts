@@ -3,7 +3,7 @@ import { createOllama } from "ollama-ai-provider-v2";
 import { createDeepSeek } from "@ai-sdk/deepseek";
 import { resolveApiKey } from "@/lib/api-key-resolver";
 
-export type ProviderType = "openai" | "ollama" | "deepseek";
+export type ProviderType = "openai" | "ollama" | "deepseek" | "neuroapi";
 
 export async function getModel(
   provider: ProviderType,
@@ -22,6 +22,16 @@ export async function getModel(
     if (!apiKey) throw new Error("DeepSeek API key not configured");
     const deepseek = createDeepSeek({ apiKey });
     return deepseek(modelName);
+  }
+
+  if (provider === "neuroapi") {
+    const apiKey = await resolveApiKey(userId, "neuroapi");
+    if (!apiKey) throw new Error("NeuroAPI key not configured");
+    const neuroapi = createOpenAI({
+      apiKey,
+      baseURL: "https://neuroapi.host/v1",
+    });
+    return neuroapi(modelName);
   }
 
   const baseURL = await resolveApiKey(userId, "ollama");

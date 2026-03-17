@@ -45,10 +45,20 @@ interface DeepseekModelResponse {
   }[];
 }
 
+interface NeuroapiModelResponse {
+  object: string;
+  data: {
+    id: string;
+    object: string;
+    owned_by: string;
+  }[];
+}
+
 function AiSettings() {
   const [selectedModel, setSelectedModel] = useState<AiModel>(defaultModel);
   const [ollamaModels, setOllamaModels] = useState<string[]>([]);
   const [deepseekModels, setDeepseekModels] = useState<string[]>([]);
+  const [neuroapiModels, setNeuroapiModels] = useState<string[]>([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
   const [isLoadingSettings, setIsLoadingSettings] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -108,6 +118,9 @@ function AiSettings() {
     }
     if (isInitialized && selectedModel.provider === AiProvider.DEEPSEEK) {
       fetchDeepseekModels();
+    }
+    if (isInitialized && selectedModel.provider === AiProvider.NEUROAPI) {
+      fetchNeuroapiModels();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedModel.provider, isInitialized]);
@@ -229,6 +242,30 @@ function AiSettings() {
     }
   };
 
+  const fetchNeuroapiModels = async () => {
+    setIsLoadingModels(true);
+    setFetchError("");
+    try {
+      const response = await fetch("/api/ai/neuroapi/models");
+      if (!response.ok) {
+        setFetchError(
+          "Не удалось загрузить модели NeuroAPI. Проверьте API-ключ.",
+        );
+        return;
+      }
+      const data: NeuroapiModelResponse = await response.json();
+      const modelNames = data.data.map((model) => model.id);
+      setNeuroapiModels(modelNames);
+    } catch (error) {
+      console.error("Error fetching NeuroAPI models:", error);
+      setFetchError(
+        "Не удалось загрузить модели NeuroAPI. Проверьте API-ключ.",
+      );
+    } finally {
+      setIsLoadingModels(false);
+    }
+  };
+
   const getModelsList = (provider: AiProvider) => {
     switch (provider) {
       case AiProvider.OLLAMA:
@@ -237,6 +274,8 @@ function AiSettings() {
         return Object.entries(OpenaiModel);
       case AiProvider.DEEPSEEK:
         return deepseekModels.map((model) => [model, model]);
+      case AiProvider.NEUROAPI:
+        return neuroapiModels.map((model) => [model, model]);
       default:
         return [];
     }

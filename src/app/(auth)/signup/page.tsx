@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import AuthCard from "@/components/auth/AuthCard";
 
 export const metadata: Metadata = {
-  title: "Sign Up",
+  title: "Регистрация",
 };
 
 export default function Signup() {

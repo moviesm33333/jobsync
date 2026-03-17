@@ -63,6 +63,19 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ success: true });
       }
 
+      case "neuroapi": {
+        const res = await fetch("https://neuroapi.host/v1/models", {
+          headers: { Authorization: `Bearer ${key}` },
+        });
+        if (!res.ok) {
+          return NextResponse.json({
+            success: false,
+            error: res.status === 401 ? "Invalid API key" : `NeuroAPI returned ${res.status}`,
+          });
+        }
+        return NextResponse.json({ success: true });
+      }
+
       case "ollama": {
         const baseUrl = key.replace(/\/+$/, "");
         const res = await fetch(`${baseUrl}/api/tags`);

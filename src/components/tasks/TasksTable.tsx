@@ -99,34 +99,34 @@ const priorityConfig: Record<
 };
 
 type DateGroup =
-  | "Overdue"
-  | "Today"
-  | "Tomorrow"
-  | "This Week"
-  | "Later"
-  | "No Due Date";
+  | "Просрочено"
+  | "Сегодня"
+  | "Завтра"
+  | "На этой неделе"
+  | "Позже"
+  | "Без срока";
 
 type CreatedDateGroup = string; // Format: "YYYY-MM-DD"
 type UpdatedDateGroup = string; // Format: "YYYY-MM-DD"
 
 function getDateGroup(dueDate: Date | null | undefined): DateGroup {
-  if (!dueDate) return "No Due Date";
+  if (!dueDate) return "Без срока";
   const date = new Date(dueDate);
-  if (isPast(date) && !isToday(date)) return "Overdue";
-  if (isToday(date)) return "Today";
-  if (isTomorrow(date)) return "Tomorrow";
-  if (isThisWeek(date)) return "This Week";
-  return "Later";
+  if (isPast(date) && !isToday(date)) return "Просрочено";
+  if (isToday(date)) return "Сегодня";
+  if (isTomorrow(date)) return "Завтра";
+  if (isThisWeek(date)) return "На этой неделе";
+  return "Позже";
 }
 
 function groupTasksByDate(tasks: Task[]): Record<DateGroup, Task[]> {
   const groups: Record<DateGroup, Task[]> = {
-    Overdue: [],
-    Today: [],
-    Tomorrow: [],
-    "This Week": [],
-    Later: [],
-    "No Due Date": [],
+    "Просрочено": [],
+    "Сегодня": [],
+    "Завтра": [],
+    "На этой неделе": [],
+    "Позже": [],
+    "Без срока": [],
   };
 
   tasks.forEach((task) => {
@@ -141,7 +141,7 @@ function groupTasksByActivityType(tasks: Task[]): Record<string, Task[]> {
   const groups: Record<string, Task[]> = {};
 
   tasks.forEach((task) => {
-    const key = task.activityType?.label || "No Activity Type";
+    const key = task.activityType?.label || "Без типа активности";
     if (!groups[key]) {
       groups[key] = [];
     }
@@ -225,8 +225,8 @@ function TasksTable({
           )}
           aria-label={
             task.status === "complete"
-              ? "Mark as in progress"
-              : "Mark as complete"
+              ? "Вернуть в работу"
+              : "Завершить"
           }
         >
           {task.status === "complete" && <Check className="h-3 w-3" />}
@@ -375,12 +375,12 @@ function TasksTable({
         </TableHead>
         <TableHead className="h-9 px-2">Название задачи</TableHead>
         <TableHead className="h-9 px-2">Тип активности</TableHead>
-        <TableHead className="hidden md:table-cell h-9 px-2">Status</TableHead>
+        <TableHead className="hidden md:table-cell h-9 px-2">Статус</TableHead>
         <TableHead className="hidden md:table-cell h-9 px-2 text-center">
           Приоритет
         </TableHead>
         <TableHead className="hidden md:table-cell h-9 px-2 text-center">
-          % Complete
+          % выполнения
         </TableHead>
         <TableHead className="h-9 px-1">
           <span className="sr-only">Actions</span>
@@ -403,12 +403,12 @@ function TasksTable({
   if (groupBy === "dueDate") {
     const groupedTasks = groupTasksByDate(tasks);
     const groupOrder: DateGroup[] = [
-      "Overdue",
-      "Today",
-      "Tomorrow",
-      "This Week",
-      "Later",
-      "No Due Date",
+      "Просрочено",
+      "Сегодня",
+      "Завтра",
+      "На этой неделе",
+      "Позже",
+      "Без срока",
     ];
 
     return (
@@ -482,8 +482,8 @@ function TasksTable({
           const groupTasks = groupedTasks[dateStr];
           const date = parse(dateStr, "yyyy-MM-dd", new Date());
           const displayDate = isToday(date)
-            ? "Today"
-            : format(date, "MMM d, yyyy");
+            ? "Сегодня"
+            : format(date, "dd.MM.yyyy");
 
           return (
             <div key={dateStr} className="mb-6">
@@ -517,8 +517,8 @@ function TasksTable({
           const groupTasks = groupedTasks[dateStr];
           const date = parse(dateStr, "yyyy-MM-dd", new Date());
           const displayDate = isToday(date)
-            ? "Today"
-            : format(date, "MMM d, yyyy");
+            ? "Сегодня"
+            : format(date, "dd.MM.yyyy");
 
           return (
             <div key={dateStr} className="mb-6">

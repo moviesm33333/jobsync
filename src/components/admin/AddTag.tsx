@@ -27,9 +27,9 @@ import { createTag } from "@/actions/tag.actions";
 
 const AddTagFormSchema = z.object({
   label: z
-    .string({ error: "Skill label is required." })
-    .min(1, { message: "Skill label cannot be empty." })
-    .max(60, { message: "Skill label must be 60 characters or fewer." }),
+    .string({ error: "Название навыка обязательно." })
+    .min(1, { message: "Название навыка не может быть пустым." })
+    .max(60, { message: "Название навыка не должно превышать 60 символов." }),
 });
 
 type AddTagProps = {
@@ -103,7 +103,7 @@ function AddTag({ reloadTags }: AddTagProps) {
                   <FormItem>
                     <FormLabel>Название навыка</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g. React, AWS, Python" {...field} />
+                      <Input placeholder="напр. React, AWS, Python" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

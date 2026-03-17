@@ -24,6 +24,7 @@ export enum AiProvider {
   OLLAMA = "ollama",
   OPENAI = "openai",
   DEEPSEEK = "deepseek",
+  NEUROAPI = "neuroapi",
 }
 
 // Default models per provider
