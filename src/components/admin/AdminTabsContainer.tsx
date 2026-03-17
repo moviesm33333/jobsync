@@ -32,11 +32,11 @@ function AdminTabsContainer() {
       onValueChange={(e) => onTabChange(e)}
     >
       <TabsList>
-        <TabsTrigger value="companies">Companies</TabsTrigger>
-        <TabsTrigger value="job-titles">Job Titles</TabsTrigger>
-        <TabsTrigger value="locations">Locations</TabsTrigger>
-        <TabsTrigger value="sources">Sources</TabsTrigger>
-        <TabsTrigger value="skills">Skills</TabsTrigger>
+        <TabsTrigger value="companies">Компании</TabsTrigger>
+        <TabsTrigger value="job-titles">Должности</TabsTrigger>
+        <TabsTrigger value="locations">Города</TabsTrigger>
+        <TabsTrigger value="sources">Источники</TabsTrigger>
+        <TabsTrigger value="skills">Навыки</TabsTrigger>
       </TabsList>
       <TabsContent value="companies">
         <CompaniesContainer />
