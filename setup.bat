@@ -15,17 +15,25 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-echo [1/4] Устанавливаю зависимости...
+echo [1/5] Подтягиваю последние обновления с GitHub...
+git pull origin claude/review-fork-hh-integration-6Gsjh
+if %errorlevel% neq 0 (
+    echo [ОШИБКА] git pull не удался
+    pause
+    exit /b 1
+)
+
+echo [2/5] Устанавливаю зависимости...
 call npm install
 if %errorlevel% neq 0 (
-    echo [ОШИБКА] npm install не удался
+    echo [ОШИБКА] npm install не удался!
     pause
     exit /b 1
 )
 
 :: Создаём .env если его нет
 if not exist .env (
-    echo [2/4] Создаю файл .env...
+    echo [3/5] Создаю файл .env...
     (
         echo DATABASE_URL="file:./dev.db"
         echo TZ=America/Edmonton
@@ -38,10 +46,10 @@ if not exist .env (
     ) > .env
     echo     Файл .env создан. При необходимости отредактируйте его.
 ) else (
-    echo [2/4] Файл .env уже существует, пропускаю.
+    echo [3/5] Файл .env уже существует, пропускаю.
 )
 
-echo [3/4] Создаю базу данных...
+echo [4/5] Создаю базу данных...
 call npx prisma generate
 call npx prisma db push
 if %errorlevel% neq 0 (
