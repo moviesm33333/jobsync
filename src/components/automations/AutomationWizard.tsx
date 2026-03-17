@@ -79,7 +79,7 @@ export function AutomationWizard({
     mode: "onChange",
     defaultValues: {
       name: editAutomation?.name ?? "",
-      jobBoard: (editAutomation?.jobBoard as "jsearch") ?? "jsearch",
+      jobBoard: (editAutomation?.jobBoard as CreateAutomationInput["jobBoard"]) ?? "jsearch",
       keywords: editAutomation?.keywords ?? "",
       location: editAutomation?.location ?? "",
       resumeId: editAutomation?.resumeId ?? "",
@@ -92,7 +92,7 @@ export function AutomationWizard({
     if (open) {
       form.reset({
         name: editAutomation?.name ?? "",
-        jobBoard: (editAutomation?.jobBoard as "jsearch") ?? "jsearch",
+        jobBoard: (editAutomation?.jobBoard as CreateAutomationInput["jobBoard"]) ?? "jsearch",
         keywords: editAutomation?.keywords ?? "",
         location: editAutomation?.location ?? "",
         resumeId: editAutomation?.resumeId ?? "",
@@ -215,6 +215,7 @@ export function AutomationWizard({
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="jsearch">JSearch (Google Jobs)</SelectItem>
+                    <SelectItem value="headhunter">HeadHunter (hh.ru)</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormDescription>

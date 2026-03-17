@@ -8,6 +8,7 @@ import type {
 } from "@/models/automation.model";
 import type { ScraperError, JobDetails } from "./types";
 import { searchJSearchJobs } from "./jsearch";
+import { searchHeadHunterJobs } from "./headhunter";
 import { mapScrapedJobToJobRecord } from "./mapper";
 import { normalizeJobUrl } from "./utils";
 import { calculateNextRunAt } from "./schedule";
@@ -194,12 +195,11 @@ export async function runAutomation(
       `Searching for jobs: "${automation.keywords}" in ${automation.location}`,
     );
 
-    // Use JSearch API with user's key if available
-    const rapidApiKey = await resolveApiKey(automation.userId, "rapidapi");
-    const searchResult = await searchJSearchJobs(
+    const searchResult = await searchJobsByBoard(
+      automation.jobBoard as JobBoard,
       automation.keywords,
       automation.location,
-      rapidApiKey,
+      automation.userId,
     );
 
     if (!searchResult.success) {
@@ -234,7 +234,7 @@ export async function runAutomation(
     automationLogger.log(
       automation.id,
       "success",
-      `Found ${jobsSearched} jobs from JSearch API`,
+      `Found ${jobsSearched} jobs from ${automation.jobBoard}`,
       { jobsSearched },
     );
 
@@ -595,6 +595,32 @@ async function convertResumeForMatch(
   }
 
   return parts.filter(Boolean).join("\n");
+}
+
+async function searchJobsByBoard(
+  jobBoard: JobBoard,
+  keywords: string,
+  location: string,
+  userId: string,
+): Promise<ScraperResult<JobDetails[]>> {
+  switch (jobBoard) {
+    case "headhunter":
+      return searchHeadHunterJobs(keywords);
+    case "jsearch": {
+      const rapidApiKey = await resolveApiKey(userId, "rapidapi");
+      return searchJSearchJobs(keywords, location, rapidApiKey);
+    }
+    default: {
+      const _exhaustive: never = jobBoard;
+      return {
+        success: false,
+        error: {
+          type: "network",
+          message: `Unknown job board: ${_exhaustive}`,
+        },
+      };
+    }
+  }
 }
 
 function getStatusFromError(error: ScraperError): AutomationRunStatus {

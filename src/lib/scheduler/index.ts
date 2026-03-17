@@ -2,6 +2,7 @@ import cron, { ScheduledTask } from "node-cron";
 import { SCHEDULER_CONSTANTS } from "@/lib/constants";
 import db from "@/lib/db";
 import { runAutomation } from "@/lib/scraper";
+import type { JobBoard } from "@/models/automation.model";
 
 let scheduledTask: ScheduledTask | null = null;
 
@@ -47,7 +48,7 @@ async function runDueAutomations() {
           id: automation.id,
           userId: automation.userId,
           name: automation.name,
-          jobBoard: automation.jobBoard as "jsearch",
+          jobBoard: automation.jobBoard as JobBoard,
           keywords: automation.keywords,
           location: automation.location,
           resumeId: automation.resumeId,
