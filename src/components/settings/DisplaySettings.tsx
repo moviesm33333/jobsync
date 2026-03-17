@@ -72,21 +72,21 @@ function DisplaySettings() {
         setTheme(data.theme);
         toast({
           variant: "success",
-          title: "Your selected theme has been saved.",
+          title: "Тема сохранена.",
         });
       } else {
         toast({
           variant: "destructive",
-          title: "Error",
-          description: result.message || "Failed to save display settings.",
+          title: "Ошибка",
+          description: result.message || "Не удалось сохранить настройки.",
         });
       }
     } catch (error) {
       console.error("Error saving display settings:", error);
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "Failed to save display settings.",
+        title: "Ошибка",
+        description: "Не удалось сохранить настройки.",
       });
     } finally {
       setIsSaving(false);
@@ -97,14 +97,14 @@ function DisplaySettings() {
     return (
       <div className="space-y-4">
         <div>
-          <h3 className="text-lg font-medium">Appearance</h3>
+          <h3 className="text-lg font-medium">Внешний вид</h3>
           <p className="text-sm text-muted-foreground">
-            Customize the look and feel of the application.
+            Настройте внешний вид приложения.
           </p>
         </div>
         <div className="flex items-center gap-2">
           <Loader2 className="h-4 w-4 animate-spin" />
-          <span>Loading settings...</span>
+          <span>Загрузка настроек...</span>
         </div>
       </div>
     );
@@ -113,9 +113,9 @@ function DisplaySettings() {
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="text-lg font-medium">Appearance</h3>
+        <h3 className="text-lg font-medium">Внешний вид</h3>
         <p className="text-sm text-muted-foreground">
-          Customize the look and feel of the application.
+          Настройте внешний вид приложения.
         </p>
       </div>
       <div>
@@ -126,9 +126,9 @@ function DisplaySettings() {
                 name="theme"
                 render={({ field }) => (
                   <FormItem className="space-y-1">
-                    <FormLabel>Theme</FormLabel>
+                    <FormLabel>Тема</FormLabel>
                     <FormDescription>
-                      Select the theme for the app.
+                      Выберите тему оформления.
                     </FormDescription>
                     <FormMessage />
                     <RadioGroup
@@ -143,7 +143,7 @@ function DisplaySettings() {
                           </FormControl>
                           <LightThemeElement />
                           <span className="block w-full p-2 text-center font-normal">
-                            Light
+                            Светлая
                           </span>
                         </FormLabel>
                       </FormItem>
@@ -154,7 +154,7 @@ function DisplaySettings() {
                           </FormControl>
                           <DarkThemeElement />
                           <span className="block w-full p-2 text-center font-normal">
-                            Dark
+                            Тёмная
                           </span>
                         </FormLabel>
                       </FormItem>
@@ -172,7 +172,7 @@ function DisplaySettings() {
                             <LightThemeElement />
                           )}
                           <span className="block w-full p-2 text-center font-normal">
-                            System
+                            Системная
                           </span>
                         </FormLabel>
                       </FormItem>
@@ -183,7 +183,7 @@ function DisplaySettings() {
 
               <Button type="submit" disabled={isSaving}>
                 {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Update preferences
+                Сохранить
               </Button>
             </form>
           </Form>

@@ -44,7 +44,7 @@ function AddResumeSummary({
 }: AddResumeSummaryProps) {
   const [isPending, startTransition] = useTransition();
 
-  const pageTitle = summaryToEdit ? "Edit Summary" : "Add Summary";
+  const pageTitle = summaryToEdit ? "Редактировать раздел «О себе»" : "Добавить раздел «О себе»";
 
   const form = useForm<z.infer<typeof AddSummarySectionFormSchema>>({
     resolver: zodResolver(AddSummarySectionFormSchema),
@@ -79,7 +79,7 @@ function AddResumeSummary({
       if (!res.success) {
         toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: res.message,
         });
       } else {
@@ -87,9 +87,9 @@ function AddResumeSummary({
         setDialogOpen(false);
         toast({
           variant: "success",
-          description: `Summary has been ${
-            summaryToEdit ? "updated" : "created"
-          } successfully`,
+          description: `Раздел «О себе» успешно ${
+            summaryToEdit ? "обновлён" : "создан"
+          }`,
         });
       }
     });
@@ -115,9 +115,9 @@ function AddResumeSummary({
                 name="sectionTitle"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Section Title</FormLabel>
+                    <FormLabel>Название раздела</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="Ex: Summary" />
+                      <Input {...field} placeholder="Напр.: О себе" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -131,7 +131,7 @@ function AddResumeSummary({
                 name="content"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Resume Summary</FormLabel>
+                    <FormLabel>О себе</FormLabel>
                     <FormControl>
                       <TiptapEditor field={field} />
                     </FormControl>
@@ -151,11 +151,11 @@ function AddResumeSummary({
                     className="mt-2 md:mt-0 w-full"
                     onClick={closeDialog}
                   >
-                    Cancel
+                    Отмена
                   </Button>
                 </div>
                 <Button type="submit" disabled={!formState.isDirty}>
-                  Save
+                  Сохранить
                   {isPending && <Loader className="h-4 w-4 shrink-0 spinner" />}
                 </Button>
               </DialogFooter>
