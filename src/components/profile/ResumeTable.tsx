@@ -85,7 +85,7 @@ function ResumeTable({ resumes, editResume, reloadResumes }: ResumeTableProps) {
             <TableHead>Вакансии</TableHead>
             <TableHead>Действия</TableHead>
             <TableHead>
-              <span className="sr-only">Actions</span>
+              <span className="sr-only">Действия</span>
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -121,7 +121,7 @@ function ResumeTable({ resumes, editResume, reloadResumes }: ResumeTableProps) {
                         data-testid="resume-actions-menu-btn"
                       >
                         <MoreHorizontal className="h-4 w-4" />
-                        <span className="sr-only">Toggle menu</span>
+                        <span className="sr-only">Открыть меню</span>
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
