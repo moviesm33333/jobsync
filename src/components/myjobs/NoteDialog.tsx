@@ -67,7 +67,7 @@ export function NoteDialog({
       if (result.success) {
         toast({
           variant: "success",
-          description: `Note ${editNote ? "updated" : "added"} successfully`,
+          description: editNote ? "Заметка обновлена" : "Заметка добавлена",
         });
         form.reset({ jobId, content: "" });
         onOpenChange(false);
@@ -75,7 +75,7 @@ export function NoteDialog({
       } else {
         toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: result.message,
         });
       }
@@ -86,7 +86,7 @@ export function NoteDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{editNote ? "Edit Note" : "Add Note"}</DialogTitle>
+          <DialogTitle>{editNote ? "Редактировать заметку" : "Добавить заметку"}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -108,10 +108,10 @@ export function NoteDialog({
                 variant="outline"
                 onClick={() => onOpenChange(false)}
               >
-                Cancel
+                Отмена
               </Button>
               <Button type="submit" disabled={isPending}>
-                Save
+                Сохранить
                 {isPending && (
                   <Loader className="ml-2 h-4 w-4 shrink-0 spinner" />
                 )}

@@ -40,19 +40,19 @@ function JobDetails({ job }: { job: JobResponse }) {
   const getJobType = (code: string) => {
     switch (code) {
       case "FT":
-        return "Full-time";
+        return "Полная занятость";
       case "PT":
-        return "Part-time";
+        return "Частичная занятость";
       case "C":
-        return "Contract";
+        return "Контракт";
       default:
-        return "Unknown";
+        return "Неизвестно";
     }
   };
   return (
     <>
       <div className="flex justify-between">
-        <Button title="Go Back" size="sm" variant="outline" onClick={goBack}>
+        <Button title="Назад" size="sm" variant="outline" onClick={goBack}>
           <ArrowLeft />
         </Button>
         <Button
@@ -64,7 +64,7 @@ function JobDetails({ job }: { job: JobResponse }) {
         >
           <Sparkles className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Match with AI
+            Сравнить с ИИ
           </span>
         </Button>
       </div>
@@ -117,7 +117,7 @@ function JobDetails({ job }: { job: JobResponse }) {
           )}
           {job.jobUrl && (
             <div className="my-3 ml-4">
-              <span className="font-semibold mr-2">Job URL:</span>
+              <span className="font-semibold mr-2">Ссылка на вакансию:</span>
               <a
                 href={formatUrl(job.jobUrl)}
                 target="_blank"
@@ -135,9 +135,9 @@ function JobDetails({ job }: { job: JobResponse }) {
             <div className="mx-4 mb-4">
               <h4 className="font-medium mb-2 flex items-center gap-2">
                 <Sparkles className="h-4 w-4" />
-                AI Match Analysis
+                ИИ-анализ совпадения
                 {job.matchScore && (
-                  <Badge variant="default">{job.matchScore}% Match</Badge>
+                  <Badge variant="default">{job.matchScore}% Совпадение</Badge>
                 )}
               </h4>
               <MatchDetails matchData={parsedMatchData} />

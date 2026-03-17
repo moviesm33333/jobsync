@@ -42,14 +42,14 @@ export default function NumberCardToggle({ data }: NumberCardToggleProps) {
                     : "hover:bg-muted",
                 )}
               >
-                {item.label.replace("Last ", "")}
+                {item.label}
               </button>
             ))}
           </div>
         </div>
         <CardTitle className="text-4xl">
           {current.num}{" "}
-          <span className="text-xs text-muted-foreground">Jobs Applied</span>
+          <span className="text-xs text-muted-foreground">Откликов</span>
         </CardTitle>
       </CardHeader>
       <CardContent>

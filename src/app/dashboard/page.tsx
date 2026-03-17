@@ -18,7 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Dashboard",
+  title: "Главная",
 };
 
 export default async function Dashboard() {
@@ -60,12 +60,12 @@ export default async function Dashboard() {
           <NumberCardToggle
             data={[
               {
-                label: "Last 7 days",
+                label: "За 7 дней",
                 num: jobsAppliedLast7Days,
                 trend: trendFor7Days,
               },
               {
-                label: "Last 30 days",
+                label: "За 30 дней",
                 num: jobsAppliedLast30Days,
                 trend: trendFor30Days,
               },
@@ -73,25 +73,25 @@ export default async function Dashboard() {
           />
           <TopActivitiesCard
             data={[
-              { label: "Last 7 days", activities: topActivities7Days },
-              { label: "Last 30 days", activities: topActivities30Days },
+              { label: "За 7 дней", activities: topActivities7Days },
+              { label: "За 30 дней", activities: topActivities30Days },
             ]}
           />
         </div>
         <WeeklyBarChartToggle
           charts={[
             {
-              label: "Jobs",
+              label: "Вакансии",
               data: weeklyData,
               keys: ["value"],
-              axisLeftLegend: "JOBS APPLIED",
+              axisLeftLegend: "ОТКЛИКОВ",
             },
             {
-              label: "Activities",
+              label: "Активность",
               data: activitiesData,
               keys: activitiesDataKeys(activitiesData),
               groupMode: "stacked",
-              axisLeftLegend: "TIME SPENT (Hours)",
+              axisLeftLegend: "ВРЕМЯ (часы)",
             },
           ]}
         />

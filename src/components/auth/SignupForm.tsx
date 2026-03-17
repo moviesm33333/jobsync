@@ -64,9 +64,9 @@ function SignupForm() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Full Name</FormLabel>
+                  <FormLabel>Имя</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your Name" {...field} />
+                    <Input placeholder="Ваше имя" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -79,7 +79,7 @@ function SignupForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Эл. почта</FormLabel>
                   <FormControl>
                     <Input placeholder="id@example.com" {...field} />
                   </FormControl>
@@ -94,7 +94,7 @@ function SignupForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Пароль</FormLabel>
                   <FormControl>
                     <Input type="password" {...field} />
                   </FormControl>
@@ -104,7 +104,7 @@ function SignupForm() {
             />
           </div>
           <Button type="submit" disabled={isPending} className="w-full">
-            {isPending ? <Loading /> : "Create an account"}
+            {isPending ? <Loading /> : "Создать аккаунт"}
           </Button>
           <div
             className="flex h-8 items-end space-x-1"

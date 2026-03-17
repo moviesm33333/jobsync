@@ -62,7 +62,7 @@ function SigninForm() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor="email">Email</FormLabel>
+                    <FormLabel htmlFor="email">Эл. почта</FormLabel>
                     <FormControl>
                       <Input
                         id="email"
@@ -81,7 +81,7 @@ function SigninForm() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor="password">Password</FormLabel>
+                    <FormLabel htmlFor="password">Пароль</FormLabel>
                     <FormControl>
                       <Input id="password" type="password" {...field} />
                     </FormControl>
@@ -91,7 +91,7 @@ function SigninForm() {
               />
             </div>
             <Button type="submit" disabled={isPending} className="w-full">
-              {isPending ? <Loading /> : "Login"}
+              {isPending ? <Loading /> : "Войти"}
             </Button>
             <div
               className="flex h-8 items-end space-x-1"

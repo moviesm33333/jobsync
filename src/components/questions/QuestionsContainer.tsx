@@ -66,8 +66,8 @@ function QuestionsContainer({
       } else {
         toast({
           variant: "destructive",
-          title: "Error!",
-          description: result?.message || "Failed to load questions.",
+          title: "Ошибка!",
+          description: result?.message || "Не удалось загрузить вопросы.",
         });
       }
       setLoading(false);
@@ -85,13 +85,13 @@ function QuestionsContainer({
     if (success) {
       toast({
         variant: "success",
-        description: "Question has been deleted successfully",
+        description: "Вопрос удалён",
       });
       reloadQuestions();
     } else {
       toast({
         variant: "destructive",
-        title: "Error!",
+        title: "Ошибка!",
         description: message,
       });
     }
@@ -102,7 +102,7 @@ function QuestionsContainer({
     if (!success) {
       toast({
         variant: "destructive",
-        title: "Error!",
+        title: "Ошибка!",
         description: message,
       });
       return;
@@ -139,14 +139,14 @@ function QuestionsContainer({
     <>
       <Card className="h-full">
         <CardHeader className="flex-row justify-between items-center">
-          <CardTitle>Question Bank</CardTitle>
+          <CardTitle>Банк вопросов</CardTitle>
           <div className="flex items-center">
             <div className="ml-auto flex items-center gap-2">
               <div className="relative">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder="Search questions..."
+                  placeholder="Поиск вопросов..."
                   className="pl-8 h-8 w-[150px] lg:w-[200px]"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -160,7 +160,7 @@ function QuestionsContainer({
               >
                 <PlusCircle className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  New Question
+                  Новый вопрос
                 </span>
               </Button>
             </div>
@@ -180,7 +180,7 @@ function QuestionsContainer({
                   <RecordsCount
                     count={questions.length}
                     total={totalQuestions}
-                    label="questions"
+                    label="вопросов"
                   />
                   {totalQuestions > APP_CONSTANTS.RECORDS_PER_PAGE && (
                     <RecordsPerPageSelector
@@ -206,7 +206,7 @@ function QuestionsContainer({
                 }
                 disabled={loading}
               >
-                Load More
+                Загрузить ещё
               </Button>
             </div>
           )}

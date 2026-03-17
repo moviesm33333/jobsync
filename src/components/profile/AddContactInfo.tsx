@@ -42,8 +42,8 @@ function AddContactInfo({
   const [isPending, startTransition] = useTransition();
 
   const pageTitle = contactInfoToEdit
-    ? "Edit Contact Info"
-    : "Add Contact Info";
+    ? "Редактировать контактные данные"
+    : "Добавить контактные данные";
 
   const form = useForm<z.infer<typeof AddContactInfoFormSchema>>({
     resolver: zodResolver(AddContactInfoFormSchema),
@@ -82,7 +82,7 @@ function AddContactInfo({
       if (!res.success) {
         toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: res.message,
         });
       } else {

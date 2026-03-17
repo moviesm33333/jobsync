@@ -108,7 +108,7 @@ function JobsContainer({
       } else {
         toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: message,
         });
         setLoading(false);
@@ -130,12 +130,12 @@ function JobsContainer({
     if (success) {
       toast({
         variant: "success",
-        description: `Job has been deleted successfully`,
+        description: `Вакансия удалена`,
       });
     } else {
       toast({
         variant: "destructive",
-        title: "Error!",
+        title: "Ошибка!",
         description: message,
       });
     }
@@ -147,7 +147,7 @@ function JobsContainer({
     if (!success) {
       toast({
         variant: "destructive",
-        title: "Error!",
+        title: "Ошибка!",
         description: message,
       });
       return;
@@ -161,12 +161,12 @@ function JobsContainer({
       router.refresh();
       toast({
         variant: "success",
-        description: `Job has been updated successfully`,
+        description: `Вакансия обновлена`,
       });
     } else {
       toast({
         variant: "destructive",
-        title: "Error!",
+        title: "Ошибка!",
         description: message,
       });
     }
@@ -231,12 +231,12 @@ function JobsContainer({
       document.body.removeChild(link);
       toast({
         variant: "success",
-        title: "Downloaded successfully!",
+        title: "Готово!",
       });
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Error!",
+        title: "Ошибка!",
         description:
           error instanceof Error ? error.message : "Unknown error occurred.",
       });
@@ -247,13 +247,13 @@ function JobsContainer({
     <>
       <Card x-chunk="dashboard-06-chunk-0">
         <CardHeader className="flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
-          <CardTitle>My Jobs</CardTitle>
+          <CardTitle>Мои вакансии</CardTitle>
           <div className="flex flex-wrap items-center gap-2">
             <div className="relative flex-1 min-w-[140px] sm:flex-none">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search jobs..."
+                placeholder="Поиск вакансий..."
                 className="pl-8 h-8 w-full sm:w-[150px] lg:w-[200px]"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -262,18 +262,18 @@ function JobsContainer({
             <Select value={filterKey} onValueChange={onFilterChange}>
               <SelectTrigger className="w-[120px] h-8">
                 <ListFilter className="h-3.5 w-3.5" />
-                <SelectValue placeholder="Filter" />
+                <SelectValue placeholder="Фильтр" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Filter by</SelectLabel>
+                  <SelectLabel>Фильтровать по</SelectLabel>
                   <SelectSeparator />
-                  <SelectItem value="none">None</SelectItem>
-                  <SelectItem value="applied">Applied</SelectItem>
-                  <SelectItem value="interview">Interview</SelectItem>
-                  <SelectItem value="draft">Draft</SelectItem>
-                  <SelectItem value="rejected">Rejected</SelectItem>
-                  <SelectItem value="PT">Part-time</SelectItem>
+                  <SelectItem value="none">Все</SelectItem>
+                  <SelectItem value="applied">Отклик</SelectItem>
+                  <SelectItem value="interview">Собеседование</SelectItem>
+                  <SelectItem value="draft">Черновик</SelectItem>
+                  <SelectItem value="rejected">Отказ</SelectItem>
+                  <SelectItem value="PT">Частичная занятость</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -286,7 +286,7 @@ function JobsContainer({
             >
               <File className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Export
+                Экспорт
               </span>
             </Button>
             <AddJob
@@ -317,7 +317,7 @@ function JobsContainer({
                 <RecordsCount
                   count={jobs.length}
                   total={totalJobs}
-                  label="jobs"
+                  label="вакансий"
                 />
                 {totalJobs > APP_CONSTANTS.RECORDS_PER_PAGE && (
                   <RecordsPerPageSelector
@@ -339,7 +339,7 @@ function JobsContainer({
                 disabled={loading}
                 className="btn btn-primary"
               >
-                {loading ? "Loading..." : "Load More"}
+                {loading ? "Загрузка..." : "Загрузить ещё"}
               </Button>
             </div>
           )}

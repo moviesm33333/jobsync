@@ -111,7 +111,7 @@ export function TaskForm({
       if (success) {
         toast({
           variant: "success",
-          description: `Task has been ${editTask ? "updated" : "created"} successfully`,
+          description: `Задача ${editTask ? "обновлена" : "создана"}`,
         });
         reset();
         setDialogOpen(false);
@@ -120,14 +120,14 @@ export function TaskForm({
       } else {
         toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: message,
         });
       }
     });
   }
 
-  const pageTitle = editTask ? "Edit Task" : "Add Task";
+  const pageTitle = editTask ? "Редактировать задачу" : "Добавить задачу";
 
   const closeDialog = () => {
     reset();
@@ -156,9 +156,9 @@ export function TaskForm({
                   name="title"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel>Title *</FormLabel>
+                      <FormLabel>Название задачи *</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter task title" {...field} />
+                        <Input placeholder="Введите название задачи" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -173,7 +173,7 @@ export function TaskForm({
                   name="activityTypeId"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel>Activity Type</FormLabel>
+                      <FormLabel>Тип активности</FormLabel>
                       <FormControl>
                         <Combobox
                           options={activityTypes}
@@ -197,9 +197,9 @@ export function TaskForm({
                   name="status"
                   render={({ field }) => (
                     <FormItem className="flex flex-col [&>button]:capitalize">
-                      <FormLabel>Status</FormLabel>
+                      <FormLabel>Статус</FormLabel>
                       <SelectFormCtrl
-                        label="Task Status"
+                        label="Статус задачи"
                         options={statusOptions}
                         field={field}
                       />
@@ -216,7 +216,7 @@ export function TaskForm({
                   name="priority"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel>Priority: {priorityValue}</FormLabel>
+                      <FormLabel>Приоритет: {priorityValue}</FormLabel>
                       <FormControl>
                         <Slider
                           min={0}
@@ -228,8 +228,8 @@ export function TaskForm({
                         />
                       </FormControl>
                       <div className="flex justify-between text-xs text-muted-foreground">
-                        <span>Low (0)</span>
-                        <span>High (10)</span>
+                        <span>Низкий (0)</span>
+                        <span>Высокий (10)</span>
                       </div>
                       <FormMessage />
                     </FormItem>
@@ -272,7 +272,7 @@ export function TaskForm({
                   name="dueDate"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel>Due Date</FormLabel>
+                      <FormLabel>Срок</FormLabel>
                       <DatePicker
                         field={field}
                         presets={true}
@@ -288,7 +288,7 @@ export function TaskForm({
               {editTask && (
                 <div className="flex flex-col gap-2">
                   <div>
-                    <p className="text-sm font-medium">Created</p>
+                    <p className="text-sm font-medium">Создано</p>
                     <p className="text-sm text-muted-foreground">
                       {editTask.createdAt
                         ? format(
@@ -299,7 +299,7 @@ export function TaskForm({
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm font-medium">Updated</p>
+                    <p className="text-sm font-medium">Обновлено</p>
                     <p className="text-sm text-muted-foreground">
                       {editTask.updatedAt
                         ? format(
@@ -319,7 +319,7 @@ export function TaskForm({
                   name="description"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel>Description</FormLabel>
+                      <FormLabel>Описание</FormLabel>
                       <FormControl>
                         <TiptapEditor field={field} />
                       </FormControl>
@@ -338,11 +338,11 @@ export function TaskForm({
                       className="mt-2 md:mt-0 w-full"
                       onClick={closeDialog}
                     >
-                      Cancel
+                      Отмена
                     </Button>
                   </div>
                   <Button type="submit" data-testid="save-task-btn">
-                    Save
+                    Сохранить
                     {isPending && (
                       <Loader className="h-4 w-4 shrink-0 spinner ml-2" />
                     )}

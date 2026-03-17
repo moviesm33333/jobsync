@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: "%s | JobSync",
     default: "JobSync",
   },
-  description: "Job Application Tracking System",
+  description: "Система отслеживания откликов на вакансии",
 };
 
 interface Props {
@@ -25,7 +25,7 @@ interface Props {
 
 export default function RootLayout({ children }: Readonly<Props>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="ru" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",

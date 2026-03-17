@@ -34,7 +34,7 @@ export default function WeeklyBarChartToggle({
   });
 
   const totalHours =
-    current.label === "Activities"
+    current.label === "Активность"
       ? roundedData.reduce(
           (sum, item) =>
             sum +
@@ -53,11 +53,11 @@ export default function WeeklyBarChartToggle({
         <div className="flex items-center justify-between mb-1 mt-3">
           <div className="flex items-baseline gap-2">
             <CardTitle className="text-green-600">
-              Weekly {current.label}
+              За неделю: {current.label}
             </CardTitle>
             {totalHours !== null && (
               <span className="text-sm text-muted-foreground">
-                {totalHours.toFixed(1)} hrs
+                {totalHours.toFixed(1)} ч
               </span>
             )}
           </div>
@@ -101,7 +101,7 @@ export default function WeeklyBarChartToggle({
             }
             enableTotals={current.groupMode === "stacked" ? true : false}
             valueFormat={(value) =>
-              current.label === "Activities"
+              current.label === "Активность"
                 ? value.toFixed(1)
                 : value.toFixed(0)
             }

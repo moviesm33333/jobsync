@@ -85,7 +85,7 @@ export function QuestionForm({
       if (success) {
         toast({
           variant: "success",
-          description: `Question has been ${editQuestion ? "updated" : "created"} successfully`,
+          description: `Вопрос ${editQuestion ? "обновлён" : "создан"}`,
         });
         reset();
         setDialogOpen(false);
@@ -94,14 +94,14 @@ export function QuestionForm({
       } else {
         toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: message,
         });
       }
     });
   }
 
-  const pageTitle = editQuestion ? "Edit Question" : "Add Question";
+  const pageTitle = editQuestion ? "Редактировать вопрос" : "Добавить вопрос";
 
   const closeDialog = () => {
     reset();
@@ -126,9 +126,9 @@ export function QuestionForm({
                 name="question"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Question *</FormLabel>
+                    <FormLabel>Вопрос *</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter interview question" {...field} />
+                      <Input placeholder="Введите вопрос" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -140,7 +140,7 @@ export function QuestionForm({
                 name="tagIds"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Skill Tags</FormLabel>
+                    <FormLabel>Теги навыков</FormLabel>
                     <FormControl>
                       <TagInput
                         availableTags={availableTags}
@@ -158,7 +158,7 @@ export function QuestionForm({
                 name="answer"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Answer</FormLabel>
+                    <FormLabel>Ответ</FormLabel>
                     <FormControl>
                       <TiptapEditor field={field} />
                     </FormControl>
@@ -174,10 +174,10 @@ export function QuestionForm({
                   className="mt-2 md:mt-0"
                   onClick={closeDialog}
                 >
-                  Cancel
+                  Отмена
                 </Button>
                 <Button type="submit">
-                  Save
+                  Сохранить
                   {isPending && (
                     <Loader className="h-4 w-4 shrink-0 spinner ml-2" />
                   )}

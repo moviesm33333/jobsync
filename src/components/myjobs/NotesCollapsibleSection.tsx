@@ -79,7 +79,7 @@ export function NotesCollapsibleSection({
       if (result.success) {
         toast({
           variant: "success",
-          description: `Note ${editingNote ? "updated" : "added"} successfully`,
+          description: editingNote ? "Заметка обновлена" : "Заметка добавлена",
         });
         handleCancel();
         loadNotes();

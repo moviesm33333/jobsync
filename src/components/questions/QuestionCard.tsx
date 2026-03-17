@@ -70,7 +70,7 @@ export function QuestionCard({
                 }}
               >
                 <Pencil className="mr-2 h-4 w-4" />
-                Edit
+                Редактировать
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="text-destructive"
@@ -80,7 +80,7 @@ export function QuestionCard({
                 }}
               >
                 <Trash2 className="mr-2 h-4 w-4" />
-                Delete
+                Удалить
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -116,7 +116,7 @@ export function QuestionCard({
               setExpanded(!expanded);
             }}
           >
-            {expanded ? "Show less" : "Show more"}
+            {expanded ? "Свернуть" : "Развернуть"}
           </button>
         )}
       </div>
@@ -124,19 +124,19 @@ export function QuestionCard({
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Question</AlertDialogTitle>
+            <AlertDialogTitle>Удалить вопрос</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this question? This action cannot
-              be undone.
+              Вы уверены, что хотите удалить этот вопрос? Это действие нельзя
+              отменить.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Отмена</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => onDelete(question.id)}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              Delete
+              Удалить
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

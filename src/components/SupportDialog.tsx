@@ -22,7 +22,7 @@ export function SupportDialog({ open, onOpenChange }: SupportDialogProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Support</DialogTitle>
+          <DialogTitle>Поддержка</DialogTitle>
           <DialogDescription>
             <a
               href="https://github.com/Gsync/jobsync/issues"
@@ -36,13 +36,13 @@ export function SupportDialog({ open, onOpenChange }: SupportDialogProps) {
         </DialogHeader>
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <h3 className="text-sm font-semibold">Version</h3>
+            <h3 className="text-sm font-semibold">Версия</h3>
             <p className="text-sm text-muted-foreground">v{appVersion}</p>
           </div>
           <div className="space-y-2">
-            <h3 className="text-sm font-semibold">Copyright</h3>
+            <h3 className="text-sm font-semibold">Авторские права</h3>
             <p className="text-sm text-muted-foreground">
-              © {currentYear} JobSync. All rights reserved.
+              © {currentYear} JobSync. Все права защищены.
             </p>
           </div>
         </div>

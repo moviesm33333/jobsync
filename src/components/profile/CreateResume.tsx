@@ -42,7 +42,7 @@ function CreateResume({
 }: CreateResumeProps) {
   const [isPending, startTransition] = useTransition();
 
-  const pageTitle = resumeToEdit ? "Edit Resume Title" : "Create Resume";
+  const pageTitle = resumeToEdit ? "Редактировать название резюме" : "Создать резюме";
 
   const form = useForm<z.infer<typeof CreateResumeFormSchema>>({
     resolver: zodResolver(CreateResumeFormSchema),
@@ -87,7 +87,7 @@ function CreateResume({
       if (!response.success) {
         toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: response?.message,
         });
       } else {
@@ -99,9 +99,9 @@ function CreateResume({
         }
         toast({
           variant: "success",
-          description: `Resume title has been ${
-            resumeToEdit ? "updated" : "created"
-          } successfully`,
+          description: `Название резюме успешно ${
+            resumeToEdit ? "обновлено" : "создано"
+          }`,
         });
       }
     });
@@ -128,7 +128,7 @@ function CreateResume({
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Resume Title</FormLabel>
+                    <FormLabel>Название резюме</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -155,7 +155,7 @@ function CreateResume({
                 name="file"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Upload Resume (Optional)</FormLabel>
+                    <FormLabel>Загрузить резюме (необязательно)</FormLabel>
                     <FormControl>
                       <Input
                         type="file"
@@ -186,11 +186,11 @@ function CreateResume({
                     className="mt-2 md:mt-0 w-full"
                     onClick={closeDialog}
                   >
-                    Cancel
+                    Отмена
                   </Button>
                 </div>
                 <Button type="submit" disabled={!isValid}>
-                  Save
+                  Сохранить
                   {isPending && <Loader className="h-4 w-4 shrink-0 spinner" />}
                 </Button>
               </DialogFooter>

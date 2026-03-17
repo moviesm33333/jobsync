@@ -41,7 +41,7 @@ const ProfileContainer = () => {
         setLoading(false);
         return toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: message,
         });
       }
@@ -77,7 +77,7 @@ const ProfileContainer = () => {
   return (
     <Card>
       <CardHeader className="flex-row justify-between items-center">
-        <CardTitle>Profile</CardTitle>
+        <CardTitle>Профиль</CardTitle>
         <div className="flex items-center">
           <Button
             size="sm"
@@ -87,7 +87,7 @@ const ProfileContainer = () => {
           >
             <PlusCircle className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              New Resume
+              Новое резюме
             </span>
           </Button>
           <CreateResume
@@ -112,7 +112,7 @@ const ProfileContainer = () => {
               <RecordsCount
                 count={resumes.length}
                 total={totalResumes}
-                label="resumes"
+                label="резюме"
               />
               {totalResumes > APP_CONSTANTS.RECORDS_PER_PAGE && (
                 <RecordsPerPageSelector
@@ -132,7 +132,7 @@ const ProfileContainer = () => {
               disabled={loading}
               className="btn btn-primary"
             >
-              {loading ? "Loading..." : "Load More"}
+              {loading ? "Загрузка..." : "Загрузить ещё"}
             </Button>
           </div>
         )}

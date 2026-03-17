@@ -113,7 +113,7 @@ function TasksContainer({
       } else {
         toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: message,
         });
         setLoading(false);
@@ -132,13 +132,13 @@ function TasksContainer({
     if (success) {
       toast({
         variant: "success",
-        description: "Task has been deleted successfully",
+        description: "Задача удалена",
       });
       reloadTasks();
     } else {
       toast({
         variant: "destructive",
-        title: "Error!",
+        title: "Ошибка!",
         description: message,
       });
     }
@@ -149,7 +149,7 @@ function TasksContainer({
     if (!success) {
       toast({
         variant: "destructive",
-        title: "Error!",
+        title: "Ошибка!",
         description: message,
       });
       return;
@@ -173,14 +173,14 @@ function TasksContainer({
     if (success) {
       toast({
         variant: "success",
-        description: "Task status updated successfully",
+        description: "Статус задачи обновлён",
       });
       onTasksChanged?.();
     } else {
       setTasks(originalTasks);
       toast({
         variant: "destructive",
-        title: "Error!",
+        title: "Ошибка!",
         description: message,
       });
     }
@@ -192,13 +192,13 @@ function TasksContainer({
       await refreshCurrentActivity();
       toast({
         variant: "success",
-        description: "Activity started from task",
+        description: "Активность запущена из задачи",
       });
       router.push("/dashboard/activities");
     } else {
       toast({
         variant: "destructive",
-        title: "Error!",
+        title: "Ошибка!",
         description: message,
       });
     }
@@ -251,14 +251,14 @@ function TasksContainer({
     <>
       <Card x-chunk="dashboard-tasks-chunk-0" className="h-full">
         <CardHeader className="flex-row justify-between items-center">
-          <CardTitle>My Tasks</CardTitle>
+          <CardTitle>Мои задачи</CardTitle>
           <div className="flex items-center">
             <div className="ml-auto flex items-center gap-2">
               <div className="relative">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder="Search tasks..."
+                  placeholder="Поиск задач..."
                   className="pl-8 h-8 w-[150px] lg:w-[200px]"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -275,7 +275,7 @@ function TasksContainer({
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+                    <DropdownMenuLabel>Фильтр по статусу</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     {(Object.keys(TASK_STATUSES) as TaskStatus[]).map(
                       (status) => (
@@ -302,18 +302,18 @@ function TasksContainer({
                 <Select value={groupBy} onValueChange={onGroupByChange}>
                   <SelectTrigger className="w-[140px] h-8">
                     <ListFilter className="h-3.5 w-3.5" />
-                    <SelectValue placeholder="Group by" />
+                    <SelectValue placeholder="Группировать" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>Group by</SelectLabel>
+                      <SelectLabel>Группировать</SelectLabel>
                       <SelectSeparator />
-                      <SelectItem value="none">None</SelectItem>
-                      <SelectItem value="createdDate">Created Date</SelectItem>
-                      <SelectItem value="dueDate">Due Date</SelectItem>
-                      <SelectItem value="updatedDate">Updated Date</SelectItem>
+                      <SelectItem value="none">Нет</SelectItem>
+                      <SelectItem value="createdDate">Дата создания</SelectItem>
+                      <SelectItem value="dueDate">Срок</SelectItem>
+                      <SelectItem value="updatedDate">Дата обновления</SelectItem>
                       <SelectItem value="activityType">
-                        Activity Type
+                        Тип активности
                       </SelectItem>
                     </SelectGroup>
                   </SelectContent>
@@ -325,7 +325,7 @@ function TasksContainer({
                   className="h-8 gap-1 w-[140px]"
                 >
                   <ListFilter className="h-3.5 w-3.5" />
-                  <span>Group by</span>
+                  <span>Группировать</span>
                 </Button>
               )}
               <Button
@@ -337,7 +337,7 @@ function TasksContainer({
               >
                 <PlusCircle className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  New Task
+                  Новая задача
                 </span>
               </Button>
             </div>
@@ -359,7 +359,7 @@ function TasksContainer({
                 <RecordsCount
                   count={tasks.length}
                   total={totalTasks}
-                  label="tasks"
+                  label="задач"
                 />
                 {totalTasks > APP_CONSTANTS.RECORDS_PER_PAGE && (
                   <RecordsPerPageSelector
@@ -372,7 +372,7 @@ function TasksContainer({
           )}
           {!loading && tasks.length === 0 && (
             <div className="text-center py-8 text-muted-foreground">
-              No tasks found. Create your first task to get started.
+              Задачи не найдены. Создайте первую задачу.
             </div>
           )}
           {tasks.length < totalTasks && (
@@ -391,7 +391,7 @@ function TasksContainer({
                 disabled={loading}
                 className="btn btn-primary"
               >
-                {loading ? "Loading..." : "Load More"}
+                {loading ? "Загрузка..." : "Загрузить ещё"}
               </Button>
             </div>
           )}

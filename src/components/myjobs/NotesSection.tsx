@@ -54,13 +54,13 @@ export function NotesSection({ jobId }: NotesSectionProps) {
     if (result.success) {
       toast({
         variant: "success",
-        description: "Note deleted successfully",
+        description: "Заметка удалена",
       });
       loadNotes();
     } else {
       toast({
         variant: "destructive",
-        title: "Error!",
+        title: "Ошибка!",
         description: result.message,
       });
     }
@@ -82,7 +82,7 @@ export function NotesSection({ jobId }: NotesSectionProps) {
         <div className="flex items-center justify-between">
           <CollapsibleTrigger className="flex items-center gap-2 hover:opacity-80">
             <StickyNote className="h-4 w-4" />
-            <span className="font-medium">Notes</span>
+            <span className="font-medium">Заметки</span>
             {notes.length > 0 && (
               <Badge variant="secondary" className="text-xs">
                 {notes.length}
@@ -99,12 +99,12 @@ export function NotesSection({ jobId }: NotesSectionProps) {
             onClick={handleAddNote}
           >
             <PlusCircle className="h-3.5 w-3.5" />
-            New Note
+            Новая заметка
           </Button>
         </div>
         <CollapsibleContent className="mt-3 space-y-3">
           {notes.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No notes yet.</p>
+            <p className="text-sm text-muted-foreground">Заметок пока нет.</p>
           ) : (
             notes.map((note) => (
               <NoteCard

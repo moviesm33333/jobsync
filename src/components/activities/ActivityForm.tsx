@@ -152,7 +152,7 @@ const ActivityFormComponent = ({
             name="activityName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Activity Name</FormLabel>
+                <FormLabel>Название</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -178,7 +178,7 @@ const ActivityFormComponent = ({
             name="activityType"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Activity Type</FormLabel>
+                <FormLabel>Тип активности</FormLabel>
                 <FormControl>
                   <Combobox options={activityTypes} field={field} creatable />
                 </FormControl>
@@ -210,7 +210,7 @@ const ActivityFormComponent = ({
             name="startTime"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Start Time</FormLabel>
+                <FormLabel>Начало</FormLabel>
                 <FormControl>
                   <Input {...field} placeholder="hh:mm AM/PM" />
                 </FormControl>
@@ -249,7 +249,7 @@ const ActivityFormComponent = ({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  End Time
+                  Конец
                   <span className="text-sm">
                     {duration && (
                       <span>
@@ -287,7 +287,7 @@ const ActivityFormComponent = ({
             name="description"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel id="job-description-label">Description</FormLabel>
+                <FormLabel id="job-description-label">Описание</FormLabel>
                 <FormControl>
                   <TiptapEditor field={field} />
                 </FormControl>
@@ -306,11 +306,11 @@ const ActivityFormComponent = ({
                 className="mt-2 md:mt-0 w-full"
                 onClick={() => onClose()}
               >
-                Cancel
+                Отмена
               </Button>
             </div>
             <Button type="submit" data-testid="save-activity-btn">
-              Save
+              Сохранить
               {/* {isPending && <Loader className="h-4 w-4 shrink-0 spinner" />} */}
             </Button>
           </DialogFooter>

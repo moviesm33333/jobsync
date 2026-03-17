@@ -55,15 +55,15 @@ function ActivitiesContainer() {
         } else {
           toast({
             variant: "destructive",
-            title: "Error!",
+            title: "Ошибка!",
             description: message,
           });
         }
       } catch (error) {
         toast({
           variant: "destructive",
-          title: "Error!",
-          description: "Failed to load activities. Please try again.",
+          title: "Ошибка!",
+          description: "Не удалось загрузить. Попробуйте снова.",
         });
       } finally {
         setLoading(false);
@@ -112,13 +112,13 @@ function ActivitiesContainer() {
   return (
     <Card>
       <CardHeader className="flex-row justify-between items-center">
-        <CardTitle>Activities</CardTitle>
+        <CardTitle>Активность</CardTitle>
         <div className="flex items-center gap-2">
           <div className="relative">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Search activities..."
+              placeholder="Поиск активности..."
               className="pl-8 h-8 w-[150px] lg:w-[200px]"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -134,13 +134,13 @@ function ActivitiesContainer() {
               >
                 <PlusCircle className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  New Activity
+                  Новая запись
                 </span>
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[725px] max-h-[90vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle>Add New Activity</DialogTitle>
+                <DialogTitle>Добавить запись</DialogTitle>
               </DialogHeader>
               <div className="p-4">
                 <ActivityForm
@@ -166,7 +166,7 @@ function ActivitiesContainer() {
               <RecordsCount
                 count={activitiesList.length}
                 total={totalActivities}
-                label="activities"
+                label="записей"
               />
               {totalActivities > APP_CONSTANTS.RECORDS_PER_PAGE && (
                 <RecordsPerPageSelector
@@ -192,7 +192,7 @@ function ActivitiesContainer() {
               disabled={loading}
               className="btn btn-primary"
             >
-              {loading ? "Loading..." : "Load More"}
+              {loading ? "Загрузка..." : "Загрузить ещё"}
             </Button>
           </div>
         )}

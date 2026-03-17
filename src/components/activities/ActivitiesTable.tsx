@@ -58,13 +58,13 @@ function ActivitiesTable({
     if (success) {
       toast({
         variant: "success",
-        description: `Activity has been deleted successfully`,
+        description: `Запись удалена`,
       });
       reloadActivities();
     } else {
       toast({
         variant: "destructive",
-        title: "Error!",
+        title: "Ошибка!",
         description: message,
       });
     }
@@ -77,9 +77,9 @@ function ActivitiesTable({
             <TableHead className="hidden md:table-cell">Date</TableHead>
             <TableHead>Activity</TableHead>
             <TableHead>Project(Activity Type)</TableHead>
-            <TableHead className="hidden md:table-cell">Start Time</TableHead>
-            <TableHead className="hidden md:table-cell">End Time</TableHead>
-            <TableHead>Duration</TableHead>
+            <TableHead className="hidden md:table-cell">Начало</TableHead>
+            <TableHead className="hidden md:table-cell">Конец</TableHead>
+            <TableHead>Длительность</TableHead>
             <TableHead>
               <span>Actions</span>
             </TableHead>
@@ -123,7 +123,7 @@ function ActivitiesTable({
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-[200px]">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuLabel>Действия</DropdownMenuLabel>
                       <DropdownMenuGroup>
                         <DropdownMenuItem
                           className="cursor-pointer text-green-600"
@@ -131,21 +131,21 @@ function ActivitiesTable({
                           disabled={activityExist}
                         >
                           <CirclePlay className="mr-2 h-4 w-4" />
-                          Start Activity
+                          Начать
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           className="text-red-600 cursor-pointer"
                           onClick={() => onDeleteActivity(activity.id!)}
                         >
                           <Trash className="mr-2 h-4 w-4" />
-                          Delete
+                          Удалить
                         </DropdownMenuItem>
                       </DropdownMenuGroup>
                     </DropdownMenuContent>
                   </DropdownMenu>
                   {!activityExist && (
                     <Button
-                      title="Start Activity"
+                      title="Начать"
                       aria-haspopup="true"
                       size="icon"
                       variant="ghost"

@@ -9,7 +9,7 @@ export function GlobalActivityBanner() {
   if (!currentActivity) return null;
 
   const activityType = currentActivity.activityType as ActivityType;
-  const message = `${activityType?.label || "Activity"} - ${currentActivity.activityName}`;
+  const message = `${activityType?.label || "Активность"} - ${currentActivity.activityName}`;
 
   return (
     <div className="px-4 sm:px-6">

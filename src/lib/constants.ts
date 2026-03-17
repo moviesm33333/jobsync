@@ -25,71 +25,71 @@ export const SCHEDULER_CONSTANTS = {
 
 export const JOB_SOURCES = [
   { label: "Indeed", value: "indeed" },
-  { label: "Linkedin", value: "linkedin" },
+  { label: "LinkedIn", value: "linkedin" },
   { label: "Monster", value: "monster" },
   { label: "Glassdoor", value: "glassdoor" },
-  { label: "Company Career page", value: "careerpage" },
+  { label: "Сайт компании", value: "careerpage" },
   { label: "Google", value: "google" },
   { label: "ZipRecruiter", value: "ziprecruiter" },
   { label: "Job Street", value: "jobstreet" },
-  { label: "Other", value: "other" },
+  { label: "Другое", value: "other" },
 ] as const;
 
 export const JOB_STATUSES = [
-  { label: "Draft", value: "draft" },
-  { label: "Applied", value: "applied" },
-  { label: "Interview", value: "interview" },
-  { label: "Offer", value: "offer" },
-  { label: "Rejected", value: "rejected" },
-  { label: "Expired", value: "expired" },
-  { label: "Archived", value: "archived" },
+  { label: "Черновик", value: "draft" },
+  { label: "Отклик", value: "applied" },
+  { label: "Собеседование", value: "interview" },
+  { label: "Оффер", value: "offer" },
+  { label: "Отказ", value: "rejected" },
+  { label: "Истекла", value: "expired" },
+  { label: "Архив", value: "archived" },
 ] as const;
 
 export const SIDEBAR_LINKS = [
   {
     icon: LayoutDashboard,
     route: "/dashboard",
-    label: "Dashboard",
+    label: "Главная",
   },
   {
     icon: BriefcaseBusiness,
     route: "/dashboard/myjobs",
-    label: "My Jobs",
+    label: "Мои вакансии",
   },
   {
     icon: Zap,
     route: "/dashboard/automations",
-    label: "Automations",
+    label: "Автоматизация",
   },
   {
     icon: SquareCheckBig,
     route: "/dashboard/tasks",
-    label: "Tasks",
+    label: "Задачи",
   },
   {
     icon: CalendarClock,
     route: "/dashboard/activities",
-    label: "Activities",
+    label: "Активность",
   },
   {
     icon: BookOpen,
     route: "/dashboard/questions",
-    label: "Question Bank",
+    label: "База вопросов",
   },
   {
     icon: UserRound,
     route: "/dashboard/profile",
-    label: "Profile",
+    label: "Профиль",
   },
   {
     icon: Sheet,
     route: "/dashboard/admin",
-    label: "Administration",
+    label: "Управление",
   },
   {
     icon: Wrench,
     route: "/dashboard/developer",
-    label: "Developer Options",
+    label: "Для разработчика",
     devOnly: true,
   },
 ];

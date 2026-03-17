@@ -79,22 +79,22 @@ const priorityConfig: Record<
   low: {
     icon: ArrowDown,
     color: "text-green-600 bg-green-100 dark:bg-green-900/30",
-    label: "Low",
+    label: "Низкий",
   },
   medium: {
     icon: ArrowRight,
     color: "text-cyan-600 bg-cyan-100 dark:bg-cyan-900/30",
-    label: "Medium",
+    label: "Средний",
   },
   high: {
     icon: ArrowUp,
     color: "text-orange-600 bg-orange-100 dark:bg-orange-900/30",
-    label: "High",
+    label: "Высокий",
   },
   critical: {
     icon: Flame,
     color: "text-red-600 bg-red-100 dark:bg-red-900/30",
-    label: "Critical",
+    label: "Критический",
   },
 };
 
@@ -294,20 +294,20 @@ function TasksTable({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[200px]">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Действия</DropdownMenuLabel>
             <DropdownMenuGroup>
               <DropdownMenuItem
                 className="cursor-pointer"
                 onClick={() => editTask(task.id)}
               >
                 <Pencil className="mr-2 h-4 w-4" />
-                Edit Task
+                Редактировать
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
                   <Tags className="mr-2 h-4 w-4" />
-                  Change Status
+                  Изменить статус
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
                   <DropdownMenuSubContent className="p-0">
@@ -333,7 +333,7 @@ function TasksTable({
                 disabled={!!task.activity}
               >
                 <CirclePlay className="mr-2 h-4 w-4" />
-                Start Activity
+                Начать
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
@@ -341,7 +341,7 @@ function TasksTable({
                 onClick={() => onDeleteTask(task.id)}
               >
                 <Trash className="mr-2 h-4 w-4" />
-                Delete
+                Удалить
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>
@@ -350,7 +350,7 @@ function TasksTable({
       <TableCell className="py-1 px-1">
         {!task.activity && (
           <Button
-            title="Start Activity"
+            title="Начать"
             aria-haspopup="true"
             size="icon"
             variant="ghost"
@@ -373,11 +373,11 @@ function TasksTable({
         <TableHead className="w-[24px] h-9 px-1">
           <span className="sr-only">Complete</span>
         </TableHead>
-        <TableHead className="h-9 px-2">Title</TableHead>
-        <TableHead className="h-9 px-2">Activity Type</TableHead>
+        <TableHead className="h-9 px-2">Название задачи</TableHead>
+        <TableHead className="h-9 px-2">Тип активности</TableHead>
         <TableHead className="hidden md:table-cell h-9 px-2">Status</TableHead>
         <TableHead className="hidden md:table-cell h-9 px-2 text-center">
-          Priority
+          Приоритет
         </TableHead>
         <TableHead className="hidden md:table-cell h-9 px-2 text-center">
           % Complete
@@ -395,7 +395,7 @@ function TasksTable({
   if (tasks.length === 0) {
     return (
       <div className="text-center py-8 text-muted-foreground">
-        No tasks found. Create your first task to get started.
+        Задачи не найдены. Создайте первую задачу.
       </div>
     );
   }

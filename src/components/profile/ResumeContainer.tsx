@@ -51,7 +51,7 @@ function ResumeContainer({ resume }: { resume: Resume }) {
     <>
       <Card>
         <CardHeader className="flex-row justify-between items-center">
-          <CardTitle>Resume</CardTitle>
+          <CardTitle>Резюме</CardTitle>
           <CardDescription>
             {resume.FileId && resume.File?.filePath
               ? DownloadFileButton(

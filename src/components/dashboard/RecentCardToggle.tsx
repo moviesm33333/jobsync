@@ -24,10 +24,10 @@ interface RecentCardToggleProps {
 function formatDuration(totalMinutes: number) {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
-  return totalMinutes === 0 ? "0min" : `${hours}h ${minutes}min`;
+  return totalMinutes === 0 ? "0мин" : `${hours}ч ${minutes}мин`;
 }
 
-const tabs = ["Jobs", "Activities"] as const;
+const tabs = ["Вакансии", "Активность"] as const;
 
 export default function RecentCardToggle({
   jobs,
@@ -40,7 +40,7 @@ export default function RecentCardToggle({
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-green-600">
-            Recent {tabs[activeIndex]}
+            Последние: {tabs[activeIndex]}
           </CardTitle>
           <div className="flex rounded-md border text-xs">
             {tabs.map((tab, index) => (

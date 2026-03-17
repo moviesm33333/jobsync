@@ -53,8 +53,8 @@ function ResumeTable({ resumes, editResume, reloadResumes }: ResumeTableProps) {
     if (resume._count?.Job! > 0)
       return toast({
         variant: "destructive",
-        title: "Error!",
-        description: "Number of jobs using resume must be 0!",
+        title: "Ошибка!",
+        description: "Количество вакансий, использующих резюме, должно быть 0!",
       });
     const { success, message } = await deleteResumeById(
       resume.id,
@@ -63,13 +63,13 @@ function ResumeTable({ resumes, editResume, reloadResumes }: ResumeTableProps) {
     if (success) {
       toast({
         variant: "success",
-        description: `Resume has been deleted successfully`,
+        description: `Резюме успешно удалено`,
       });
       reloadResumes();
     } else {
       toast({
         variant: "destructive",
-        title: "Error!",
+        title: "Ошибка!",
         description: message,
       });
     }
@@ -79,11 +79,11 @@ function ResumeTable({ resumes, editResume, reloadResumes }: ResumeTableProps) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Resume Title</TableHead>
-            <TableHead>Created</TableHead>
-            <TableHead className="hidden md:table-cell">Updated</TableHead>
-            <TableHead>Jobs</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead>Название резюме</TableHead>
+            <TableHead>Создано</TableHead>
+            <TableHead className="hidden md:table-cell">Обновлено</TableHead>
+            <TableHead>Вакансии</TableHead>
+            <TableHead>Действия</TableHead>
             <TableHead>
               <span className="sr-only">Actions</span>
             </TableHead>
@@ -125,18 +125,18 @@ function ResumeTable({ resumes, editResume, reloadResumes }: ResumeTableProps) {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuLabel>Действия</DropdownMenuLabel>
                       <DropdownMenuItem
                         className="cursor-pointer"
                         onClick={() => editResume(resume)}
                       >
                         <Pencil className="mr-2 h-4 w-4" />
-                        Edit Resume Title
+                        Редактировать название резюме
                       </DropdownMenuItem>
                       <Link href={`/dashboard/profile/resume/${resume.id}`}>
                         <DropdownMenuItem className="cursor-pointer">
                           <FilePenLine className="mr-2 h-4 w-4" />
-                          View/Edit Resume
+                          Просмотр/Редактирование резюме
                         </DropdownMenuItem>
                       </Link>
                       <DropdownMenuItem
@@ -144,7 +144,7 @@ function ResumeTable({ resumes, editResume, reloadResumes }: ResumeTableProps) {
                         onClick={() => onDeleteResume(resume)}
                       >
                         <Trash className="mr-2 h-4 w-4" />
-                        Delete
+                        Удалить
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -155,7 +155,7 @@ function ResumeTable({ resumes, editResume, reloadResumes }: ResumeTableProps) {
         </TableBody>
       </Table>
       <DeleteAlertDialog
-        pageTitle="resume"
+        pageTitle="резюме"
         open={alertOpen}
         onOpenChange={setAlertOpen}
         onDelete={() => deleteResume(resumeToDelete!)}

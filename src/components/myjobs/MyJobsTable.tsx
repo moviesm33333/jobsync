@@ -74,15 +74,15 @@ function MyJobsTable({
         <TableHeader>
           <TableRow>
             <TableHead className="hidden w-[100px] sm:table-cell">
-              <span className="sr-only">Company Logo</span>
+              <span className="sr-only">Логотип компании</span>
             </TableHead>
-            <TableHead className="hidden md:table-cell">Date Applied</TableHead>
-            <TableHead>Title</TableHead>
-            <TableHead>Company</TableHead>
-            <TableHead className="hidden md:table-cell">Location</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="hidden md:table-cell">Match</TableHead>
-            <TableHead className="hidden md:table-cell">Source</TableHead>
+            <TableHead className="hidden md:table-cell">Дата отклика</TableHead>
+            <TableHead>Название</TableHead>
+            <TableHead>Компания</TableHead>
+            <TableHead className="hidden md:table-cell">Местоположение</TableHead>
+            <TableHead>Статус</TableHead>
+            <TableHead className="hidden md:table-cell">Совпадение</TableHead>
+            <TableHead className="hidden md:table-cell">Источник</TableHead>
             <TableHead>
               <span className="sr-only">Actions</span>
             </TableHead>
@@ -95,13 +95,13 @@ function MyJobsTable({
                 <TableCell className="hidden sm:table-cell">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    alt="Company logo"
+                    alt="Логотип компании"
                     className="aspect-square rounded-md object-cover h-8 w-8"
                     src={job.Company?.logoUrl || "/images/jobsync-logo.svg"}
                   />
                 </TableCell>
                 <TableCell className="hidden md:table-cell w-[120px]">
-                  {job.appliedDate ? format(job.appliedDate, "PP") : "N/A"}
+                  {job.appliedDate ? format(job.appliedDate, "PP") : "—"}
                 </TableCell>
                 <TableCell
                   className="font-medium cursor-pointer max-w-[120px] sm:max-w-none"
@@ -159,34 +159,34 @@ function MyJobsTable({
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-[200px]">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuLabel>Действия</DropdownMenuLabel>
                       <DropdownMenuGroup>
                         <DropdownMenuItem
                           className="cursor-pointer"
                           onClick={() => viewJobDetails(job?.id)}
                         >
                           <ListCollapse className="mr-2 h-4 w-4" />
-                          View Details
+                          Подробнее
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           className="cursor-pointer"
                           onClick={() => editJob(job.id)}
                         >
                           <Pencil className="mr-2 h-4 w-4" />
-                          Edit Job
+                          Редактировать вакансию
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           className="cursor-pointer"
                           onClick={() => onAddNote(job.id)}
                         >
                           <StickyNote className="mr-2 h-4 w-4" />
-                          Add a Note
+                          Добавить заметку
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuSub>
                           <DropdownMenuSubTrigger>
                             <Tags className="mr-2 h-4 w-4" />
-                            Change status
+                            Изменить статус
                           </DropdownMenuSubTrigger>
                           <DropdownMenuPortal>
                             <DropdownMenuSubContent className="p-0">
@@ -229,7 +229,7 @@ function MyJobsTable({
                           onClick={() => onDeleteJob(job.id)}
                         >
                           <Trash className="mr-2 h-4 w-4" />
-                          Delete
+                          Удалить
                         </DropdownMenuItem>
                       </DropdownMenuGroup>
                     </DropdownMenuContent>

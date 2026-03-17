@@ -120,7 +120,7 @@ function AiSettings() {
       if (!response.ok) {
         if (selectedModel.provider === AiProvider.OLLAMA) {
           setFetchError(
-            "Failed to fetch Ollama models. Make sure Ollama is running.",
+            "Не удалось загрузить модели Ollama. Убедитесь что Ollama запущена.",
           );
         }
         return;
@@ -134,7 +134,7 @@ function AiSettings() {
       console.error("Error fetching Ollama models:", error);
       if (selectedModel.provider === AiProvider.OLLAMA) {
         setFetchError(
-          "Failed to fetch Ollama models. Make sure Ollama is running.",
+          "Не удалось загрузить модели Ollama. Убедитесь что Ollama запущена.",
         );
       }
     } finally {
@@ -167,7 +167,7 @@ function AiSettings() {
       if (!response.ok) {
         if (selectedModel.provider === AiProvider.OLLAMA) {
           setRunningModelError(
-            "No model is currently running. Please start a model first.",
+            "Ни одна модель не запущена. Сначала запустите модель.",
           );
         }
         return;
@@ -192,7 +192,7 @@ function AiSettings() {
       } else {
         if (selectedModel.provider === AiProvider.OLLAMA) {
           setRunningModelError(
-            "No model is currently running. Please run the ollama model first.",
+            "Ни одна модель не запущена. Сначала запустите модель.",
           );
         }
       }
@@ -200,7 +200,7 @@ function AiSettings() {
       console.error("Error fetching running model:", error);
       if (selectedModel.provider === AiProvider.OLLAMA) {
         setRunningModelError(
-          "No model is currently running. Please run the ollama model first.",
+          "Ни одна модель не запущена. Сначала запустите модель.",
         );
       }
     }
@@ -245,8 +245,8 @@ function AiSettings() {
     if (!selectedModel.model) {
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "Please select a model to save.",
+        title: "Ошибка",
+        description: "Выберите модель для сохранения.",
       });
       return;
     }
@@ -259,22 +259,22 @@ function AiSettings() {
       if (result.success) {
         toast({
           variant: "success",
-          title: "Saved!",
-          description: "AI Settings saved successfully.",
+          title: "Сохранено!",
+          description: "Настройки ИИ сохранены.",
         });
       } else {
         toast({
           variant: "destructive",
-          title: "Error",
-          description: result.message || "Failed to save AI settings.",
+          title: "Ошибка",
+          description: result.message || "Не удалось сохранить настройки ИИ.",
         });
       }
     } catch (error) {
       console.error("Error saving AI settings:", error);
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "Failed to save AI settings.",
+        title: "Ошибка",
+        description: "Не удалось сохранить настройки ИИ.",
       });
     } finally {
       setIsSaving(false);
@@ -284,14 +284,14 @@ function AiSettings() {
     return (
       <div className="space-y-4">
         <div>
-          <h3 className="text-lg font-medium">AI Provider</h3>
+          <h3 className="text-lg font-medium">ИИ-провайдер</h3>
           <p className="text-sm text-muted-foreground">
-            Configure your AI service provider and model.
+            Настройте провайдера ИИ и модель.
           </p>
         </div>
         <div className="flex items-center gap-2">
           <Loader2 className="h-4 w-4 animate-spin" />
-          <span>Loading settings...</span>
+          <span>Загрузка настроек...</span>
         </div>
       </div>
     );
@@ -300,14 +300,14 @@ function AiSettings() {
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="text-lg font-medium">AI Provider</h3>
+        <h3 className="text-lg font-medium">ИИ-провайдер</h3>
         <p className="text-sm text-muted-foreground">
-          Configure your AI service provider and model.
+          Настройте провайдера ИИ и модель.
         </p>
       </div>
       <div>
         <Label className="my-4" htmlFor="ai-provider">
-          AI Service Provider
+          Провайдер ИИ
         </Label>
         <Select
           value={selectedModel.provider}
@@ -315,10 +315,10 @@ function AiSettings() {
         >
           <SelectTrigger
             id="ai-provider"
-            aria-label="Select AI provider"
+            aria-label="Выберите провайдера"
             className="w-[180px]"
           >
-            <SelectValue placeholder="Select AI Service Provider" />
+            <SelectValue placeholder="Выберите провайдера" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -333,7 +333,7 @@ function AiSettings() {
       </div>
       <div>
         <Label className="my-4" htmlFor="ai-model">
-          Model
+          Модель
         </Label>
         <div className="flex items-start gap-2">
           <Select
@@ -343,12 +343,12 @@ function AiSettings() {
           >
             <SelectTrigger
               id="ai-model"
-              aria-label="Select Model"
+              aria-label="Выберите модель"
               className="w-[180px]"
             >
               <SelectValue
                 placeholder={
-                  isLoadingModels ? "Loading models..." : "Select AI Model"
+                  isLoadingModels ? "Загрузка моделей..." : "Выберите модель"
                 }
               />
             </SelectTrigger>
@@ -372,7 +372,7 @@ function AiSettings() {
         {runningModelName && (
           <div className="flex items-center gap-1 text-green-600 text-sm mt-2">
             <CheckCircle className="h-4 w-4 flex-shrink-0" />
-            <span>{runningModelName} is running</span>
+            <span>{runningModelName} запущена</span>
           </div>
         )}
         {runningModelError && (
@@ -394,7 +394,7 @@ function AiSettings() {
         }
       >
         {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-        Save
+        Сохранить
       </Button>
     </div>
   );

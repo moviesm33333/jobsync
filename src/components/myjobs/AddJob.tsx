@@ -154,7 +154,7 @@ export function AddJob({
       if (!success) {
         toast({
           variant: "destructive",
-          title: "Error!",
+          title: "Ошибка!",
           description: message,
         });
       }
@@ -162,13 +162,11 @@ export function AddJob({
     });
     toast({
       variant: "success",
-      description: `Job has been ${
-        editJob ? "updated" : "created"
-      } successfully`,
+      description: editJob ? "Вакансия обновлена" : "Вакансия создана",
     });
   }
 
-  const pageTitle = editJob ? "Edit Job" : "Add Job";
+  const pageTitle = editJob ? "Редактировать вакансию" : "Добавить вакансию";
 
   const addJobForm = () => {
     reset();
@@ -204,7 +202,7 @@ export function AddJob({
       >
         <PlusCircle className="h-3.5 w-3.5" />
         <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-          New Job
+          Новая вакансия
         </span>
       </Button>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -227,10 +225,10 @@ export function AddJob({
                     name="jobUrl"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
-                        <FormLabel>Job URL</FormLabel>
+                        <FormLabel>Ссылка на вакансию</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="Copy and paste job link here"
+                            placeholder="Вставьте ссылку на вакансию"
                             {...field}
                           />
                         </FormControl>
@@ -247,7 +245,7 @@ export function AddJob({
                     name="title"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
-                        <FormLabel>Job Title</FormLabel>
+                        <FormLabel>Должность</FormLabel>
                         <FormControl>
                           <Combobox
                             options={jobTitles}
@@ -267,7 +265,7 @@ export function AddJob({
                     name="company"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
-                        <FormLabel>Company</FormLabel>
+                        <FormLabel>Компания</FormLabel>
                         <FormControl>
                           <Combobox
                             options={companies}
@@ -287,7 +285,7 @@ export function AddJob({
                     name="location"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
-                        <FormLabel>Job Location</FormLabel>
+                        <FormLabel>Местоположение</FormLabel>
                         <FormControl>
                           <Combobox
                             options={locations}
@@ -307,7 +305,7 @@ export function AddJob({
                     name="type"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
-                        <FormLabel className="mb-2">Job Type</FormLabel>
+                        <FormLabel className="mb-2">Тип занятости</FormLabel>
                         <RadioGroup
                           name="type"
                           onValueChange={field.onChange}
@@ -340,7 +338,7 @@ export function AddJob({
                     name="source"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
-                        <FormLabel>Job Source</FormLabel>
+                        <FormLabel>Источник</FormLabel>
                         <Combobox
                           options={jobSources}
                           field={field}
@@ -374,7 +372,7 @@ export function AddJob({
                           htmlFor="applied-switch"
                           className="flex items-center ml-4 mb-2"
                         >
-                          {field.value ? "Applied" : "Not Applied"}
+                          {field.value ? "Откликнулся" : "Не откликнулся"}
                         </FormLabel>
 
                         <FormMessage />
@@ -390,9 +388,9 @@ export function AddJob({
                     name="status"
                     render={({ field }) => (
                       <FormItem className="flex flex-col [&>button]:capitalize">
-                        <FormLabel>Status</FormLabel>
+                        <FormLabel>Статус</FormLabel>
                         <SelectFormCtrl
-                          label="Job Status"
+                          label="Статус вакансии"
                           options={jobStatuses}
                           field={field}
                         />
@@ -409,7 +407,7 @@ export function AddJob({
                     name="dateApplied"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
-                        <FormLabel>Date Applied</FormLabel>
+                        <FormLabel>Дата отклика</FormLabel>
                         <DatePicker
                           field={field}
                           presets={false}
@@ -428,7 +426,7 @@ export function AddJob({
                     name="dueDate"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
-                        <FormLabel>Due Date</FormLabel>
+                        <FormLabel>Срок</FormLabel>
                         <DatePicker
                           field={field}
                           presets={true}
@@ -447,10 +445,10 @@ export function AddJob({
                     name="salaryRange"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
-                        <FormLabel>Salary Range</FormLabel>
+                        <FormLabel>Зарплата</FormLabel>
                         <FormControl>
                           <SelectFormCtrl
-                            label="Salary Range"
+                            label="Зарплата"
                             options={SALARY_RANGES}
                             field={field}
                           />
@@ -468,9 +466,9 @@ export function AddJob({
                     name="resume"
                     render={({ field }) => (
                       <FormItem className="flex flex-col [&>button]:capitalize">
-                        <FormLabel>Resume</FormLabel>
+                        <FormLabel>Резюме</FormLabel>
                         <SelectFormCtrl
-                          label="Resume"
+                          label="Резюме"
                           options={resumes}
                           field={field}
                         />
@@ -479,7 +477,7 @@ export function AddJob({
                     )}
                   />
                   <Button variant="link" type="button" onClick={createResume}>
-                    Add New
+                    Добавить
                   </Button>
                   <CreateResume
                     resumeDialogOpen={resumeDialogOpen}
@@ -496,7 +494,7 @@ export function AddJob({
                     name="tags"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
-                        <FormLabel>Add Skill</FormLabel>
+                        <FormLabel>Добавить навык</FormLabel>
                         <FormControl>
                           <TagInput
                             availableTags={availableTags}
@@ -518,7 +516,7 @@ export function AddJob({
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
                         <FormLabel id="job-description-label">
-                          Job Description
+                          Описание вакансии
                         </FormLabel>
                         <FormControl>
                           <TiptapEditor field={field} />
@@ -540,11 +538,11 @@ export function AddJob({
                         className="mt-2 md:mt-0 w-full"
                         onClick={closeDialog}
                       >
-                        Cancel
+                        Отмена
                       </Button>
                     </div>
                     <Button type="submit" data-testid="save-job-btn">
-                      Save
+                      Сохранить
                       {isPending && (
                         <Loader className="h-4 w-4 shrink-0 spinner" />
                       )}

@@ -23,7 +23,7 @@ function TasksSidebar({
 }: TasksSidebarProps) {
   return (
     <div className="w-48 border-r py-4 hidden md:block h-full">
-      <h3 className="font-semibold mb-4 text-sm">Activity Types</h3>
+      <h3 className="font-semibold mb-4 text-sm">Типы активности</h3>
       <ul className="space-y-1">
         <li>
           <button
@@ -35,7 +35,7 @@ function TasksSidebar({
             )}
           >
             <span className="flex justify-between items-center">
-              <span>All</span>
+              <span>Все</span>
               <span className="text-muted-foreground text-xs">
                 {totalTasks}
               </span>

@@ -30,12 +30,12 @@ export function ProfileDropdown({ user, signOutAction }: ProfileDropdownProps) {
           <UserAvatar user={user} />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>{user?.email ?? "My Account"}</DropdownMenuLabel>
+          <DropdownMenuLabel>{user?.email ?? "Мой аккаунт"}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
             <Link href="/dashboard/settings" className="cursor-pointer">
               <Settings className="w-5 mr-2" />
-              Settings
+              Настройки
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -43,14 +43,14 @@ export function ProfileDropdown({ user, signOutAction }: ProfileDropdownProps) {
             className="cursor-pointer"
           >
             <Info className="w-5 mr-2" />
-            Support
+            Поддержка
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <form action={signOutAction}>
             <DropdownMenuItem>
               <Button variant="ghost" className="w-full">
                 <PowerIcon className="w-5" />
-                <div className="hidden md:block mx-2">Logout</div>
+                <div className="hidden md:block mx-2">Выйти</div>
               </Button>
             </DropdownMenuItem>
           </form>

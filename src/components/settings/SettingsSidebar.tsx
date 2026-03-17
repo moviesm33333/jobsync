@@ -11,9 +11,9 @@ const SETTINGS_SECTIONS: {
   label: string;
   icon: typeof Bot;
 }[] = [
-  { id: "ai-provider", label: "AI Provider", icon: Bot },
-  { id: "api-keys", label: "API Keys", icon: Key },
-  { id: "appearance", label: "Appearance", icon: Palette },
+  { id: "ai-provider", label: "ИИ-провайдер", icon: Bot },
+  { id: "api-keys", label: "API-ключи", icon: Key },
+  { id: "appearance", label: "Внешний вид", icon: Palette },
 ];
 
 interface SettingsSidebarProps {
