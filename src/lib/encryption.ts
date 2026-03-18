@@ -14,23 +14,11 @@ const KEY_LENGTH = 32;
 const PBKDF2_ITERATIONS = 100_000;
 const SALT = "jobsync-api-key-encryption";
 
-function getOrCreateEncryptionKey(): string {
-  if (process.env.ENCRYPTION_KEY) {
-    return process.env.ENCRYPTION_KEY;
-  }
-
-  // Auto-generate and persist for the lifetime of this process
-  const generated = randomBytes(32).toString("base64");
-  process.env.ENCRYPTION_KEY = generated;
-  console.warn(
-    "ENCRYPTION_KEY не задан в .env — сгенерирован автоматически. " +
-      "Добавьте ENCRYPTION_KEY в .env чтобы ключи сохранялись между перезапусками.",
-  );
-  return generated;
-}
-
 function getDerivedKey(): Buffer {
-  const secret = getOrCreateEncryptionKey();
+  const secret = process.env.ENCRYPTION_KEY;
+  if (!secret) {
+    throw new Error("ENCRYPTION_KEY is not set");
+  }
   return pbkdf2Sync(secret, SALT, PBKDF2_ITERATIONS, KEY_LENGTH, "sha256");
 }
 
