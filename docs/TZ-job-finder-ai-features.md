@@ -1,285 +1,574 @@
-# ТЗ: Расширенные статусы и заметки к вакансиям
+# ТЗ: Бот для поиска работы на HH.ru — Расширенные статусы + Заметки
 
 **Целевой репозиторий:** https://github.com/moviesm33333/job_finder_ai
-**Репозиторий-референс:** https://github.com/moviesm33333/jobsync (JobSync)
-**Дата:** 2026-03-19
+**Репозиторий-референс (JobSync):** https://github.com/moviesm33333/jobsync
+**Дата:** 2026-03-20
 
 ---
 
-## Общее описание
+## Контекст проекта
 
-Перенос двух фич из JobSync в job_finder_ai:
+**job_finder_ai** — бот для автоматизации поиска работы на HH.ru.
 
-1. **Расширенные статусы вакансий** — добавление статусов `interview`, `offer`, `rejected`, `accepted` для отслеживания воронки после отклика
-2. **Заметки к вакансиям** — возможность добавлять, редактировать и удалять текстовые заметки к каждой вакансии
+- **Стек:** Python (Flask) + vanilla JS + SQLite
+- **Авторизация HH.ru:** эмуляция браузера (Selenium/Playwright), НЕ OAuth, НЕ API-токен
+- **Резюме:** хранится на HH.ru, бот получает его оттуда через браузерную сессию
+- **Архитектура:** однопользовательское приложение (без системы регистрации/логина)
 
 ---
 
-## Фича 1: Расширенные статусы вакансий
+## Что внедряем
 
-### Текущее состояние (job_finder_ai)
+| # | Фича | Описание |
+|---|-------|----------|
+| 1 | Расширенные статусы | Воронка после отклика: `interview` → `offer` → `accepted` / `rejected` |
+| 2 | Заметки к вакансиям | Текстовые заметки с CRUD: результаты собесов, контакты HR, условия |
 
-Предполагаемые существующие статусы: `new`, `manual`, `auto`, `applied`, `snoozed`, `trash`.
-После статуса `applied` — нет дальнейшего трекинга.
+---
 
-### Что добавить
+## Модуль 1: Расширенные статусы вакансий
 
-| Статус | Значение | Описание | Цвет (предложение) |
-|--------|----------|----------|---------------------|
-| `interview` | Приглашён на собеседование | Компания ответила, назначена встреча | Зелёный `#22C55E` |
-| `offer` | Получен оффер | Компания сделала предложение | Синий `#3B82F6` |
-| `rejected` | Отказ | Компания отказала или кандидат отказался | Красный `#EF4444` |
-| `accepted` | Принято | Кандидат принял оффер и выходит на работу | Золотой `#EAB308` |
+### 1.1. Текущее состояние
 
-### Референс из JobSync
+Предполагаемые статусы сейчас: `new`, `manual`, `auto`, `applied`, `snoozed`, `trash`.
+**Проблема:** после `applied` — чёрная дыра. Непонятно, что дальше с вакансией.
 
-**Файл:** `src/lib/constants.ts:38-46`
-```typescript
-export const JOB_STATUSES = [
-  { label: "Draft", value: "draft" },
-  { label: "Applied", value: "applied" },
-  { label: "Interview", value: "interview" },
-  { label: "Offer", value: "offer" },
-  { label: "Rejected", value: "rejected" },
-  { label: "Expired", value: "expired" },
-  { label: "Archived", value: "archived" },
-] as const;
+### 1.2. Новые статусы
+
+| Статус | Значение | Когда ставится | Цвет |
+|--------|----------|----------------|------|
+| `interview` | Приглашён на собеседование | Пришёл ответ от компании, назначена встреча | `#22C55E` (зелёный) |
+| `offer` | Получен оффер | Компания прислала предложение о работе | `#3B82F6` (синий) |
+| `rejected` | Отказ | Компания отказала ИЛИ кандидат сам отказался | `#EF4444` (красный) |
+| `accepted` | Принято | Кандидат принял оффер, выходит на работу | `#EAB308` (золотой) |
+
+### 1.3. Граф переходов статусов
+
+```
+new ──→ applied ──→ interview ──→ offer ──→ accepted
+  │         │           │           │
+  │         │           │           └──→ rejected (отказался от оффера)
+  │         │           │
+  │         │           └──→ rejected (не прошёл собес)
+  │         │
+  │         └──→ rejected (отказ без собеса)
+  │
+  └──→ snoozed
+  └──→ trash
 ```
 
-**Файл:** `src/actions/job.actions.ts:391-433` — Логика смены статуса:
-```typescript
-export const updateJobStatus = async (jobId: string, status: JobStatus) => {
-  const dataToUpdate = () => {
-    switch (status.value) {
-      case "applied":
-        return { statusId: status.id, applied: true, appliedDate: new Date() };
-      case "interview":
-        return { statusId: status.id, applied: true }; // interview подразумевает applied
-      default:
-        return { statusId: status.id };
+**Правила автоматики:**
+- Переход в `interview` → автоматически `applied=True`, `applied_date=now()` (если ещё не applied)
+- Переход в `offer` → автоматически `applied=True` (если ещё не applied)
+- Из `accepted` и `rejected` обратные переходы запрещены (только через ручной сброс)
+- Из `trash` в любой статус — разрешено (восстановление)
+
+### 1.4. Сценарии использования
+
+**Сценарий A: Полная воронка**
+1. Бот нашёл вакансию → статус `new`
+2. Бот автоматически откликнулся → `applied`
+3. Пользователь получил приглашение на собес → вручную ставит `interview`
+4. Прошёл собес, получил оффер → вручную ставит `offer`
+5. Принял оффер → `accepted`
+
+**Сценарий B: Быстрый отказ**
+1. Бот откликнулся → `applied`
+2. Пришёл отказ → пользователь ставит `rejected`
+
+**Сценарий C: Пропуск этапов**
+1. Вакансия в статусе `new`
+2. Пользователь сразу ставит `interview` (откликался вручную на HH, мимо бота)
+3. Система автоматически выставляет `applied=True`
+
+**Сценарий D: Множественные собесы**
+1. Статус `interview` — был первый собес
+2. Пользователь добавляет заметку: "Первый собес — техническое интервью, прошёл"
+3. Статус остаётся `interview` — ждёт второй раунд
+4. Добавляет заметку: "Финальный собес с CTO"
+5. Переход в `offer` или `rejected`
+
+### 1.5. Задачи реализации
+
+#### Backend
+
+**Задача 1.5.1: Миграция БД**
+```python
+# Расширить допустимые значения поля status в таблице vacancies
+VACANCY_STATUSES = [
+    'new', 'manual', 'auto', 'applied', 'snoozed', 'trash',
+    'interview', 'offer', 'rejected', 'accepted'  # НОВЫЕ
+]
+```
+**Проверка:** `SELECT DISTINCT status FROM vacancies;` → новые статусы принимаются без ошибок
+
+**Задача 1.5.2: API-эндпоинт смены статуса**
+```
+PATCH /api/vacancy/<vacancy_id>/status
+Body: { "status": "interview" }
+Response: { "ok": true, "vacancy": { ... } }
+```
+
+Логика (адаптация из JobSync `src/actions/job.actions.ts:391-433`):
+```python
+def update_vacancy_status(vacancy_id, new_status):
+    vacancy = Vacancy.query.get_or_404(vacancy_id)
+
+    if new_status in ('interview', 'offer', 'accepted'):
+        if not vacancy.applied:
+            vacancy.applied = True
+            vacancy.applied_date = datetime.utcnow()
+
+    if new_status in ('accepted', 'rejected'):
+        # Запрет обратного перехода
+        if vacancy.status in ('accepted', 'rejected') and new_status != vacancy.status:
+            # Разрешить только через явный сброс
+            pass
+
+    vacancy.status = new_status
+    vacancy.status_changed_at = datetime.utcnow()  # НОВОЕ поле
+    db.session.commit()
+```
+
+**Проверка:** `curl -X PATCH .../api/vacancy/1/status -d '{"status":"interview"}'` → статус изменён, applied=True
+
+**Задача 1.5.3: Новое поле `status_changed_at`**
+```sql
+ALTER TABLE vacancies ADD COLUMN status_changed_at DATETIME;
+```
+Нужно для отслеживания: когда именно пришёл на собес, когда получил оффер и т.д.
+
+**Проверка:** после смены статуса поле заполняется
+
+#### Frontend
+
+**Задача 1.5.4: Dropdown смены статуса в карточке вакансии**
+- В карточке вакансии (детальный вид) — dropdown с доступными статусами
+- Доступные статусы зависят от текущего (граф переходов)
+- При выборе — AJAX-запрос на PATCH
+- Бейдж с цветом текущего статуса
+
+**Задача 1.5.5: Бейджи в списке вакансий**
+```css
+.status-badge { padding: 2px 8px; border-radius: 4px; font-size: 12px; color: white; }
+.status-new       { background: #6B7280; }
+.status-applied   { background: #06B6D4; }
+.status-interview { background: #22C55E; }
+.status-offer     { background: #3B82F6; }
+.status-rejected  { background: #EF4444; }
+.status-accepted  { background: #EAB308; }
+.status-snoozed   { background: #A855F7; }
+.status-trash     { background: #374151; }
+```
+
+**Проверка:** в списке вакансий видны цветные бейджи, клик на бейдж открывает dropdown
+
+**Задача 1.5.6: Фильтр по новым статусам**
+- Добавить `interview`, `offer`, `rejected`, `accepted` в фильтр
+- Счётчик рядом с каждым фильтром: `Interview (3)`
+
+**Задача 1.5.7: Мини-воронка на главной**
+```
+Найдено: 150 → Откликнулись: 42 → Собесы: 8 → Офферы: 2 → Принято: 1
+```
+Простая горизонтальная полоска с числами. Без графиков — просто числа в цветных блоках.
+
+**Проверка:** на главной странице видна воронка с актуальными числами
+
+---
+
+## Модуль 2: Заметки к вакансиям
+
+### 2.1. Описание
+
+Прикрепление текстовых заметок к вакансии. Одна вакансия — много заметок. Порядок — от новых к старым.
+
+**Зачем:**
+- Записать впечатления после собеседования
+- Сохранить контакты HR / рекрутера
+- Зафиксировать условия оффера (зп, бонусы, дата выхода)
+- Записать вопросы, которые задали на собесе
+- Отметить red/green flags компании
+
+### 2.2. Сценарии использования
+
+**Сценарий A: Заметка после собеседования**
+1. Пользователь открывает карточку вакансии
+2. Нажимает "+ Заметка"
+3. Пишет: "Собес 20.03 — техническое интервью, 1 час. Спрашивали про asyncio, SQLAlchemy, Docker. Дали тестовое на 3 дня."
+4. Сохраняет
+5. Видит заметку в списке с датой
+
+**Сценарий B: Редактирование заметки**
+1. Пользователь видит заметку с ошибкой
+2. Нажимает "Редактировать"
+3. Исправляет текст
+4. Сохраняет → появляется пометка "(изменено)"
+
+**Сценарий C: Множественные заметки**
+1. Заметка 1: "Отклик отправлен, ответили через 2 дня"
+2. Заметка 2: "Первый собес — HR скрининг. Зп 250-300к, удалёнка"
+3. Заметка 3: "Техническое интервью — дали оффер 280к"
+4. Все три видны в хронологическом порядке (новые сверху)
+
+**Сценарий D: Удаление заметки**
+1. Пользователь нажимает "Удалить" на заметке
+2. Появляется подтверждение: "Удалить заметку?"
+3. Подтверждает → заметка удалена
+4. Отменяет → ничего не происходит
+
+**Сценарий E: Удаление вакансии**
+1. Пользователь удаляет вакансию из списка
+2. Все заметки этой вакансии удаляются каскадно (ON DELETE CASCADE)
+
+### 2.3. Задачи реализации
+
+#### Backend
+
+**Задача 2.3.1: Новая таблица `vacancy_notes`**
+
+```sql
+CREATE TABLE vacancy_notes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    vacancy_id INTEGER NOT NULL,
+    content TEXT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (vacancy_id) REFERENCES vacancies(id) ON DELETE CASCADE
+);
+CREATE INDEX idx_vacancy_notes_vacancy_id ON vacancy_notes(vacancy_id);
+```
+
+SQLAlchemy-модель (адаптация из JobSync `prisma/schema.prisma:415-427`):
+```python
+class VacancyNote(db.Model):
+    __tablename__ = 'vacancy_notes'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    vacancy_id = db.Column(
+        db.Integer,
+        db.ForeignKey('vacancies.id', ondelete='CASCADE'),
+        nullable=False, index=True
+    )
+    content = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow,
+                           onupdate=datetime.utcnow, nullable=False)
+
+    vacancy = db.relationship(
+        'Vacancy',
+        backref=db.backref('notes', lazy='dynamic', cascade='all, delete-orphan')
+    )
+
+    @property
+    def is_edited(self):
+        return (self.updated_at - self.created_at).total_seconds() > 1
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'vacancy_id': self.vacancy_id,
+            'content': self.content,
+            'created_at': self.created_at.isoformat(),
+            'updated_at': self.updated_at.isoformat(),
+            'is_edited': self.is_edited,
+        }
+```
+
+**Проверка:** `python -c "from models import VacancyNote; print('OK')"` → без ошибок
+
+**Задача 2.3.2: CRUD API-эндпоинты**
+
+Адаптация логики из JobSync `src/actions/note.actions.ts`:
+
+```
+GET    /api/vacancy/<vacancy_id>/notes
+       → { "notes": [ { id, content, created_at, updated_at, is_edited }, ... ] }
+       → Сортировка: created_at DESC (новые сверху)
+
+POST   /api/vacancy/<vacancy_id>/notes
+       Body: { "content": "Текст заметки" }
+       → 201 { "note": { id, content, ... } }
+       → Валидация: content не пустой, vacancy_id существует
+
+PUT    /api/vacancy/<vacancy_id>/notes/<note_id>
+       Body: { "content": "Обновлённый текст" }
+       → 200 { "note": { id, content, ..., is_edited: true } }
+       → Валидация: note_id существует, принадлежит vacancy_id
+
+DELETE /api/vacancy/<vacancy_id>/notes/<note_id>
+       → 200 { "ok": true }
+       → Валидация: note_id существует, принадлежит vacancy_id
+```
+
+**Проверка каждого эндпоинта:**
+```bash
+# Создать
+curl -X POST .../api/vacancy/1/notes -d '{"content":"Тест"}' → 201
+# Прочитать
+curl .../api/vacancy/1/notes → список с одной заметкой
+# Обновить
+curl -X PUT .../api/vacancy/1/notes/1 -d '{"content":"Обновлено"}' → is_edited: true
+# Удалить
+curl -X DELETE .../api/vacancy/1/notes/1 → ok: true
+# Проверить пустой список
+curl .../api/vacancy/1/notes → пустой список
+```
+
+**Задача 2.3.3: Количество заметок в списке вакансий**
+- При выдаче списка вакансий (GET /api/vacancies) добавить поле `notes_count`
+- SQL: `SELECT COUNT(*) FROM vacancy_notes WHERE vacancy_id = ?`
+- Или через JOIN/subquery при выдаче списка
+
+**Проверка:** в JSON каждой вакансии есть `notes_count: N`
+
+#### Frontend
+
+**Задача 2.3.4: Секция заметок в карточке вакансии**
+
+Референс: JobSync `src/components/myjobs/NotesSection.tsx`
+
+```html
+<!-- Встраивается в детальную карточку вакансии -->
+<div class="notes-section">
+  <div class="notes-header" onclick="toggleNotes()">
+    <span>📝 Заметки</span>
+    <span class="notes-count-badge">3</span>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="notes-list" id="notesList">
+    <!-- Заметки подгружаются через AJAX -->
+  </div>
+  <button class="btn-add-note" onclick="openNoteForm()">+ Добавить заметку</button>
+</div>
+```
+
+Поведение:
+- Секция свёрнута по умолчанию, ЕСЛИ заметок 0
+- Секция развёрнута, ЕСЛИ есть хотя бы 1 заметка
+- Клик на заголовок — сворачивает/разворачивает
+- Бейдж с количеством заметок
+
+**Задача 2.3.5: Карточка заметки**
+
+Референс: JobSync `src/components/myjobs/NoteCard.tsx`
+
+```html
+<div class="note-card">
+  <div class="note-header">
+    <span class="note-date">20 мар 2026, 14:30</span>
+    <span class="note-edited" style="display:none">(изменено)</span>
+    <div class="note-actions">
+      <button class="btn-icon" onclick="editNote(noteId)" title="Редактировать">✏️</button>
+      <button class="btn-icon btn-danger" onclick="confirmDeleteNote(noteId)" title="Удалить">🗑️</button>
+    </div>
+  </div>
+  <div class="note-content">Текст заметки...</div>
+</div>
+```
+
+Стили:
+```css
+.note-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+}
+.note-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.note-date { color: #6b7280; font-size: 13px; }
+.note-edited { color: #9ca3af; font-size: 12px; margin-left: 8px; }
+.note-content { font-size: 14px; line-height: 1.5; white-space: pre-wrap; }
+```
+
+**Задача 2.3.6: Форма создания/редактирования заметки**
+
+Референс: JobSync `src/components/myjobs/NoteDialog.tsx`
+
+```html
+<!-- Модальное окно -->
+<div class="modal" id="noteModal">
+  <div class="modal-content">
+    <h3 id="noteModalTitle">Добавить заметку</h3>
+    <textarea id="noteContent" rows="6" placeholder="Введите текст заметки..."></textarea>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeNoteModal()">Отмена</button>
+      <button class="btn-primary" onclick="saveNote()">Сохранить</button>
+    </div>
+  </div>
+</div>
+```
+
+Логика JS:
+```javascript
+let editingNoteId = null;
+
+function openNoteForm(noteId = null) {
+    editingNoteId = noteId;
+    if (noteId) {
+        // Режим редактирования — заполнить textarea текущим текстом
+        document.getElementById('noteModalTitle').textContent = 'Редактировать заметку';
+        document.getElementById('noteContent').value = getCurrentNoteContent(noteId);
+    } else {
+        // Режим создания
+        document.getElementById('noteModalTitle').textContent = 'Добавить заметку';
+        document.getElementById('noteContent').value = '';
     }
-  };
-  // ...
-};
-```
+    document.getElementById('noteModal').style.display = 'flex';
+}
 
-**Ключевой паттерн:** при переходе в `interview` автоматически выставляется `applied: true`. Это важно — если пользователь пропустил этап отклика, система сама пометит.
+async function saveNote() {
+    const content = document.getElementById('noteContent').value.trim();
+    if (!content) { alert('Заметка не может быть пустой'); return; }
 
-**Файл:** `src/components/myjobs/MyJobsTable.tsx:128-140` — Рендеринг бейджей:
-```tsx
-<Badge className={cn(
-  "w-[70px] justify-center",
-  job.Status?.value === "applied" && "bg-cyan-500",
-  job.Status?.value === "interview" && "bg-green-500"
-)}>
-  {job.Status?.label}
-</Badge>
-```
+    if (editingNoteId) {
+        await fetch(`/api/vacancy/${vacancyId}/notes/${editingNoteId}`, {
+            method: 'PUT', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ content })
+        });
+    } else {
+        await fetch(`/api/vacancy/${vacancyId}/notes`, {
+            method: 'POST', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ content })
+        });
+    }
+    closeNoteModal();
+    loadNotes(); // Перезагрузить список заметок
+}
 
-### Задачи для реализации
-
-#### Backend (Python/Flask/SQLAlchemy)
-
-1. **Миграция БД** — добавить новые значения в enum/список допустимых статусов
-   ```python
-   # В модели Vacancy (или как называется) расширить допустимые статусы:
-   VACANCY_STATUSES = [
-       'new', 'manual', 'auto', 'applied', 'snoozed', 'trash',
-       'interview', 'offer', 'rejected', 'accepted'  # НОВЫЕ
-   ]
-   ```
-
-2. **API-эндпоинт** — обновить `PATCH /api/vacancy/<id>/status` (или аналог), чтобы принимал новые статусы
-
-3. **Бизнес-логика** — при переходе в `interview` автоматически ставить `applied=True` и `applied_date` если они пусты (паттерн из JobSync)
-
-4. **Валидация переходов** (опционально) — разрешённые переходы:
-   ```
-   applied → interview → offer → accepted
-                      ↘ rejected
-              interview → rejected
-   ```
-
-#### Frontend (vanilla JS)
-
-5. **Кнопки смены статуса** — в карточке вакансии добавить dropdown или набор кнопок для смены статуса (после `applied`):
-   - «Интервью» / «Оффер» / «Отказ» / «Принято»
-
-6. **Цветовые бейджи** — отображать статус цветным бейджем:
-   ```css
-   .status-interview { background: #22C55E; color: white; }
-   .status-offer     { background: #3B82F6; color: white; }
-   .status-rejected  { background: #EF4444; color: white; }
-   .status-accepted  { background: #EAB308; color: white; }
-   ```
-
-7. **Фильтр по статусам** — добавить новые статусы в фильтры списка вакансий
-
-8. **Счётчики** — на главной показывать количество вакансий в каждом статусе (мини-воронка)
-
----
-
-## Фича 2: Заметки к вакансиям
-
-### Описание
-
-Возможность прикреплять к вакансии текстовые заметки: результаты собеседований, впечатления, контакты HR, условия оффера и т.д.
-
-### Референс из JobSync
-
-**Схема БД:** `prisma/schema.prisma:415-427`
-```prisma
-model Note {
-  id        String   @id @default(uuid())
-  jobId     String
-  job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([jobId])
-  @@index([userId])
+function confirmDeleteNote(noteId) {
+    if (confirm('Удалить заметку?')) {
+        deleteNote(noteId);
+    }
 }
 ```
 
-**CRUD-операции:** `src/actions/note.actions.ts`
-- `getNotesByJobId(jobId)` — получить все заметки вакансии, отсортированные по дате (desc)
-- `addNote({ jobId, content })` — создать заметку
-- `updateNote({ id, jobId, content })` — обновить заметку
-- `deleteNote(noteId)` — удалить заметку
+**Проверка:** создать заметку → видна в списке → отредактировать → "(изменено)" → удалить → исчезла
 
-**Отслеживание редактирования:**
-```typescript
-// Определение "была ли заметка отредактирована" (разница > 1 сек между created и updated)
-isEdited: note.updatedAt.getTime() - note.createdAt.getTime() > 1000
+**Задача 2.3.7: Бейдж количества заметок в списке вакансий**
+- В таблице/списке вакансий рядом с названием показывать `(3)` если есть заметки
+- Данные из поля `notes_count` в API
+
+**Проверка:** в списке вакансий видно количество заметок у каждой
+
+---
+
+## Пошаговый план реализации с чекпоинтами
+
+### Этап 1: Backend — Миграция БД
+**Задачи:** 1.5.1, 1.5.3, 2.3.1
+**Что делаем:**
+- Добавляем новые статусы в список допустимых
+- Добавляем поле `status_changed_at` в таблицу вакансий
+- Создаём таблицу `vacancy_notes`
+
+**Чекпоинт:**
+```bash
+# Приложение запускается без ошибок
+python app.py
+# Таблица создана
+sqlite3 db.sqlite "SELECT * FROM vacancy_notes LIMIT 1;"
+# Новые статусы принимаются
+sqlite3 db.sqlite "UPDATE vacancies SET status='interview' WHERE id=1;"
 ```
 
-**UI-компоненты:**
+---
 
-1. **NotesSection** (`src/components/myjobs/NotesSection.tsx`) — сворачиваемый блок с бейджем-счётчиком и кнопкой "New Note"
-2. **NoteCard** (`src/components/myjobs/NoteCard.tsx`) — карточка заметки с датой, меткой "(edited)", кнопками редактирования и удаления
-3. **NoteDialog** (`src/components/myjobs/NoteDialog.tsx`) — модальное окно для создания/редактирования заметки с rich-text редактором
+### Этап 2: Backend — API заметок
+**Задачи:** 2.3.2, 2.3.3
+**Что делаем:**
+- 4 эндпоинта CRUD для заметок
+- Поле `notes_count` в API списка вакансий
 
-### Задачи для реализации
-
-#### Backend (Python/Flask/SQLAlchemy)
-
-1. **Новая таблица в БД:**
-   ```python
-   class VacancyNote(db.Model):
-       __tablename__ = 'vacancy_notes'
-
-       id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-       vacancy_id = db.Column(db.Integer, db.ForeignKey('vacancies.id', ondelete='CASCADE'), nullable=False, index=True)
-       content = db.Column(db.Text, nullable=False)
-       created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-       updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
-
-       vacancy = db.relationship('Vacancy', backref=db.backref('notes', lazy='dynamic', cascade='all, delete-orphan'))
-   ```
-
-2. **Миграция** — создать таблицу `vacancy_notes` (Alembic или ручная миграция)
-
-3. **API-эндпоинты:**
-   ```
-   GET    /api/vacancy/<vacancy_id>/notes          — список заметок
-   POST   /api/vacancy/<vacancy_id>/notes          — создать заметку { content: "..." }
-   PUT    /api/vacancy/<vacancy_id>/notes/<note_id> — обновить заметку { content: "..." }
-   DELETE /api/vacancy/<vacancy_id>/notes/<note_id> — удалить заметку
-   ```
-
-4. **Формат ответа:**
-   ```json
-   {
-     "id": 1,
-     "vacancy_id": 42,
-     "content": "Текст заметки",
-     "created_at": "2026-03-19T10:30:00",
-     "updated_at": "2026-03-19T10:30:00",
-     "is_edited": false
-   }
-   ```
-
-#### Frontend (vanilla JS)
-
-5. **Секция заметок в карточке вакансии:**
-   - Сворачиваемый блок "Заметки (N)" под описанием вакансии
-   - Кнопка "+ Добавить заметку"
-   - Список заметок в обратном хронологическом порядке
-
-6. **Карточка заметки:**
-   ```html
-   <div class="note-card">
-     <div class="note-header">
-       <span class="note-date">19 мар 2026, 10:30</span>
-       <span class="note-edited">(изменено)</span>
-       <div class="note-actions">
-         <button class="btn-edit" title="Редактировать">✏️</button>
-         <button class="btn-delete" title="Удалить">🗑️</button>
-       </div>
-     </div>
-     <div class="note-content">Текст заметки...</div>
-   </div>
-   ```
-
-7. **Форма создания/редактирования:**
-   - Модальное окно (или inline-форма)
-   - Textarea для ввода текста (plain text — без rich-text, для простоты)
-   - Кнопки "Сохранить" / "Отмена"
-
-8. **Подтверждение удаления** — confirm-диалог перед удалением заметки
-
-9. **Бейдж-счётчик** — показывать количество заметок в списке вакансий (как в JobSync — в колонке с названием вакансии)
+**Чекпоинт:**
+```bash
+# Полный цикл CRUD через curl
+curl -X POST .../api/vacancy/1/notes -d '{"content":"test"}' → 201
+curl .../api/vacancy/1/notes → [{...}]
+curl -X PUT .../api/vacancy/1/notes/1 -d '{"content":"updated"}' → 200
+curl -X DELETE .../api/vacancy/1/notes/1 → 200
+```
 
 ---
 
-## Приоритет и порядок реализации
+### Этап 3: Backend — API статусов
+**Задачи:** 1.5.2
+**Что делаем:**
+- Эндпоинт смены статуса с автоматикой (applied при interview)
+- Валидация допустимых переходов
 
-### Этап 1: Backend (оба фичи одновременно)
-1. Миграция БД — новые статусы + таблица `vacancy_notes`
-2. API-эндпоинты для заметок
-3. Обновление API статусов
-
-### Этап 2: Frontend — Статусы
-4. Бейджи со статусами
-5. Dropdown смены статуса
-6. Фильтры
-
-### Этап 3: Frontend — Заметки
-7. Секция заметок в карточке
-8. Форма создания/редактирования
-9. Удаление с подтверждением
-
-### Этап 4: Полировка
-10. Счётчики на главной
-11. Бейдж количества заметок в списке
+**Чекпоинт:**
+```bash
+# Смена статуса
+curl -X PATCH .../api/vacancy/1/status -d '{"status":"interview"}' → 200
+# Проверить что applied=True автоматически
+curl .../api/vacancy/1 → applied: true, status: "interview"
+```
 
 ---
 
-## Важные отличия от JobSync
+### Этап 4: Frontend — Статусы
+**Задачи:** 1.5.4, 1.5.5, 1.5.6
+**Что делаем:**
+- Цветные бейджи статусов
+- Dropdown смены статуса
+- Фильтр по статусам
 
-| Аспект | JobSync | job_finder_ai |
-|--------|---------|---------------|
-| Стек | Next.js + React + Prisma | Flask + vanilla JS + SQLAlchemy |
-| Rich text | TipTap editor | Простой textarea (достаточно) |
-| Auth | NextAuth (multi-user) | Однопользовательский (без userId в заметках) |
-| ID | UUID | Integer autoincrement |
-| Статусы | В отдельной таблице JobStatus | Строковое поле в таблице вакансий |
-
-**Примечание:** Если в job_finder_ai нет авторизации (однопользовательское приложение), поле `userId` в заметках не нужно. Это упрощает реализацию.
+**Чекпоинт:** открыть браузер → в списке вакансий цветные бейджи → клик → dropdown → сменить статус → бейдж обновился → фильтр работает
 
 ---
 
-## Оценка трудозатрат
+### Этап 5: Frontend — Заметки
+**Задачи:** 2.3.4, 2.3.5, 2.3.6, 2.3.7
+**Что делаем:**
+- Секция заметок в карточке
+- Карточки заметок
+- Модалка создания/редактирования
+- Удаление с подтверждением
+- Бейдж количества в списке
 
-| Задача | Сложность | Ориентировочно |
-|--------|-----------|----------------|
-| Миграция БД | Низкая | 1 час |
-| API заметок | Низкая | 2 часа |
-| API статусов | Низкая | 1 час |
-| Frontend статусов | Средняя | 3 часа |
-| Frontend заметок | Средняя | 4 часа |
-| Тестирование | Средняя | 2 часа |
-| **Итого** | | **~13 часов** |
+**Чекпоинт:** открыть вакансию → добавить заметку → она появилась → отредактировать → "(изменено)" → удалить → подтвердить → исчезла → в списке вакансий виден бейдж с числом
+
+---
+
+### Этап 6: Воронка на главной
+**Задачи:** 1.5.7
+**Что делаем:**
+- SQL-запрос подсчёта по статусам
+- Горизонтальная полоска-воронка
+
+**Чекпоинт:** на главной видна воронка `Найдено: N → Откликнулись: N → Собесы: N → Офферы: N`
+
+---
+
+## Референсы из JobSync (полный список файлов)
+
+| Что | Файл в JobSync | Что взять |
+|-----|----------------|-----------|
+| Список статусов | `src/lib/constants.ts:38-46` | Названия и значения статусов |
+| Логика смены статуса | `src/actions/job.actions.ts:391-433` | Паттерн автоматического applied при interview |
+| Бейджи статусов | `src/components/myjobs/MyJobsTable.tsx:128-140` | Цвета и стили бейджей |
+| Схема заметок | `prisma/schema.prisma:415-427` | Структура таблицы Note |
+| CRUD заметок | `src/actions/note.actions.ts` (весь файл) | Логика всех операций, определение is_edited |
+| Секция заметок | `src/components/myjobs/NotesSection.tsx` | Сворачиваемый блок, загрузка, состояния |
+| Карточка заметки | `src/components/myjobs/NoteCard.tsx` | Отображение даты, "(edited)", кнопки |
+| Форма заметки | `src/components/myjobs/NoteDialog.tsx` | Модалка создания/редактирования |
+| Dropdown статуса | `src/components/myjobs/MyJobsTable.tsx:186-199` | Подменю смены статуса |
+
+---
+
+## Важные отличия: что НЕ копировать из JobSync
+
+| Аспект | JobSync | job_finder_ai | Решение |
+|--------|---------|---------------|---------|
+| Rich text | TipTap editor | — | Простой `<textarea>`, plain text достаточно |
+| userId в заметках | Есть (multi-user) | Нет (single-user) | Убрать поле userId |
+| UUID | Используется | — | Integer autoincrement |
+| Отдельная таблица статусов | `JobStatus` model | — | Строковое поле `status` в таблице вакансий |
+| Валидация Zod | NoteFormSchema | — | Простая проверка `if not content: return 400` |
+| React + server actions | Next.js | — | Vanilla JS + fetch API |
